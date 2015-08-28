@@ -1,0 +1,15 @@
+<html>
+<head>
+<script type='text/javascript'>
+  function init(header) {
+    if (this === window)
+    
+    this["f1"] = function() {debugger; alert(header + " in f1")}
+    this["f2"] = function() {debugger; alert(header + " in f2")}
+  }
+</script>
+</head>
+<body onload="init('MUM')">
+<button onclick="f1()">Call f1</button><br/>
+<button onclick="f2()">Call f2</button>
+</body>

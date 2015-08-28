@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Example</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+
+<div id="divid" style="color:red;">Hello world. I am divid.</div>
+
+<p> I am paragraph 1</p>
+
+<p>I am paragraph 2</p>
+
+<p>I am para 3</p>
+
+<p> I am para 4</p>
+<script>
+	var re = /quick\s(brown).+?(jumps)/ig;
+	var result = re.exec('The Quick Brown Fox Jumps Over The Lazy Dog');
+	document.write(JSON.stringify(result));
+	function experiment7() {
+		var obj, p;
+		obj = $("#divid");
+		obj.empty();     				// 4		
+		var p = $("<p>");    			// 5
+		//var p = $("p");
+		obj.append(p);   				// 6
+		p.attr("id", "id10");  			// 7			
+		p.html("New paragraph");  		// 8
+		//document.write("new text");
+	}
+	
+	experiment7();
+</script>
+ 
+</body>
+</html>

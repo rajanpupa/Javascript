@@ -1,0 +1,937 @@
+<html>
+	<head>
+		<title>jQuery History</title>
+		<script src="jQueryVersions/jquery-1.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+		$(function() {
+			$("#version").change(versionChanged);
+				
+			function versionChanged(evt) {
+				var option, trs;
+				option = $("#version option:selected" ).text()
+				trs = $("tr");
+				trs.each(function(index) {
+					var el, td;
+					el = $(this);
+					el.show();
+				});
+
+				if (option !== "All") {				
+					option = "+jquery-" + $( "#version option:selected" ).text()
+					trs.each(function(index) {
+						var el, td;
+						el = $(this);
+						td = el.find("td:eq(1)");
+						if (td.html().indexOf(option) === -1) {
+							td.parent().hide();
+						}
+					});
+				}
+			}
+		});
+		</script>
+	</head>
+	<body>
+	<select id='version'>
+		<option>All</option>
+		<option>1.0</option>
+		<option>1.1</option>
+		<option>1.2</option>
+		<option>1.3</option>
+		<option>1.4</option>
+		<option>1.5</option>
+		<option>1.6</option>
+		<option>1.7</option>
+		<option>1.8</option>
+		<option>1.9</option>
+		<option>1.10</option>
+		<option>1.11</option>
+	</select>
+	<table border='1px' style='border-collapse:collapse'>
+		<tr><td>jQuery.Animation</td><td>+jquery-1.8b1</td></tr>
+<tr><td>jQuery.Callbacks</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.Deferred</td><td>+jquery-1.5b1</td></tr>
+<tr><td>jQuery.Event</td><td>+jquery-1.3b2</td></tr>
+<tr><td>jQuery.Tween</td><td>+jquery-1.8b1</td></tr>
+<tr><td>jQuery._Deferred</td><td>+jquery-1.5b1</td><td>-jquery-1.7b1</td></tr>
+<tr><td>jQuery._data</td><td>+jquery-1.5rc1</td></tr>
+<tr><td>jQuery._evalUrl</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery._mark</td><td>+jquery-1.6b1</td><td>-jquery-1.8b1</td></tr>
+<tr><td>jQuery._queueHooks</td><td>+jquery-1.8b1</td></tr>
+<tr><td>jQuery._removeData</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery._unmark</td><td>+jquery-1.6b1</td><td>-jquery-1.8b1</td></tr>
+<tr><td>jQuery.acceptData</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.access</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.active</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.ajax</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.ajaxPrefilter</td><td>+jquery-1.5b1</td></tr>
+<tr><td>jQuery.ajaxSettings.accepts.*</td><td>+jquery-1.5b1</td></tr>
+<tr><td>jQuery.ajaxSettings.accepts._default</td><td>+jquery-1.2.2</td><td>-jquery-1.5b1</td></tr>
+<tr><td>jQuery.ajaxSettings.accepts.html</td><td>+jquery-1.2.2</td></tr>
+<tr><td>jQuery.ajaxSettings.accepts.json</td><td>+jquery-1.2.2</td></tr>
+<tr><td>jQuery.ajaxSettings.accepts.script</td><td>+jquery-1.2.2</td></tr>
+<tr><td>jQuery.ajaxSettings.accepts.text</td><td>+jquery-1.2.2</td></tr>
+<tr><td>jQuery.ajaxSettings.accepts.xml</td><td>+jquery-1.2.2</td></tr>
+<tr><td>jQuery.ajaxSettings.async</td><td>+jquery-1.1a</td></tr>
+<tr><td>jQuery.ajaxSettings.contentType</td><td>+jquery-1.1a</td></tr>
+<tr><td>jQuery.ajaxSettings.converters.* text</td><td>+jquery-1.5b1</td></tr>
+<tr><td>jQuery.ajaxSettings.converters.text html</td><td>+jquery-1.5b1</td></tr>
+<tr><td>jQuery.ajaxSettings.converters.text json</td><td>+jquery-1.5b1</td></tr>
+<tr><td>jQuery.ajaxSettings.converters.text script</td><td>+jquery-1.5b1</td></tr>
+<tr><td>jQuery.ajaxSettings.converters.text xml</td><td>+jquery-1.5b1</td></tr>
+<tr><td>jQuery.ajaxSettings.flatOptions.context</td><td>+jquery-1.6.3rc1</td></tr>
+<tr><td>jQuery.ajaxSettings.flatOptions.url</td><td>+jquery-1.6.3rc1</td></tr>
+<tr><td>jQuery.ajaxSettings.global</td><td>+jquery-1.1a</td></tr>
+<tr><td>jQuery.ajaxSettings.isLocal</td><td>+jquery-1.5.1rc1</td></tr>
+<tr><td>jQuery.ajaxSettings.jsonp</td><td>+jquery-1.5b1</td></tr>
+<tr><td>jQuery.ajaxSettings.jsonpCallback</td><td>+jquery-1.5b1</td></tr>
+<tr><td>jQuery.ajaxSettings.processData</td><td>+jquery-1.1a</td></tr>
+<tr><td>jQuery.ajaxSettings.responseFields.json</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.ajaxSettings.responseFields.text</td><td>+jquery-1.5rc1</td></tr>
+<tr><td>jQuery.ajaxSettings.responseFields.xml</td><td>+jquery-1.5rc1</td></tr>
+<tr><td>jQuery.ajaxSettings.timeout</td><td>+jquery-1.1a</td><td>-jquery-1.3b2</td></tr>
+<tr><td>jQuery.ajaxSettings.type</td><td>+jquery-1.1a</td></tr>
+<tr><td>jQuery.ajaxSettings.url</td><td>+jquery-1.2.5</td></tr>
+<tr><td>jQuery.ajaxSettings.xhr</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.ajaxSetup</td><td>+jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.ajaxTimeout</span></td><td>+jquery-1.0</td><td>-jquery-1.2</td></tr>
+<tr><td>jQuery.ajaxTransport</td><td>+jquery-1.5b1</td></tr>
+<tr><td><span style='color:red'>jQuery.attr</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.attrFix.readonly</td><td>+jquery-1.6b1</td><td>-jquery-1.6.1rc1</td></tr>
+<tr><td>jQuery.attrFix.tabindex</td><td>+jquery-1.6b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.attrFn.blur</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.change</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.click</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.contextmenu</td><td>+jquery-1.7b1</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.css</td><td>+jquery-1.4a2</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.data</td><td>+jquery-1.4a2</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.dblclick</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.error</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.focus</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.focusin</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.focusout</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.height</td><td>+jquery-1.4a2</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.html</td><td>+jquery-1.4a2</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.keydown</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.keypress</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.keyup</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.load</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.mousedown</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.mouseenter</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.mouseleave</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.mousemove</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.mouseout</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.mouseover</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.mouseup</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.offset</td><td>+jquery-1.4a2</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.resize</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.scroll</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.select</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.submit</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.text</td><td>+jquery-1.4a2</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.unload</td><td>+jquery-1.4</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.val</td><td>+jquery-1.4a2</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrFn.width</td><td>+jquery-1.4a2</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.attrHooks.checked.set</td><td>+jquery-1.6b1</td><td>-jquery-1.6rc1</td></tr>
+<tr><td>jQuery.attrHooks.disabled.set</td><td>+jquery-1.6b1</td><td>-jquery-1.6rc1</td></tr>
+<tr><td>jQuery.attrHooks.readOnly.set</td><td>+jquery-1.6b1</td><td>-jquery-1.6rc1</td></tr>
+<tr><td>jQuery.attrHooks.selected.set</td><td>+jquery-1.6b1</td><td>-jquery-1.6rc1</td></tr>
+<tr><td>jQuery.attrHooks.tabIndex.get</td><td>+jquery-1.6b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.attrHooks.tabindex.get</td><td>+jquery-1.7b2</td><td>-jquery-1.8b1</td></tr>
+<tr><td>jQuery.attrHooks.type.set</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.attrHooks.value.get</td><td>+jquery-1.6.1rc1</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.attrHooks.value.set</td><td>+jquery-1.6.1rc1</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.bindReady</td><td>+jquery-1.4a2</td><td>-jquery-1.8b1</td></tr>
+<tr><td><span style='color:red'>jQuery.boxModel</span></td><td>+jquery-1.0</td><td>-jquery-1.8b1</td></tr>
+<tr><td>jQuery.browser.chrome</td><td>+jquery-1.8b2</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.browser.firefox</td><td>+jquery-1.4a2</td><td>-jquery-1.4rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.browser.mozilla</span></td><td>+jquery-1.0</td><td>-jquery-1.4rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.browser.msie</span></td><td>+jquery-1.0</td><td>-jquery-1.4rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.browser.opera</span></td><td>+jquery-1.0</td><td>-jquery-1.4rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.browser.safari</span></td><td>+jquery-1.0</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.browser.version</td><td>+jquery-1.1.3a</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.browser.webkit</td><td>+jquery-1.4rc1</td><td>-jquery-1.8b2</td><td>+jquery-1.8.1</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.buildFragment</td><td>+jquery-1.4.3rc1</td><td>-jquery-1.9b1</td><td>+jquery-1.9rc1</td></tr>
+<tr><td>jQuery.camelCase</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.chars</td><td>+jquery-1.1.3a</td><td>-jquery-1.1.4</td></tr>
+<tr><td>jQuery.classFilter</td><td>+jquery-1.1.3a</td><td>-jquery-1.3b1</td></tr>
+<tr><td><span style='color:red'>jQuery.className.add</span></td><td>+jquery-1.0</td><td>-jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.className.has</span></td><td>+jquery-1.0</td><td>-jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.className.remove</span></td><td>+jquery-1.0</td><td>-jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.clean</span></td><td>+jquery-1.0</td><td>-jquery-1.9rc1</td></tr>
+<tr><td>jQuery.cleanData</td><td>+jquery-1.4.1</td></tr>
+<tr><td>jQuery.clone</td><td>+jquery-1.5rc1</td></tr>
+<tr><td>jQuery.contains</td><td>+jquery-1.4a2</td></tr>
+<tr><td><span style='color:red'>jQuery.css</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.cssHooks.borderWidth.expand</td><td>+jquery-1.7.2b1</td></tr>
+<tr><td>jQuery.cssHooks.borderWidth.set</td><td>+jquery-1.8b1</td></tr>
+<tr><td>jQuery.cssHooks.height.get</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.cssHooks.height.set</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.cssHooks.left.get</td><td>+jquery-1.11.0-beta1</td></tr>
+<tr><td>jQuery.cssHooks.margin.expand</td><td>+jquery-1.7.2b1</td></tr>
+<tr><td>jQuery.cssHooks.marginRight.get</td><td>+jquery-1.11.0-beta1</td></tr>
+<tr><td>jQuery.cssHooks.opacity.get</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.cssHooks.padding.expand</td><td>+jquery-1.7.2b1</td></tr>
+<tr><td>jQuery.cssHooks.padding.set</td><td>+jquery-1.8b1</td></tr>
+<tr><td>jQuery.cssHooks.width.get</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.cssHooks.width.set</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.cssNumber.columnCount</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.cssNumber.fillOpacity</td><td>+jquery-1.6.2rc1</td></tr>
+<tr><td>jQuery.cssNumber.flexGrow</td><td>+jquery-1.11.1-rc2</td></tr>
+<tr><td>jQuery.cssNumber.flexShrink</td><td>+jquery-1.11.1-rc2</td></tr>
+<tr><td>jQuery.cssNumber.fontWeight</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.cssNumber.lineHeight</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.cssNumber.opacity</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.cssNumber.order</td><td>+jquery-1.10.2</td></tr>
+<tr><td>jQuery.cssNumber.orphans</td><td>+jquery-1.6rc1</td></tr>
+<tr><td>jQuery.cssNumber.widows</td><td>+jquery-1.6rc1</td></tr>
+<tr><td>jQuery.cssNumber.zIndex</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.cssNumber.zoom</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.cssProps.float</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.curCSS</span></td><td>+jquery-1.0</td><td>-jquery-1.8b1</td></tr>
+<tr><td>jQuery.data</td><td>+jquery-1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.dequeue</span></td><td>+jquery-1.0</td><td>-jquery-1.2</td><td>+jquery-1.3b2</td></tr>
+<tr><td>jQuery.dir</td><td>+jquery-1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.each</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.easing.linear</td><td>+jquery-1.1.3a</td></tr>
+<tr><td>jQuery.easing.swing</td><td>+jquery-1.1.3a</td></tr>
+<tr><td>jQuery.error</td><td>+jquery-1.4.1</td></tr>
+<tr><td><span style='color:red'>jQuery.event.add</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.event.customEvent.changeData</td><td>+jquery-1.6b1</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.event.customEvent.getData</td><td>+jquery-1.6b1</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.event.customEvent.setData</td><td>+jquery-1.6b1</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.event.dispatch</td><td>+jquery-1.7rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.event.fix</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.event.fixHooks.click.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.fixHooks.contextmenu.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.fixHooks.dblclick.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.fixHooks.keydown.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.fixHooks.keypress.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.fixHooks.keyup.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.fixHooks.mousedown.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.fixHooks.mouseenter.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.fixHooks.mouseleave.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.fixHooks.mousemove.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.fixHooks.mouseout.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.fixHooks.mouseover.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.fixHooks.mouseup.filter</td><td>+jquery-1.7b2</td><td>-jquery-1.9.1</td></tr>
+<tr><td>jQuery.event.global.load</td><td>+jquery-1.3rc1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.global.unload</td><td>+jquery-1.2.2b</td><td>-jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.event.guid</span></td><td>+jquery-1.0</td><td>-jquery-1.7b2</td></tr>
+<tr><td><span style='color:red'>jQuery.event.handle</span></td><td>+jquery-1.0</td><td>-jquery-1.7rc1</td><td>+jquery-1.7rc2</td><td>-jquery-1.9</td></tr>
+<tr><td>jQuery.event.handlers</td><td>+jquery-1.9</td></tr>
+<tr><td>jQuery.event.keyHooks.filter</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.mouseHooks.filter</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.propHooks.click.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.propHooks.contextmenu.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.propHooks.dblclick.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.propHooks.keydown.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.propHooks.keypress.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.propHooks.keyup.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.propHooks.mousedown.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.propHooks.mouseenter.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.propHooks.mouseleave.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.propHooks.mousemove.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.propHooks.mouseout.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.propHooks.mouseover.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.propHooks.mouseup.filter</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.event.proxy</td><td>+jquery-1.2.5</td><td>-jquery-1.7b2</td></tr>
+<tr><td><span style='color:red'>jQuery.event.remove</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.event.simulate</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.beforeunload.postDispatch</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.event.special.beforeunload.setup</td><td>+jquery-1.4a2</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.event.special.beforeunload.teardown</td><td>+jquery-1.4a2</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.event.special.blur.delegateType</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.blur.noBubble</td><td>+jquery-1.7b2</td><td>-jquery-1.7.1rc1</td></tr>
+<tr><td>jQuery.event.special.blur.setup</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.special.blur.teardown</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.special.blur.trigger</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.event.special.change.filters.beforeactivate</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.special.change.filters.blur</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.special.change.filters.click</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.special.change.filters.focus</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.special.change.filters.keyup</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.special.change.remove</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.special.change.setup</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.special.click._default</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.event.special.click.trigger</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.event.special.focus.delegateType</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.focus.noBubble</td><td>+jquery-1.7b2</td><td>-jquery-1.7.1rc1</td></tr>
+<tr><td>jQuery.event.special.focus.setup</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.special.focus.teardown</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.special.focus.trigger</td><td>+jquery-1.7b1</td><td>-jquery-1.7b2</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.event.special.focusin.setup</td><td>+jquery-1.4rc1</td></tr>
+<tr><td>jQuery.event.special.focusin.teardown</td><td>+jquery-1.4rc1</td></tr>
+<tr><td>jQuery.event.special.focusout.setup</td><td>+jquery-1.4rc1</td></tr>
+<tr><td>jQuery.event.special.focusout.teardown</td><td>+jquery-1.4rc1</td></tr>
+<tr><td>jQuery.event.special.live.add</td><td>+jquery-1.4a1</td><td>-jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.live.remove</td><td>+jquery-1.4a1</td><td>-jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.load.noBubble</td><td>+jquery-1.7.1rc1</td></tr>
+<tr><td>jQuery.event.special.mouseenter.bindType</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.mouseenter.delegateType</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.mouseenter.handle</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.mouseenter.handler</td><td>+jquery-1.2.2b</td><td>-jquery-1.3b1</td></tr>
+<tr><td>jQuery.event.special.mouseenter.setup</td><td>+jquery-1.2.2b</td><td>-jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.mouseenter.teardown</td><td>+jquery-1.2.2b</td><td>-jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.mouseleave.bindType</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.mouseleave.delegateType</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.mouseleave.handle</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.mouseleave.handler</td><td>+jquery-1.2.2b</td><td>-jquery-1.3b1</td></tr>
+<tr><td>jQuery.event.special.mouseleave.setup</td><td>+jquery-1.2.2b</td><td>-jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.mouseleave.teardown</td><td>+jquery-1.2.2b</td><td>-jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.mouseout.bindType</td><td>+jquery-1.7b1</td><td>-jquery-1.7.1rc1</td></tr>
+<tr><td>jQuery.event.special.mouseout.delegateType</td><td>+jquery-1.7b1</td><td>-jquery-1.7.1rc1</td></tr>
+<tr><td>jQuery.event.special.mouseout.handle</td><td>+jquery-1.7b1</td><td>-jquery-1.7.1rc1</td></tr>
+<tr><td>jQuery.event.special.mouseover.bindType</td><td>+jquery-1.7b1</td><td>-jquery-1.7.1rc1</td></tr>
+<tr><td>jQuery.event.special.mouseover.delegateType</td><td>+jquery-1.7b1</td><td>-jquery-1.7.1rc1</td></tr>
+<tr><td>jQuery.event.special.mouseover.handle</td><td>+jquery-1.7b1</td><td>-jquery-1.7.1rc1</td></tr>
+<tr><td>jQuery.event.special.pointerenter.bindType</td><td>+jquery-1.11.1-rc2</td></tr>
+<tr><td>jQuery.event.special.pointerenter.delegateType</td><td>+jquery-1.11.1-rc2</td></tr>
+<tr><td>jQuery.event.special.pointerenter.handle</td><td>+jquery-1.11.1-rc2</td></tr>
+<tr><td>jQuery.event.special.pointerleave.bindType</td><td>+jquery-1.11.1-rc2</td></tr>
+<tr><td>jQuery.event.special.pointerleave.delegateType</td><td>+jquery-1.11.1-rc2</td></tr>
+<tr><td>jQuery.event.special.pointerleave.handle</td><td>+jquery-1.11.1-rc2</td></tr>
+<tr><td>jQuery.event.special.ready.handler</td><td>+jquery-1.2.2b</td><td>-jquery-1.2.2b2</td></tr>
+<tr><td>jQuery.event.special.ready.setup</td><td>+jquery-1.2.2b</td><td>-jquery-1.8.1</td></tr>
+<tr><td>jQuery.event.special.ready.teardown</td><td>+jquery-1.2.2b</td><td>-jquery-1.7b1</td></tr>
+<tr><td>jQuery.event.special.submit.remove</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.special.submit.setup</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.event.specialAll.live.setup</td><td>+jquery-1.3b1</td><td>-jquery-1.4a1</td></tr>
+<tr><td>jQuery.event.specialAll.live.teardown</td><td>+jquery-1.3b1</td><td>-jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.event.trigger</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.event.triggered</td><td>+jquery-1.3rc1</td><td>-jquery-1.4.1</td><td>+jquery-1.4.4rc1</td><td>-jquery-1.7b1</td></tr>
+<tr><td>jQuery.expando</td><td>+jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.#</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td></tr>
+<tr><td><span style='color:red'>jQuery.expr..</span></td><td>+jquery-1.0</td><td>-jquery-1.1.3</td></tr>
+<tr><td>jQuery.expr.:.active</td><td>+jquery-1.8b1</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.expr.:.animated</td><td>+jquery-1.2</td><td>-jquery-1.3b1</td><td>+jquery-1.3b2</td></tr>
+<tr><td>jQuery.expr.:.button</td><td>+jquery-1.0.2</td></tr>
+<tr><td>jQuery.expr.:.checkbox</td><td>+jquery-1.0.2</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.checked</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.contains</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td><td>+jquery-1.8b1</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.disabled</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.empty</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.enabled</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.eq</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td><td>+jquery-1.8.2</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.even</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.:.file</td><td>+jquery-1.0.2</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.first</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td><td>+jquery-1.8.2</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.first-child</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.:.focus</td><td>+jquery-1.6b1</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.gt</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.:.has</td><td>+jquery-1.1.4</td></tr>
+<tr><td>jQuery.expr.:.header</td><td>+jquery-1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.hidden</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.expr.:.image</td><td>+jquery-1.0.2</td></tr>
+<tr><td>jQuery.expr.:.input</td><td>+jquery-1.0.2</td></tr>
+<tr><td>jQuery.expr.:.lang</td><td>+jquery-1.9rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.last</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td><td>+jquery-1.8.2</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.last-child</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.lt</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.:.not</td><td>+jquery-1.8b2</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.nth</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.:.nth-child</td><td>+jquery-1.0.1</td><td>-jquery-1.1.3</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.odd</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td><td>+jquery-1.8.2</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.only-child</span></td><td>+jquery-1.0</td><td>-jquery-1.3b1</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.parent</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.expr.:.password</td><td>+jquery-1.0.2</td></tr>
+<tr><td>jQuery.expr.:.radio</td><td>+jquery-1.0.2</td></tr>
+<tr><td>jQuery.expr.:.reset</td><td>+jquery-1.0.2</td></tr>
+<tr><td>jQuery.expr.:.root</td><td>+jquery-1.9b1</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.selected</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.expr.:.submit</td><td>+jquery-1.0.2</td></tr>
+<tr><td>jQuery.expr.:.target</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.expr.:.text</td><td>+jquery-1.0.2</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.:.visible</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.@.</span></td><td>+jquery-1.0</td><td>-jquery-1.1.3</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.@.!=</span></td><td>+jquery-1.0</td><td>-jquery-1.1.3</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.@.$=</span></td><td>+jquery-1.0</td><td>-jquery-1.1.3</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.@.*=</span></td><td>+jquery-1.0</td><td>-jquery-1.1.3</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.@.=</span></td><td>+jquery-1.0</td><td>-jquery-1.1.3</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.@.^=</span></td><td>+jquery-1.0</td><td>-jquery-1.1.3</td></tr>
+<tr><td>jQuery.expr.@._prefix</td><td>+jquery-1.1a</td><td>-jquery-1.1.3</td></tr>
+<tr><td>jQuery.expr.@._resort</td><td>+jquery-1.1a</td><td>-jquery-1.1.3</td></tr>
+<tr><td><span style='color:red'>jQuery.expr.[</span></td><td>+jquery-1.0</td><td>-jquery-1.2</td></tr>
+<tr><td>jQuery.expr.attrHandle.async</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.autofocus</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.autoplay</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.checked</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.controls</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.defer</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.disabled</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.hidden</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.href</td><td>+jquery-1.3</td><td>-jquery-1.8b1</td></tr>
+<tr><td>jQuery.expr.attrHandle.ismap</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.loop</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.multiple</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.open</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.readonly</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.required</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.scoped</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.selected</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.attrHandle.type</td><td>+jquery-1.5.1rc1</td><td>-jquery-1.8b1</td></tr>
+<tr><td>jQuery.expr.attrMap.class</td><td>+jquery-1.3b1</td><td>-jquery-1.7b1</td></tr>
+<tr><td>jQuery.expr.attrMap.for</td><td>+jquery-1.3rc1</td><td>-jquery-1.7b1</td></tr>
+<tr><td>jQuery.expr.cacheLength</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.createPseudo</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.filter.ATTR</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filter.CHILD</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filter.CLASS</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filter.ID</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filter.POS</td><td>+jquery-1.3b1</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.filter.PSEUDO</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filter.TAG</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.active</td><td>+jquery-1.8b1</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.expr.filters.animated</td><td>+jquery-1.3b2</td></tr>
+<tr><td>jQuery.expr.filters.button</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.checkbox</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.checked</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.contains</td><td>+jquery-1.8b1</td></tr>
+<tr><td>jQuery.expr.filters.disabled</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.empty</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.enabled</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.eq</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.filters.even</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.filters.file</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.first</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.filters.focus</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.expr.filters.gt</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.filters.has</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.header</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.hidden</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.image</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.input</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.lang</td><td>+jquery-1.9rc1</td></tr>
+<tr><td>jQuery.expr.filters.last</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.filters.lt</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.filters.not</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.filters.nth</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.filters.odd</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.filters.parent</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.password</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.radio</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.reset</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.root</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.expr.filters.selected</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.submit</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.target</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.expr.filters.text</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.filters.visible</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.find.CLASS</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.find.ID</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.find.NAME</td><td>+jquery-1.3b1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.expr.find.TAG</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.preFilter.ATTR</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.preFilter.CHILD</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.preFilter.CLASS</td><td>+jquery-1.3b1</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.preFilter.ID</td><td>+jquery-1.3b1</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.preFilter.POS</td><td>+jquery-1.3b1</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.preFilter.PSEUDO</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.preFilter.TAG</td><td>+jquery-1.3b1</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.active</td><td>+jquery-1.8b2</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.expr.pseudos.animated</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.button</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.checkbox</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.checked</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.contains</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.disabled</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.empty</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.enabled</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.eq</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.pseudos.even</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.pseudos.file</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.first</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.pseudos.focus</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.gt</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.pseudos.has</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.header</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.hidden</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.image</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.input</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.lang</td><td>+jquery-1.9rc1</td></tr>
+<tr><td>jQuery.expr.pseudos.last</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.pseudos.lt</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.pseudos.not</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.nth</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.pseudos.odd</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.pseudos.parent</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.password</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.radio</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.reset</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.root</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.expr.pseudos.selected</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.submit</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.target</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.expr.pseudos.text</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.pseudos.visible</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.relative.</td><td>+jquery-1.3b1</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.relative. .dir</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.relative.+</td><td>+jquery-1.3b1</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.relative.+.dir</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.relative.+.first</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.relative.></td><td>+jquery-1.3b1</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.relative.>.dir</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.relative.>.first</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.relative.~</td><td>+jquery-1.3b1</td><td>-jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.relative.~.dir</td><td>+jquery-1.8b2</td></tr>
+<tr><td>jQuery.expr.setFilters.active</td><td>+jquery-1.8.2</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.expr.setFilters.animated</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.button</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.checkbox</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.checked</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.contains</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.disabled</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.empty</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.enabled</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.eq</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.setFilters.even</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.setFilters.file</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.first</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.setFilters.focus</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.gt</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.setFilters.has</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.header</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.hidden</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.image</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.input</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.lang</td><td>+jquery-1.9rc1</td></tr>
+<tr><td>jQuery.expr.setFilters.last</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.setFilters.lt</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.setFilters.not</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.nth</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.setFilters.odd</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.expr.setFilters.parent</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.password</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.radio</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.reset</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.root</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.expr.setFilters.selected</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.submit</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.target</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.expr.setFilters.text</td><td>+jquery-1.8.2</td></tr>
+<tr><td>jQuery.expr.setFilters.visible</td><td>+jquery-1.8.2</td></tr>
+<tr><td><span style='color:red'>jQuery.extend</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.filter</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.find</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn._hide</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td>jQuery.fn._load</td><td>+jquery-1.2.5</td><td>-jquery-1.4.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fn._show</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn._toggle</span></td><td>+jquery-1.0</td><td>-jquery-1.8b1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.add</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.addBack</td><td>+jquery-1.8b1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.addClass</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.after</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.ajaxComplete</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.ajaxError</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.ajaxSend</td><td>+jquery-1.0.4</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.ajaxStart</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.ajaxStop</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.ajaxSuccess</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.ancestors</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td>jQuery.fn.andSelf</td><td>+jquery-1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.animate</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.append</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.appendTo</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.attr</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.background</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.before</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.bind</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.blur</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.change</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.children</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.clearQueue</td><td>+jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.click</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.clone</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.closest</td><td>+jquery-1.3b1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.color</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td>jQuery.fn.constructor</td><td>+jquery-1.5b1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.contains</span></td><td>+jquery-1.0</td><td>-jquery-1.2</td></tr>
+<tr><td>jQuery.fn.contents</td><td>+jquery-1.2</td></tr>
+<tr><td>jQuery.fn.contextmenu</td><td>+jquery-1.7b1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.css</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.data</td><td>+jquery-1.2.3b</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.dblclick</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.delay</td><td>+jquery-1.4a1</td></tr>
+<tr><td>jQuery.fn.delegate</td><td>+jquery-1.4.2</td></tr>
+<tr><td>jQuery.fn.dequeue</td><td>+jquery-1.2</td></tr>
+<tr><td>jQuery.fn.detach</td><td>+jquery-1.4a1</td></tr>
+<tr><td>jQuery.fn.die</td><td>+jquery-1.3b1</td><td>-jquery-1.9rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.domManip</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.each</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.empty</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.end</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.eq</span></td><td>+jquery-1.0</td><td>-jquery-1.2</td><td>+jquery-1.2.1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.error</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.evalScripts</td><td>+jquery-1.0.3</td><td>-jquery-1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.extend</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.fadeIn</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.fadeOut</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.fadeTo</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.fadeToggle</td><td>+jquery-1.4.4rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.filter</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.find</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.finish</td><td>+jquery-1.9rc1</td></tr>
+<tr><td>jQuery.fn.first</td><td>+jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.float</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.focus</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.focusin</td><td>+jquery-1.4</td></tr>
+<tr><td>jQuery.fn.focusout</td><td>+jquery-1.4</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.get</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.gt</span></td><td>+jquery-1.0</td><td>-jquery-1.2</td></tr>
+<tr><td>jQuery.fn.has</td><td>+jquery-1.4a2</td></tr>
+<tr><td>jQuery.fn.hasClass</td><td>+jquery-1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.height</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td><td>+jquery-1.1b</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.hide</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.hover</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.href</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.html</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.id</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.index</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.init</td><td>+jquery-1.1.3a</td></tr>
+<tr><td>jQuery.fn.innerHeight</td><td>+jquery-1.2.4a</td></tr>
+<tr><td>jQuery.fn.innerWidth</td><td>+jquery-1.2.4a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.insertAfter</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.insertBefore</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.is</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.jquery</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.keydown</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.keypress</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.keyup</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.last</td><td>+jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.left</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td>jQuery.fn.length</td><td>+jquery-1.1a</td><td>-jquery-1.3b1</td><td>+jquery-1.4a1</td></tr>
+<tr><td>jQuery.fn.live</td><td>+jquery-1.3b1</td><td>-jquery-1.9rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.load</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.loadIfModified</span></td><td>+jquery-1.0</td><td>-jquery-1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.lt</span></td><td>+jquery-1.0</td><td>-jquery-1.2</td></tr>
+<tr><td>jQuery.fn.map</td><td>+jquery-1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.mousedown</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.mouseenter</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.fn.mouseleave</td><td>+jquery-1.3b1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.mousemove</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.mouseout</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.mouseover</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.mouseup</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.name</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.next</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.nextAll</td><td>+jquery-1.2</td></tr>
+<tr><td>jQuery.fn.nextUntil</td><td>+jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.not</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.off</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.fn.offset</td><td>+jquery-1.2</td></tr>
+<tr><td>jQuery.fn.offsetParent</td><td>+jquery-1.2.5</td></tr>
+<tr><td>jQuery.fn.on</td><td>+jquery-1.7b1</td></tr>
+<tr><td>jQuery.fn.one</td><td>+jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.oneblur</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onechange</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.oneclick</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onedblclick</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.oneerror</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onefocus</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onekeydown</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onekeypress</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onekeyup</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.oneload</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onemousedown</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onemousemove</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onemouseout</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onemouseover</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onemouseup</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onereset</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.oneresize</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onescroll</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.oneselect</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.onesubmit</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.oneunload</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td>jQuery.fn.outerHeight</td><td>+jquery-1.2.4a</td></tr>
+<tr><td>jQuery.fn.outerWidth</td><td>+jquery-1.2.4a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.overflow</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.parent</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.parents</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.parentsUntil</td><td>+jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.position</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td><td>+jquery-1.2.5</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.prepend</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.prependTo</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.prev</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.prevAll</td><td>+jquery-1.2</td></tr>
+<tr><td>jQuery.fn.prevUntil</td><td>+jquery-1.4a1</td></tr>
+<tr><td>jQuery.fn.promise</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.fn.prop</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.fn.push</td><td>+jquery-1.3rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.pushStack</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td><td>+jquery-1.1b</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.queue</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.ready</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.rel</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.remove</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.removeAttr</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.removeClass</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.removeData</td><td>+jquery-1.2.3b</td></tr>
+<tr><td>jQuery.fn.removeProp</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.fn.replaceAll</td><td>+jquery-1.2</td></tr>
+<tr><td>jQuery.fn.replaceWith</td><td>+jquery-1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.reset</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.resize</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.scroll</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.scrollLeft</td><td>+jquery-1.2.5</td></tr>
+<tr><td>jQuery.fn.scrollTop</td><td>+jquery-1.2.5</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.select</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.selector</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.fn.serialize</td><td>+jquery-1.0.2</td></tr>
+<tr><td>jQuery.fn.serializeArray</td><td>+jquery-1.2</td></tr>
+<tr><td>jQuery.fn.set</td><td>+jquery-1.0.4</td><td>-jquery-1.1b</td></tr>
+<tr><td>jQuery.fn.setArray</td><td>+jquery-1.1a</td><td>-jquery-1.4.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.show</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.siblings</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.size</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.slice</td><td>+jquery-1.1.4</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.slideDown</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.slideToggle</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.slideUp</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.sort</td><td>+jquery-1.3.2</td></tr>
+<tr><td>jQuery.fn.splice</td><td>+jquery-1.3.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.src</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td>jQuery.fn.stop</td><td>+jquery-1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.submit</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.text</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.title</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td>jQuery.fn.toArray</td><td>+jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.toggle</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.toggleClass</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.trigger</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.triggerHandler</td><td>+jquery-1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unbind</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unblur</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unchange</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unclick</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.undblclick</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td>jQuery.fn.undelegate</td><td>+jquery-1.4.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unerror</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unfocus</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unkeydown</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unkeypress</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unkeyup</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unload</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unmousedown</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unmousemove</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unmouseout</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unmouseover</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unmouseup</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unreset</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unresize</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unscroll</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unselect</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.unsubmit</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.ununload</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td>jQuery.fn.unwrap</td><td>+jquery-1.4a1</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.val</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.width</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td><td>+jquery-1.1b</td></tr>
+<tr><td><span style='color:red'>jQuery.fn.wrap</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.fn.wrapAll</td><td>+jquery-1.2</td></tr>
+<tr><td>jQuery.fn.wrapInner</td><td>+jquery-1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.fx</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.get</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.getAll</span></td><td>+jquery-1.0</td><td>-jquery-1.1.3a</td></tr>
+<tr><td><span style='color:red'>jQuery.getIfModified</span></td><td>+jquery-1.0</td><td>-jquery-1.2</td></tr>
+<tr><td>jQuery.getJSON</td><td>+jquery-1.0.2</td></tr>
+<tr><td><span style='color:red'>jQuery.getScript</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.getText</td><td>+jquery-1.4a2</td><td>-jquery-1.4.2</td></tr>
+<tr><td>jQuery.globalEval</td><td>+jquery-1.0.4</td></tr>
+<tr><td><span style='color:red'>jQuery.grep</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.guid</td><td>+jquery-1.4rc1</td></tr>
+<tr><td>jQuery.handleComplete</td><td>+jquery-1.4.3rc1</td><td>-jquery-1.5b1</td></tr>
+<tr><td>jQuery.handleError</td><td>+jquery-1.1a</td><td>-jquery-1.5b1</td></tr>
+<tr><td>jQuery.handleSuccess</td><td>+jquery-1.4.3rc1</td><td>-jquery-1.5b1</td></tr>
+<tr><td>jQuery.hasData</td><td>+jquery-1.5b1</td></tr>
+<tr><td>jQuery.holdReady</td><td>+jquery-1.6b1</td></tr>
+<tr><td><span style='color:red'>jQuery.httpData</span></td><td>+jquery-1.0</td><td>-jquery-1.5b1</td></tr>
+<tr><td><span style='color:red'>jQuery.httpNotModified</span></td><td>+jquery-1.0</td><td>-jquery-1.5b1</td></tr>
+<tr><td><span style='color:red'>jQuery.httpSuccess</span></td><td>+jquery-1.0</td><td>-jquery-1.5b1</td></tr>
+<tr><td>jQuery.inArray</td><td>+jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.init</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.initDone</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td>jQuery.isArray</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.isEmptyObject</td><td>+jquery-1.4a1</td></tr>
+<tr><td>jQuery.isFunction</td><td>+jquery-1.1</td></tr>
+<tr><td>jQuery.isNaN</td><td>+jquery-1.4.3rc1</td><td>-jquery-1.7b2</td></tr>
+<tr><td>jQuery.isNumeric</td><td>+jquery-1.7b2</td></tr>
+<tr><td>jQuery.isObjectLiteral</td><td>+jquery-1.4a1</td><td>-jquery-1.4a2</td></tr>
+<tr><td>jQuery.isPlainObject</td><td>+jquery-1.4a2</td></tr>
+<tr><td><span style='color:red'>jQuery.isReady</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.isWindow</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.isXMLDoc</td><td>+jquery-1.1.2</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.attr.html</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.attr.val</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.axis.ancestors</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.axis.children</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.axis.next</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.axis.parent</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.axis.parents</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.axis.prev</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.axis.siblings</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.each.addClass</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.each.bind</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.each.empty</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.each.hide</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.each.remove</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.each.removeAttr</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.each.removeClass</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.each.show</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.each.toggle</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.each.toggleClass</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.each.trigger</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.each.unbind</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.to.appendTo</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.to.insertAfter</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.to.insertBefore</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.macros.to.prependTo</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td>jQuery.makeArray</td><td>+jquery-1.1a</td></tr>
+<tr><td><span style='color:red'>jQuery.map</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.merge</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.mergeNum</td><td>+jquery-1.1.3a</td><td>-jquery-1.2</td></tr>
+<tr><td>jQuery.multiFilter</td><td>+jquery-1.1b</td><td>-jquery-1.4a1</td></tr>
+<tr><td>jQuery.noConflict</td><td>+jquery-1.1a</td></tr>
+<tr><td>jQuery.noData.applet</td><td>+jquery-1.4a2</td><td>-jquery-1.11.0-beta2</td></tr>
+<tr><td>jQuery.noData.applet </td><td>+jquery-1.11.0-beta2</td></tr>
+<tr><td>jQuery.noData.embed</td><td>+jquery-1.4a2</td><td>-jquery-1.11.0-beta2</td></tr>
+<tr><td>jQuery.noData.embed </td><td>+jquery-1.11.0-beta2</td></tr>
+<tr><td>jQuery.noData.object</td><td>+jquery-1.4a2</td><td>-jquery-1.11.0-beta2</td></tr>
+<tr><td>jQuery.noData.object </td><td>+jquery-1.11.0-beta2</td></tr>
+<tr><td>jQuery.nodeName</td><td>+jquery-1.1.2</td></tr>
+<tr><td>jQuery.noop</td><td>+jquery-1.4rc1</td></tr>
+<tr><td>jQuery.now</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.nth</td><td>+jquery-1.1a</td><td>-jquery-1.8b1</td></tr>
+<tr><td>jQuery.offset.bodyOffset</td><td>+jquery-1.3b1</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.offset.doesAddBorderForTableAndCells</td><td>+jquery-1.7b1</td><td>-jquery-1.7rc2</td></tr>
+<tr><td>jQuery.offset.doesNotAddBorder</td><td>+jquery-1.7b1</td><td>-jquery-1.7rc2</td></tr>
+<tr><td>jQuery.offset.doesNotIncludeMarginInBodyOffset</td><td>+jquery-1.7b1</td><td>-jquery-1.7rc2</td></tr>
+<tr><td>jQuery.offset.initialize</td><td>+jquery-1.3b1</td><td>-jquery-1.7b1</td></tr>
+<tr><td>jQuery.offset.setOffset</td><td>+jquery-1.4a1</td></tr>
+<tr><td>jQuery.offset.subtractsBorderForOverflowNotVisible</td><td>+jquery-1.7b1</td><td>-jquery-1.7rc2</td></tr>
+<tr><td>jQuery.offset.supportsFixedPosition</td><td>+jquery-1.7b1</td><td>-jquery-1.7rc2</td></tr>
+<tr><td><span style='color:red'>jQuery.param</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.parents</span></td><td>+jquery-1.0</td><td>-jquery-1.2</td></tr>
+<tr><td>jQuery.parseHTML</td><td>+jquery-1.8b1</td></tr>
+<tr><td>jQuery.parseJSON</td><td>+jquery-1.4.1</td></tr>
+<tr><td>jQuery.parseXML</td><td>+jquery-1.5b1</td></tr>
+<tr><td><span style='color:red'>jQuery.post</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.prop</td><td>+jquery-1.1a</td><td>-jquery-1.4a1</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.propFix.cellpadding</td><td>+jquery-1.6.1rc1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.propFix.cellspacing</td><td>+jquery-1.6.1rc1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.propFix.class</td><td>+jquery-1.6.1rc1</td></tr>
+<tr><td>jQuery.propFix.colspan</td><td>+jquery-1.6.1rc1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.propFix.contenteditable</td><td>+jquery-1.6.1rc1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.propFix.for</td><td>+jquery-1.6.1rc1</td></tr>
+<tr><td>jQuery.propFix.frameborder</td><td>+jquery-1.6.1rc1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.propFix.maxlength</td><td>+jquery-1.6.1rc1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.propFix.readonly</td><td>+jquery-1.6.1rc1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.propFix.rowspan</td><td>+jquery-1.6.1rc1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.propFix.tabindex</td><td>+jquery-1.6.1rc1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.propFix.usemap</td><td>+jquery-1.6.1rc1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.propHooks.tabIndex.get</td><td>+jquery-1.6.3rc1</td></tr>
+<tr><td>jQuery.props.cellspacing</td><td>+jquery-1.2.5</td><td>-jquery-1.6b1</td></tr>
+<tr><td>jQuery.props.checked</td><td>+jquery-1.1.3</td><td>-jquery-1.2.5</td></tr>
+<tr><td>jQuery.props.class</td><td>+jquery-1.1.3</td><td>-jquery-1.6b1</td></tr>
+<tr><td>jQuery.props.className</td><td>+jquery-1.1.3</td><td>-jquery-1.2.5</td></tr>
+<tr><td>jQuery.props.colspan</td><td>+jquery-1.4a1</td><td>-jquery-1.6b1</td></tr>
+<tr><td>jQuery.props.cssFloat</td><td>+jquery-1.1.3</td><td>-jquery-1.4a1</td></tr>
+<tr><td>jQuery.props.defaultValue</td><td>+jquery-1.2.2b</td><td>-jquery-1.2.5</td></tr>
+<tr><td>jQuery.props.disabled</td><td>+jquery-1.1.3</td><td>-jquery-1.2.5</td></tr>
+<tr><td>jQuery.props.float</td><td>+jquery-1.1.3</td><td>-jquery-1.4a1</td></tr>
+<tr><td>jQuery.props.for</td><td>+jquery-1.1.3</td><td>-jquery-1.6b1</td></tr>
+<tr><td>jQuery.props.frameborder</td><td>+jquery-1.4a1</td><td>-jquery-1.6b1</td></tr>
+<tr><td>jQuery.props.innerHTML</td><td>+jquery-1.1.3</td><td>-jquery-1.2.5</td></tr>
+<tr><td>jQuery.props.maxlength</td><td>+jquery-1.1.3</td><td>-jquery-1.6b1</td></tr>
+<tr><td>jQuery.props.nodeName</td><td>+jquery-1.2.2b</td><td>-jquery-1.2.5</td></tr>
+<tr><td>jQuery.props.readonly</td><td>+jquery-1.1.3</td><td>-jquery-1.6b1</td></tr>
+<tr><td>jQuery.props.rowspan</td><td>+jquery-1.3b1</td><td>-jquery-1.6b1</td></tr>
+<tr><td>jQuery.props.selected</td><td>+jquery-1.1.3</td><td>-jquery-1.2.5</td></tr>
+<tr><td>jQuery.props.selectedIndex</td><td>+jquery-1.2.2b</td><td>-jquery-1.2.5</td></tr>
+<tr><td>jQuery.props.styleFloat</td><td>+jquery-1.1.3</td><td>-jquery-1.4a1</td></tr>
+<tr><td>jQuery.props.tabindex</td><td>+jquery-1.3b2</td><td>-jquery-1.6b1</td></tr>
+<tr><td>jQuery.props.tagName</td><td>+jquery-1.2.2b</td><td>-jquery-1.2.5</td></tr>
+<tr><td>jQuery.props.usemap</td><td>+jquery-1.4a1</td><td>-jquery-1.6b1</td></tr>
+<tr><td>jQuery.props.value</td><td>+jquery-1.1.3</td><td>-jquery-1.2.5</td></tr>
+<tr><td>jQuery.proxy</td><td>+jquery-1.4rc1</td></tr>
+<tr><td>jQuery.queue</td><td>+jquery-1.3b2</td></tr>
+<tr><td><span style='color:red'>jQuery.ready</span></td><td>+jquery-1.0</td><td>-jquery-1.2.2b</td><td>+jquery-1.2.2b2</td></tr>
+<tr><td>jQuery.readyWait</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.removeAttr</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.removeData</td><td>+jquery-1.2</td></tr>
+<tr><td>jQuery.removeEvent</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.safariTimer</td><td>+jquery-1.0.2</td><td>-jquery-1.1.4</td></tr>
+<tr><td><span style='color:red'>jQuery.setAuto</span></td><td>+jquery-1.0</td><td>-jquery-1.0.4</td></tr>
+<tr><td><span style='color:red'>jQuery.sibling</span></td><td>+jquery-1.0</td></tr>
+<tr><td><span style='color:red'>jQuery.speed</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.style</td><td>+jquery-1.4a1</td></tr>
+<tr><td>jQuery.styleFloat</td><td>+jquery-1.1.3</td><td>-jquery-1.2.2b</td></tr>
+<tr><td>jQuery.sub</td><td>+jquery-1.5</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.subclass</td><td>+jquery-1.5b1</td><td>-jquery-1.5</td></tr>
+<tr><td>jQuery.support.ajax</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.support.appendChecked</td><td>+jquery-1.6rc1</td></tr>
+<tr><td>jQuery.support.boxModel</td><td>+jquery-1.3rc1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.support.boxSizing</td><td>+jquery-1.8b1</td></tr>
+<tr><td>jQuery.support.boxSizingReliable</td><td>+jquery-1.8b1</td></tr>
+<tr><td>jQuery.support.changeBubbles</td><td>+jquery-1.4a1</td></tr>
+<tr><td>jQuery.support.checkClone</td><td>+jquery-1.4.1</td></tr>
+<tr><td>jQuery.support.checkOn</td><td>+jquery-1.4rc1</td></tr>
+<tr><td>jQuery.support.clearCloneStyle</td><td>+jquery-1.9rc1</td></tr>
+<tr><td>jQuery.support.cors</td><td>+jquery-1.5b1</td></tr>
+<tr><td>jQuery.support.cssFloat</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.support.deleteExpando</td><td>+jquery-1.4.2</td><td>-jquery-1.4.3rc1</td><td>+jquery-1.4.4rc1</td></tr>
+<tr><td>jQuery.support.doesAddBorderForTableAndCells</td><td>+jquery-1.7b1</td><td>-jquery-1.8b1</td></tr>
+<tr><td>jQuery.support.doesNotAddBorder</td><td>+jquery-1.7b1</td><td>-jquery-1.8b1</td></tr>
+<tr><td>jQuery.support.doesNotIncludeMarginInBodyOffset</td><td>+jquery-1.7b1</td><td>-jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.support.enctype</td><td>+jquery-1.7rc1</td></tr>
+<tr><td>jQuery.support.fixedPosition</td><td>+jquery-1.7rc2</td><td>-jquery-1.8b1</td></tr>
+<tr><td>jQuery.support.focusBubbles</td><td>+jquery-1.4a2</td><td>-jquery-1.4rc1</td></tr>
+<tr><td>jQuery.support.focusinBubbles</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.support.getSetAttribute</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.support.hrefNormalized</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.support.html5Clone</td><td>+jquery-1.7.1rc1</td></tr>
+<tr><td>jQuery.support.htmlSerialize</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.support.inlineBlockNeedsLayout</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.support.input</td><td>+jquery-1.9b1</td></tr>
+<tr><td>jQuery.support.leadingWhitespace</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.support.nativeBind</td><td>+jquery-1.6b1</td><td>-jquery-1.6rc1</td></tr>
+<tr><td>jQuery.support.noCloneChecked</td><td>+jquery-1.5.1</td></tr>
+<tr><td>jQuery.support.noCloneEvent</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.support.objectAll</td><td>+jquery-1.3b1</td><td>-jquery-1.4a1</td></tr>
+<tr><td>jQuery.support.opacity</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.support.optDisabled</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.support.optSelected</td><td>+jquery-1.4rc1</td></tr>
+<tr><td>jQuery.support.ownLast</td><td>+jquery-1.10.0-beta1</td></tr>
+<tr><td>jQuery.support.parentNode</td><td>+jquery-1.4.2</td><td>-jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.support.pixelMargin</td><td>+jquery-1.7.2b1</td><td>-jquery-1.8rc1</td></tr>
+<tr><td>jQuery.support.pixelPosition</td><td>+jquery-1.8b1</td></tr>
+<tr><td>jQuery.support.radioValue</td><td>+jquery-1.6rc1</td></tr>
+<tr><td>jQuery.support.reliableHiddenOffsets</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.support.reliableMarginRight</td><td>+jquery-1.5.2rc1</td></tr>
+<tr><td>jQuery.support.scriptEval</td><td>+jquery-1.3b1</td><td>-jquery-1.6b1</td></tr>
+<tr><td>jQuery.support.shrinkWrapBlocks</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.support.style</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.support.submitBubbles</td><td>+jquery-1.4a1</td></tr>
+<tr><td>jQuery.support.subtractsBorderForOverflowNotVisible</td><td>+jquery-1.7b1</td><td>-jquery-1.8b1</td></tr>
+<tr><td>jQuery.support.supportsFixedPosition</td><td>+jquery-1.7b1</td><td>-jquery-1.7rc2</td></tr>
+<tr><td>jQuery.support.tabindex</td><td>+jquery-1.3b2</td><td>-jquery-1.3rc1</td></tr>
+<tr><td>jQuery.support.tbody</td><td>+jquery-1.3b1</td></tr>
+<tr><td>jQuery.support.unknownElems</td><td>+jquery-1.7b1</td><td>-jquery-1.7.1rc1</td></tr>
+<tr><td><span style='color:red'>jQuery.swap</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.text</td><td>+jquery-1.4.2</td></tr>
+<tr><td><span style='color:red'>jQuery.timeout</span></td><td>+jquery-1.0</td><td>-jquery-1.1a</td></tr>
+<tr><td>jQuery.triggerGlobal</td><td>+jquery-1.4.3rc1</td><td>-jquery-1.5b1</td></tr>
+<tr><td><span style='color:red'>jQuery.trim</span></td><td>+jquery-1.0</td></tr>
+<tr><td>jQuery.type</td><td>+jquery-1.4.3rc1</td></tr>
+<tr><td>jQuery.uaMatch</td><td>+jquery-1.4rc1</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.unique</td><td>+jquery-1.1.3a</td></tr>
+<tr><td>jQuery.uuid</td><td>+jquery-1.4.3rc1</td><td>-jquery-1.9b1</td></tr>
+<tr><td>jQuery.valHooks.checkbox.set</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.valHooks.option.get</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.valHooks.radio.set</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.valHooks.select.get</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.valHooks.select.set</td><td>+jquery-1.6b1</td></tr>
+<tr><td>jQuery.when</td><td>+jquery-1.5b1</td></tr>
+
+	</table>
+	</body>
+</html>

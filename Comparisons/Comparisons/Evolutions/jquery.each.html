@@ -1,0 +1,365 @@
+<html>
+<head>
+</head>
+<body>
+<h3>arg=jQuery.each</h3>
+<b>jQuery.each (jquery-1.0.js)</b><br/>
+<pre>
+ function ( obj, fn, args ) {
+		if ( obj.length == undefined )
+			for ( var i in obj )
+				fn.apply( obj[i], args || [i, obj[i]] );
+		else
+			for ( var i = 0; i &lt; obj.length; i++ )
+				fn.apply( obj[i], args || [i, obj[i]] );
+		return obj;
+	}
+</pre>
+<b>jquery-1.0.1 - jquery-1.0.2: no change</b><br/><br/>
+<b>jQuery.each (jquery-1.0.3.js)</b><br/>
+<pre>
+ function ( obj, fn, args ) {
+		if ( obj.length == undefined )
+			for ( var i in obj )
+				fn.apply( obj[i], args || [i, obj[i]] );
+		else
+<i>			for ( var i = 0; i &lt; obj.length; i++ )</i> <b>//modified in jquery-1.1a.js</b>
+<span style='color:red'>				if ( fn.apply( obj[i], args || [i, obj[i]] ) === false ) break;</span>
+		return obj;
+	}
+</pre>
+<b>jquery-1.0.4: no change</b><br/><br/>
+<b>jQuery.each (jquery-1.1a.js)</b><br/>
+<pre>
+ function ( obj, fn, args ) {
+		if ( obj.length == undefined )
+			for ( var i in obj )
+<i>				fn.apply( obj[i], args || [i, obj[i]] );</i> <b>//modified in jquery-1.1.4.js</b>
+		else
+<span style='color:red'>			for ( var i = 0, ol = obj.length; i &lt; ol; i++ )</span>
+<i>				if ( fn.apply( obj[i], args || [i, obj[i]] ) === false ) break;</i> <b>//modified in jquery-1.1.4.js</b>
+		return obj;
+	}
+</pre>
+<b>jquery-1.1b - jquery-1.1.3: no change</b><br/><br/>
+<b>jQuery.each (jquery-1.1.4.js)</b><br/>
+<pre>
+<i> function ( obj, fn, args ) {</i> <b>//modified in jquery-1.2.2b.js</b>
+<span style='color:red'>		if ( args ) {</span>
+<i>			if ( obj.length == undefined )</i> <b>//modified in jquery-1.2.2b.js</b>
+<i>				for ( var i in obj )</i> <b>//modified in jquery-1.2.2b.js</b>
+<span style='color:red'><i>					fn.apply( obj[i], args );</i> <b>//modified in jquery-1.2.2b.js</b></span>
+			else
+<i>				for ( var i = 0, ol = obj.length; i &lt; ol; i++ )</i> <b>//modified in jquery-1.2.2b.js</b>
+<span style='color:red'><i>					if ( fn.apply( obj[i], args ) === false ) break;</i> <b>//modified in jquery-1.2.2b.js</b></span>
+<span style='color:red'></span>
+<span style='color:red'>		// A special, fast, case for the most common use of each</span>
+<span style='color:red'>		} else {</span>
+<i>			if ( obj.length == undefined )</i> <b>//modified in jquery-1.2.2b.js</b>
+<i>				for ( var i in obj )</i> <b>//modified in jquery-1.2.2b.js</b>
+<span style='color:red'><i>					fn.call( obj[i], i, obj[i] );</i> <b>//modified in jquery-1.2.2b.js</b></span>
+			else
+<span style='color:red'><i>				for ( var i = 0, ol = obj.length, val = obj[0]; </i> <b>//modified in jquery-1.2.2b.js</b></span>
+<span style='color:red'><i>					i &lt; ol && fn.call(val,i,val) !== false; val = obj[++i] ){}</i> <b>//modified in jquery-1.2.2b.js</b></span>
+		}
+<span style='color:red'></span>
+<i>		return obj;</i> <b>//modified in jquery-1.2.2b.js</b>
+	}
+</pre>
+<b>jquery-1.2 - jquery-1.2.1: no change</b><br/><br/>
+<b>jQuery.each (jquery-1.2.2b.js)</b><br/>
+<pre>
+<span style='color:red'> function ( object, callback, args ) {</span>
+		if ( args ) {
+<span style='color:red'><i>			if ( object.length == undefined )</i> <b>//modified in jquery-1.2.2.js</b></span>
+<span style='color:red'>				for ( var name in object )</span>
+<span style='color:red'><i>					callback.apply( object[ name ], args );</i> <b>//modified in jquery-1.2.2.js</b></span>
+<i>			else</i> <b>//modified in jquery-1.2.2.js</b>
+<span style='color:red'>				for ( var i = 0, length = object.length; i &lt; length; i++ )</span>
+<span style='color:red'>					if ( callback.apply( object[ i ], args ) === false )</span>
+<span style='color:red'>						break;</span>
+
+		// A special, fast, case for the most common use of each
+		} else {
+<span style='color:red'><i>			if ( object.length == undefined )</i> <b>//modified in jquery-1.2.2.js</b></span>
+<span style='color:red'>				for ( var name in object )</span>
+<span style='color:red'><i>					callback.call( object[ name ], name, object[ name ] );</i> <b>//modified in jquery-1.2.2.js</b></span>
+<i>			else</i> <b>//modified in jquery-1.2.2.js</b>
+<span style='color:red'>				for ( var i = 0, length = object.length, value = object[0]; </span>
+<span style='color:red'>					i &lt; length && callback.call( value, i, value ) !== false; value = object[++i] ){}</span>
+		}
+
+<span style='color:red'>		return object;</span>
+	}
+</pre>
+<b>jquery-1.2.2b2: no change</b><br/><br/>
+<b>jQuery.each (jquery-1.2.2.js)</b><br/>
+<pre>
+ function ( object, callback, args ) {
+		if ( args ) {
+<span style='color:red'><i>			if ( object.length == undefined ) {</i> <b>//modified in jquery-1.2.5.js</b></span>
+<i>				for ( var name in object )</i> <b>//modified in jquery-1.2.5.js</b>
+<span style='color:red'>					if ( callback.apply( object[ name ], args ) === false )</span>
+						break;
+<span style='color:red'>			} else</span>
+<i>				for ( var i = 0, length = object.length; i &lt; length; i++ )</i> <b>//modified in jquery-1.2.5.js</b>
+<i>					if ( callback.apply( object[ i ], args ) === false )</i> <b>//modified in jquery-1.2.5.js</b>
+						break;
+
+		// A special, fast, case for the most common use of each
+		} else {
+<span style='color:red'><i>			if ( object.length == undefined ) {</i> <b>//modified in jquery-1.2.5.js</b></span>
+<i>				for ( var name in object )</i> <b>//modified in jquery-1.2.5.js</b>
+<span style='color:red'>					if ( callback.call( object[ name ], name, object[ name ] ) === false )</span>
+						break;
+<span style='color:red'>			} else</span>
+<i>				for ( var i = 0, length = object.length, value = object[0]; </i> <b>//modified in jquery-1.2.5.js</b>
+					i &lt; length && callback.call( value, i, value ) !== false; value = object[++i] ){}
+		}
+
+		return object;
+	}
+</pre>
+<b>jquery-1.2.3a - jquery-1.2.4: no change</b><br/><br/>
+<b>jQuery.each (jquery-1.2.5.js)</b><br/>
+<pre>
+ function ( object, callback, args ) {
+<span style='color:red'>		var name, i = 0, length = object.length;</span>
+
+		if ( args ) {
+<span style='color:red'><i>			if ( length == undefined ) {</i> <b>//modified in jquery-1.3b1.js</b></span>
+<span style='color:red'>				for ( name in object )</span>
+					if ( callback.apply( object[ name ], args ) === false )
+						break;
+			} else
+<span style='color:red'>				for ( ; i &lt; length; )</span>
+<span style='color:red'>					if ( callback.apply( object[ i++ ], args ) === false )</span>
+						break;
+
+		// A special, fast, case for the most common use of each
+		} else {
+<span style='color:red'><i>			if ( length == undefined ) {</i> <b>//modified in jquery-1.3b1.js</b></span>
+<span style='color:red'>				for ( name in object )</span>
+					if ( callback.call( object[ name ], name, object[ name ] ) === false )
+						break;
+			} else
+<span style='color:red'>				for ( var value = object[0];</span>
+					i &lt; length && callback.call( value, i, value ) !== false; value = object[++i] ){}
+		}
+
+		return object;
+	}
+</pre>
+<b>jquery-1.2.6: no change</b><br/><br/>
+<b>jQuery.each (jquery-1.3b1.js)</b><br/>
+<pre>
+ function ( object, callback, args ) {
+<i>		var name, i = 0, length = object.length;</i> <b>//modified in jquery-1.4a1.js</b>
+
+		if ( args ) {
+<span style='color:red'><i>			if ( length === undefined ) {</i> <b>//modified in jquery-1.4a1.js</b></span>
+<i>				for ( name in object )</i> <b>//modified in jquery-1.4a1.js</b>
+<i>					if ( callback.apply( object[ name ], args ) === false )</i> <b>//modified in jquery-1.4a1.js</b>
+						break;
+<i>			} else</i> <b>//modified in jquery-1.4a1.js</b>
+<i>				for ( ; i &lt; length; )</i> <b>//modified in jquery-1.4a1.js</b>
+<i>					if ( callback.apply( object[ i++ ], args ) === false )</i> <b>//modified in jquery-1.4a1.js</b>
+						break;
+
+		// A special, fast, case for the most common use of each
+		} else {
+<span style='color:red'><i>			if ( length === undefined ) {</i> <b>//modified in jquery-1.4a1.js</b></span>
+<i>				for ( name in object )</i> <b>//modified in jquery-1.4a1.js</b>
+<i>					if ( callback.call( object[ name ], name, object[ name ] ) === false )</i> <b>//modified in jquery-1.4a1.js</b>
+						break;
+<i>			} else</i> <b>//modified in jquery-1.4a1.js</b>
+				for ( var value = object[0];
+					i &lt; length && callback.call( value, i, value ) !== false; value = object[++i] ){}
+		}
+
+		return object;
+	}
+</pre>
+<b>jquery-1.3b2 - jquery-1.3.2: no change</b><br/><br/>
+<b>jQuery.each (jquery-1.4a1.js)</b><br/>
+<pre>
+ function ( object, callback, args ) {
+<span style='color:red'>		var name, i = 0,</span>
+<span style='color:red'>			length = object.length,</span>
+<span style='color:red'>			isObj = length === undefined || jQuery.isFunction(object);</span>
+
+		if ( args ) {
+<span style='color:red'>			if ( isObj ) {</span>
+<span style='color:red'>				for ( name in object ) {</span>
+<span style='color:red'>					if ( callback.apply( object[ name ], args ) === false ) {</span>
+						break;
+					}
+				}
+			} else {
+<span style='color:red'>				for ( ; i &lt; length; ) {</span>
+<span style='color:red'>					if ( callback.apply( object[ i++ ], args ) === false ) {</span>
+						break;
+					}
+				}
+			}
+
+		// A special, fast, case for the most common use of each
+		} else {
+<span style='color:red'>			if ( isObj ) {</span>
+<span style='color:red'>				for ( name in object ) {</span>
+<span style='color:red'>					if ( callback.call( object[ name ], name, object[ name ] ) === false ) {</span>
+						break;
+					}
+				}
+			} else {
+<i>				for ( var value = object[0];</i> <b>//modified in jquery-1.6b1.js</b>
+<i>					i &lt; length && callback.call( value, i, value ) !== false; value = object[++i] ) {}</i> <b>//modified in jquery-1.6b1.js</b>
+			}
+		}
+
+		return object;
+	}
+</pre>
+<b>jquery-1.4a2 - jquery-1.5.2: no change</b><br/><br/>
+<b>jQuery.each (jquery-1.6b1.js)</b><br/>
+<pre>
+<i> function ( object, callback, args ) {</i> <b>//modified in jquery-1.8b2.js</b>
+<i>		var name, i = 0,</i> <b>//modified in jquery-1.8b2.js</b>
+<i>			length = object.length,</i> <b>//modified in jquery-1.8b2.js</b>
+<i>			isObj = length === undefined || jQuery.isFunction( object );</i> <b>//modified in jquery-1.8b2.js</b>
+
+		if ( args ) {
+			if ( isObj ) {
+<i>				for ( name in object ) {</i> <b>//modified in jquery-1.8b2.js</b>
+<i>					if ( callback.apply( object[ name ], args ) === false ) {</i> <b>//modified in jquery-1.8b2.js</b>
+						break;
+					}
+				}
+			} else {
+				for ( ; i &lt; length; ) {
+<i>					if ( callback.apply( object[ i++ ], args ) === false ) {</i> <b>//modified in jquery-1.8b2.js</b>
+						break;
+					}
+				}
+			}
+
+		// A special, fast, case for the most common use of each
+		} else {
+			if ( isObj ) {
+<i>				for ( name in object ) {</i> <b>//modified in jquery-1.8b2.js</b>
+<i>					if ( callback.call( object[ name ], name, object[ name ] ) === false ) {</i> <b>//modified in jquery-1.8b2.js</b>
+						break;
+					}
+				}
+			} else {
+				for ( ; i &lt; length; ) {
+<span style='color:red'><i>					if ( callback.call( object[ i ], i, object[ i++ ] ) === false ) {</i> <b>//modified in jquery-1.8b2.js</b></span>
+						break;
+					}
+				}
+			}
+		}
+
+<i>		return object;</i> <b>//modified in jquery-1.8b2.js</b>
+	}
+</pre>
+<b>jquery-1.6rc1 - jquery-1.8b1: no change</b><br/><br/>
+<b>jQuery.each (jquery-1.8b2.js)</b><br/>
+<pre>
+<span style='color:red'> function ( obj, callback, args ) {</span>
+<span style='color:red'><i>		var name,</i> <b>//modified in jquery-1.9b1.js</b></span>
+<span style='color:red'>			i = 0,</span>
+<span style='color:red'>			length = obj.length,</span>
+<span style='color:red'><i>			isObj = length === undefined || jQuery.isFunction( obj );</i> <b>//modified in jquery-1.9b1.js</b></span>
+
+		if ( args ) {
+<i>			if ( isObj ) {</i> <b>//modified in jquery-1.9b1.js</b>
+<span style='color:red'><i>				for ( name in obj ) {</i> <b>//modified in jquery-1.9b1.js</b></span>
+<span style='color:red'><i>					if ( callback.apply( obj[ name ], args ) === false ) {</i> <b>//modified in jquery-1.9b1.js</b></span>
+						break;
+					}
+				}
+			} else {
+<i>				for ( ; i &lt; length; ) {</i> <b>//modified in jquery-1.9b1.js</b>
+<span style='color:red'><i>					if ( callback.apply( obj[ i++ ], args ) === false ) {</i> <b>//modified in jquery-1.9b1.js</b></span>
+						break;
+					}
+				}
+			}
+
+		// A special, fast, case for the most common use of each
+		} else {
+<i>			if ( isObj ) {</i> <b>//modified in jquery-1.9b1.js</b>
+<span style='color:red'><i>				for ( name in obj ) {</i> <b>//modified in jquery-1.9b1.js</b></span>
+<span style='color:red'><i>					if ( callback.call( obj[ name ], name, obj[ name ] ) === false ) {</i> <b>//modified in jquery-1.9b1.js</b></span>
+						break;
+					}
+				}
+			} else {
+<i>				for ( ; i &lt; length; ) {</i> <b>//modified in jquery-1.9b1.js</b>
+<span style='color:red'><i>					if ( callback.call( obj[ i ], i, obj[ i++ ] ) === false ) {</i> <b>//modified in jquery-1.9b1.js</b></span>
+						break;
+					}
+				}
+			}
+		}
+
+<span style='color:red'>		return obj;</span>
+	}
+</pre>
+<b>jquery-1.8rc1 - jquery-1.8.3: no change</b><br/><br/>
+<b>jQuery.each (jquery-1.9b1.js)</b><br/>
+<pre>
+ function ( obj, callback, args ) {
+<span style='color:red'>		var value,</span>
+			i = 0,
+			length = obj.length,
+<span style='color:red'>			isArray = isArraylike( obj );</span>
+
+		if ( args ) {
+<span style='color:red'>			if ( isArray ) {</span>
+<span style='color:red'>				for ( ; i &lt; length; i++ ) {</span>
+<span style='color:red'>					value = callback.apply( obj[ i ], args );</span>
+
+<span style='color:red'>					if ( value === false ) {</span>
+						break;
+					}
+				}
+			} else {
+<span style='color:red'>				for ( i in obj ) {</span>
+<span style='color:red'>					value = callback.apply( obj[ i ], args );</span>
+
+<span style='color:red'>					if ( value === false ) {</span>
+						break;
+					}
+				}
+			}
+
+		// A special, fast, case for the most common use of each
+		} else {
+<span style='color:red'>			if ( isArray ) {</span>
+<span style='color:red'>				for ( ; i &lt; length; i++ ) {</span>
+<span style='color:red'>					value = callback.call( obj[ i ], i, obj[ i ] );</span>
+
+<span style='color:red'>					if ( value === false ) {</span>
+						break;
+					}
+				}
+			} else {
+<span style='color:red'>				for ( i in obj ) {</span>
+<span style='color:red'>					value = callback.call( obj[ i ], i, obj[ i ] );</span>
+
+<span style='color:red'>					if ( value === false ) {</span>
+						break;
+					}
+				}
+			}
+		}
+
+		return obj;
+	}
+</pre>
+<b>jquery-1.9rc1 - jquery-1.11.2: no change</b><br/><br/>
+
+</body>
+</html>

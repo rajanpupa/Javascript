@@ -1,0 +1,444 @@
+<html>
+	<head>
+		<title>jQuery Under The Hood</title>
+		<style type='text/css'>
+			table {border-collapse:collapse}
+			p, i {width:600px}
+ 			div {display:none;}
+			li {margin-bottom:20px; width:600px}
+			#slide1 {display:block}
+			.red {color:red}
+			.blue {color:blue}
+			.big {overflow:scroll}
+			.log {margin:0}
+			.red {color:red}
+		</style>
+		<script src="jquery-1.11.3.js"></script>
+		<script src='slideshow.js'></script>
+		<script type="text/javascript">
+			$(function() {
+				$("table").attr("border", "1px");
+				$("table").prop("border", "1px");
+				$("table").css("border-collapse", "collapse");
+				$("a").attr("target", "_blank");
+			});
+		</script>
+	</head>
+	<body>
+	<div>
+	<h3>jQuery Under The Hood. At Home With All The Laws of Nature</h3>
+	<ol>
+	<li>Three ways to teach this course</li>
+	<li>Transition between school and a job</li>
+	<li>Technology is always changing</li>
+	<li>Consider this a challenge!</li>
+	</ol>
+	</div>
+	
+	<div>
+	<h3>Grading</h3>
+	<ol>
+		<li>Meet with students every day</li>
+		<li>50% of grade is how you do in these meetings</li>
+		<li>50% of grade is final exam during which you can use the Chrome debugger but not the Internet.</li>
+	</ol>
+	</div>
+<!--*****-->
+	<div>
+	<h3>Labs</h3>
+	<ol>
+		<li><a target='_blank' href='experimentsPhase1.html'>Experiments Phase I: up to jQuery.filter</a></li>
+		<li><a target='_blank' href='experimentsPhase2.html'>Experiments Phase II: jQuery.fn functions</a></li>
+		<li><a target='_blank' href='experimentsPhase3.html'>Experiments Phase III: evolution of jQuery functions</a></li> 
+	</ol>
+	<p>Download <a href='http://puzzlecrowd.com/UnderTheHood.zip'>UnderTheHood.zip</a> and unzip to get all jQuery versions plus experiments.</p>
+	</div>
+<!--*****-->
+	<div>
+		<p>JavaScript is a prototype-based scripting language with dynamic typing and first-class functions. This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles.</p>
+		<p>jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.</p>
+		<p>There have been 96 releases of jQuery. Will focus on jQuery1.0.js</p>
+		<p>Let's quickly look at snippets of jQuery to review some features of JavaScript</p>
+		<p>All references to jQuery in what follows will be to jQuery1.0.js</p>
+	</div>
+
+<!--*****-->
+    <div>
+      <h3>Object Literals</h3>
+    <pre>Line 949:
+jQuery.macros = {
+	to: {
+		appendTo: "append",
+		prependTo: "prepend",
+		insertBefore: "before",
+		insertAfter: "after"
+	},
+	
+	css: "width,height,top,left,position,float,overflow,color,background".split(","),
+
+	filter: [ "eq", "lt", "gt", "contains" ],
+	...
+}
+</pre>    
+    </div>
+
+<!--*****-->    
+  <div>
+  	<h3>JavaScript is a loosely-typed language</h3>
+  	<p>No function overloading. Need to check argument types of functions at runtime.</p>
+  	<pre>
+Line 17:  	
+	if ( a && a.constructor == Function && jQuery.fn.ready )
+		return jQuery(document).ready(a);</pre>
+  	<a href='http://blog.niftysnippets.org/2010/09/say-what.html'>Ways to determine current type of a variable</a><br/>
+  	</pre>
+	<p>A variable can change types during execution</p>
+	<pre>Line 696:
+    var f = jQuery.expr[m[1]];
+	if ( f.constructor != String )
+	   f = jQuery.expr[m[1]][m[2]];   // Note: f is now a String	
+	</pre>
+  </div>
+
+<!--*****-->    
+  <div>
+  <h3>JavaScript functions are <a href='https://en.wikipedia.org/wiki/First-class_function'>first class objects</a></h3>
+  <pre>
+  Line 659:
+  var g = not !== false ? jQuery.grep :
+                          function(a,f) {return jQuery.grep(a,f,true);};
+  </pre>
+  </div>
+  
+<!--*****-->    
+  <div>
+     <h3>JavaScript new command</h3>
+<pre>&lt;html&gt;
+&lt;head&gt;
+&lt;script type='text/javascript'&gt;
+//jQuery in a nutshell
+  function jQuery(a, c) {
+    if (this === window) {
+      return <span class='red'>new jQuery(a,c);</span>
+    }
+    this.length = 0;
+    [ ].push.apply(this, [a]);
+    
+    return this;
+  }
+  jQuery.fn = jQuery.prototype = {   // JavaScript is a prototypal language.
+                                     // Any object constructed using jQuery will have function1 in its prototype.   
+    function1: function() {alert("In prototype function1: " + this[0]);}
+  }
+  jQuery.function1 = function() {alert("In static function1" + this);}		
+  $ = jQuery;
+  // end jQuery
+  
+  function demo() {
+    $("#id").function1();
+    $.function1();
+  }
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body onload="demo()"&gt;
+&lt;/body&gt;</pre><br/>
+
+<a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects'>Object Creation</a><br/><br/>
+  </div>
+
+<!--*****-->
+  <div>
+  <h3>Closure</h3>
+  <p>When a function "remembers" the environment that it was defined in</p>
+  <pre>&lt;html&gt;
+<head>
+&lt;script type='text/javascript'&gt;
+  function init(header) {
+    this["f1"] = function() {debugger; alert(header + " in f1")}	// header will be "MUM" when function is called
+    this["f2"] = function() {debugger; alert(header + " in f2")}
+  }
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body onload="init('MUM')"&gt;
+&lt;button onclick="f1()"&gt;Call f1&lt;/button&gt;&lt;br/&gt;
+&lt;button onclick="f2()"&gt;Call f2&lt;/button&gt;
+</body>
+</pre>  
+<p>To see what the closure of a function is, put a breakpoint in the function and look at the Scope panel in Developer Tools.
+  </div>
+
+<!--*****-->    
+  <div>
+    <h3>Closure in jQuery</h3>
+    <pre>Line 277
+jQuery.each( jQuery.macros.axis, function(i,<span class='red'>n</span>){
+  // value of n iterates through values of jQuery.macros.axis
+  jQuery.fn[ i ] = function(a) {   // add function named i to prototype of jQuery
+    var ret = jQuery.map(this,<span class='red'>n</span>);  // n is still defined when this function gets called because of <b>closure</b>.
+    if ( a && a.constructor == String )
+      ret = jQuery.filter(a,ret).r;
+	return this.pushStack( ret, arguments );
+  };
+});
+where jQuery.macros.axis is
+axis: {
+  parent: "a.parentNode",
+  ancestors: jQuery.parents,
+  parents: jQuery.parents,
+  next: "jQuery.sibling(a).next",
+  prev: "jQuery.sibling(a).prev",
+  siblings: jQuery.sibling,
+  children: "a.childNodes"
+}
+</pre>
+  </div>
+  
+<!--*****-->    
+  <div>
+    <h3>Information Hiding</h3>
+    <p>Learned module pattern in CS472</p>
+    <p>jQuery1.0 does a variant of this. The object you get back from $("...") contains the functions you can call on that object.
+    A module also returns an object that contains functions that can be called. In both cases the functions are not defined globally.</p>
+    <table>
+    <tr>
+    <td>
+    <pre>&lt;html&gt;
+&lt;head&gt;
+&lt;script src = "jQueryVersions/jquery-1.0.js"&gt;&lt;/script&gt;
+&lt;script type='text/javascript'&gt;
+  function init(header) {
+  	var obj = $("#id1");
+  	debugger;
+  }
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body onload="init()"&gt;
+	&lt;div id="id1"&gt;&lt;/div&gt;
+&lt;/body&gt;
+</pre> </td>
+<td>
+<img src='prototype.png'/>
+</td>
+</tr>
+</table>
+  </div>
+<!--*****-->    
+	<div>
+	  <h3>Global Variables</h3>
+	  <p>jQuery introduces only three</p>
+	  <ol>
+	  <li>jQuery on line 14: function jQuery(a,c)</li>
+	  <li>$ on line 60: var $ = jQuery;</li>
+	  <li>For you to find</li>
+	  <!--li>events on line 829: element.events = {}; (for Chrome element === window at this point)</li-->
+	  </ol>	
+	  <b>Experiment</b>
+	  <p>Use debugger to verify that the above is true</p>
+  </div>
+  
+
+<!--*********-->  
+  <div>
+  <h3>Five ways to set <i>this</i></h3>
+  <ol>
+  	<li>Use object when calling function</li>
+  	<li>Use <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call'>call</a>
+  	<li>Use <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply'>apply</a></li>
+  	<li>Use <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind'>bind</a></li>
+  	<li>If none of the above <i>this</i> will be Window.</li>
+  </ol>
+<pre>  
+&lt;html&gt;
+&lt;head&gt;
+&lt;script type='text/javascript'&gt;
+	function foo(n1, n2) {
+		alert(this.test);
+	}
+
+	function useObject() {
+		obj = {test:"Using object"};
+		obj.foo = foo;
+		obj.foo(1, 2);
+	}
+	
+	function useApply() {
+		foo.apply({test:"Using apply"}, [1, 2]);
+	}
+
+	function useCall() {
+		foo.apply({test:"Using call"}, [1, 2]);
+	}
+
+	function useBind() {
+		var foobind = foo.bind({test:"Using bind"}, 1, 2);
+		foobind();
+	}
+	
+	function useGlobal() {
+		window.test = "Using global";
+		foo(1, 2);
+	}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body onload="init()"&gt;
+	&lt;button onclick="useObject()"&gt;Use object&lt;/button&gt;&lt;br/&gt;
+	&lt;button onclick="useApply()"&gt;Use apply&lt;/button&gt;&lt;/br&gt;
+	&lt;button onclick="useCall()"&gt;Use call&lt;/button&gt;&lt;/br&gt;
+	&lt;button onclick="useBind()"&gt;Use bind&lt;/button&gt;&lt;/br&gt;
+	&lt;button onclick="useGlobal()"&gt;Use global object&lt;/button&gt;
+&lt;/body&gt;
+
+
+  </div>
+<!--*****-->  
+  <div>
+    <h3>Difference between == and ===</h3>
+    <pre>
+    	if ("" == 0) {
+    		alert("huh?");
+    	}
+    	
+    	if ("" === 0) {
+    	} else {
+    		alert("That's better")
+    	}
+    </pre>
+    <a target="_blank" href="https://javascriptweblog.wordpress.com/2011/02/07/truth-equality-and-javascript/">Equality and JavaScript</a>
+    <p>=== is only used twice in jQuery 1.0</p>
+	<p>Was this done to save a keystroke? Douglas Crockford recommends always using ===</p>
+  </div>
+  
+<!--*****-->  
+<div>
+  <h3>Chaining pattern</h3>
+  <p>Functions return <i>this</i> to simplify next call to a prototype function</p>
+<pre> 
+&lt;html&gt;
+&lt;head&gt;
+&lt;script type='text/javascript'&gt;
+	function doMath() {
+		var f = new Foo(10);
+		f.add(10)
+		 .multiply(2)
+		 .display();
+	}
+	
+	function Foo(value) {
+		this.value = value;		
+	}
+	Foo.prototype.add = function(n) {
+		this.value += n;
+		return this;
+	}
+	
+	Foo.prototype.multiply = function(n) {
+		this.value *= n;
+		return this;
+	}
+	
+	Foo.prototype.display = function() {
+		alert(this.value);
+		return this;
+	}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body onload="init()"&gt;
+&lt;button onclick="doMath()"&gt;Do math&lt;/button&gt;
+&lt;/body&gt;
+</pre>  
+
+</div>
+
+<!--*****-->  
+<div>
+  <h3>"Overloading" functions in JavaScript</h3>
+  <p>Function name can only be used once. If used again it will replace previous value of function. See <a href='http://blog.niftysnippets.org/2010/09/say-what.html'>Ways to determine current type of a variable</a>. Note that using the value of the constructor property is not mentioned. This is what is used in jQuery 1.0, e.g.,
+</p>
+<pre>  
+Line 17:
+  if ( a && a.constructor == Function && jQuery.fn.ready )
+    return jQuery(document).ready(a);
+</pre>
+<p>Here is a way to have a function that can take a Number or String argument and process them differently</p>
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;script type='text/javascript'&gt;
+	function foo(arg) {
+		if (typeof arg === "string") {
+			alert("Length of arg is " + arg.length);
+		} else if (typeof arg === "number") {
+			alert(arg % 2 === 0 ? "Number is even" : "Number is odd");
+		}
+	}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body onload="init('MUM')"&gt;
+&lt;button onclick="foo('Hello')"&gt;Call with String&lt;/button&gt;&lt;br/&gt;
+&lt;button onclick="foo(5)"&gt;Call with Number&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+
+  <div>
+	<h3>Chrome debugger suggestions</h3>
+	<ol>
+	<li>Look at Call Stack</li>
+	<li>Look at Scope, especially Closure, (if any)</li>
+	<li>Try out code in console window
+	<p>For example, test claim that if an object has a length property and a 
+	splice property that is a function then console.log will display it as an array</p>
+	<pre>
+var obj = {a:5, length:0}
+obj
+<b>Object {a: 5, length: 0}</b>
+
+obj.splice=[].splice;
+obj
+<b>[]</b>
+
+[].push.apply( obj, [1, 2, 3] )
+obj
+<b>[1, 2, 3]</b>
+
+Enter obj in Watch and see
+<b>0: 1
+1: 2
+2: 3
+a: 5
+length: 3
+splice:function
+__proto__</b>
+</pre></li>
+	<li>Use Watch to track changes</li>
+	<li>Use Watch in conjunction with Call Stack to track values of <i>this</i></li>
+	</ol>
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;script src = "jQueryVersions/jquery-1.0.js"&gt;&lt;/script&gt;
+&lt;script type='text/javascript'&gt;
+  function init(header) {
+  	debugger;
+  	var obj = $("#id1");		// put breakpoint at line 747 of jquery-1.0.js
+  	obj.css("color", "red");	// put breakpoint at line 102 of jquery-1.0.js
+  }
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body onload="init()"&gt;
+	&lt;div id="id1"&gt;&lt;/div&gt;
+&lt;/body&gt;</pre>
+<p>Call Stack will have</p>
+<pre>
+jQuery.extend.merge
+jQuery.extend.find
+jQuery
+jQuery
+init
+onload
+
+</pre>
+  </div>
+	</body>
+</head>

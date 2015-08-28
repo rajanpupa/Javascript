@@ -1,0 +1,56 @@
+Introduction: UnderTheHood/introduction.html
+Yes___ 1. Object Literals
+Yes___ 2. JavaScript is a loosely-typed language
+Yes___ 3. JavaScript functions are first class objects
+Yes___ 4. JavaScript new command
+Yes___ 5. Closure
+Yes___ 6. Closure in jQuery
+Yes___ 7. Global variables
+___ 8. Five ways to set "this"
+Yes___ 9. Difference between == and ===
+___ 10. Chaining pattern
+___ 11. "Overloading" functions in JavaScript
+Yes___ 12. Chrome debugger suggestions
+
+Demos
+Yes_ 1. demoExperiment14
+Yes_ 2. demoLiveNodeList
+Yes_ 3. demoPrivate
+____ 4. demojQuery
+____ 5. mondayTest
+
+Experiments Phase I
+Yes___ 1. Step through interpretation of jquery-1.0.js
+Yes___ 2. What names do jQuery add to global name space
+Yes___ 3. Add a function to an object using jQuery.extend()
+Yes___ 4. Use jQuery.each to modify the elements of an array
+Yes___ 5. Here is an invocation of jQuery.each with 3 arguments. Why is 3rd argument an array?
+Yes___ 6. Using jQuery.each with an array of DOM objects
+Yes___ 7. Use jQuery.extend to add a toString method to jQuery.browser.
+Yes___ 8. Modernizr.canvas
+Yes___ 9. Use jQuery.merge to merge two arrays getting rid of duplicates
+Yes___ 10. Use jQuery.map to multiply all elements of an array by two.
+Yes___ 11. Pass a string rather than a function as the second argument of jQuery.map
+Yes___ 12. Use jQuery.map to modify DOM elements
+Yes___ 13. Use jQuery.grep to select the even elements from an array
+___ 14. pushStack
+Yes___ 15. Regular expressions used in jQuery
+Yes___ 16. jQuery.className.has
+Yes___ 17. jQuery.className.add
+Yes___ 18. jQuery.className.remove
+Yes___ 19. jQuery.getAll
+Yes___ 20. jQuery.trim()
+___ 21. jQuery.filter
+
+Experiments Phase II
+Yes___ 1. $("#p1")
+___ 2. $("#p1").css("color", "red")
+___ 3. $(foo)
+Yes___ 4. obj.empty()
+Yes___ 5. $("<p>");
+Yes___ 6. obj.append()
+___ 7. p.attr("id", "id10")
+___ 8. p.html("New paragraph");
+___ 9. Fixing bugs in pseudo class functions
+___ 10. $("#divid").click(function () {debugger; console.log("here");});
+___ 11. Study the evolution of a function or object of your choice using the Comparisons program.

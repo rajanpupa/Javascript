@@ -1,0 +1,524 @@
+When done please email your exam to
+rbunker@lisco.com
+
+Please put your answers between the [[ ]] delimiters. For example
+[[ blah
+blah
+blah
+]]
+
+This will allow me split the tests into separate files that contain the answers to the same question.
+For example there will be a file called answer1.txt which contains all the answers given to the
+first question.
+
+Also please only write between the [[ ]] because I will need the question numbers to put the exams back together.
+
+1. Consider this dynamic creation of an object.
+   var obj = new Object();
+   obj.a = 5
+   obj.b = obj.a;
+   obj.c = {};
+   obj.c.a = 10;
+   obj.d = [];
+   obj.d.push(5)
+   obj.d.push(10);
+   
+Rewrite this as a single literal expression
+   var obj = {
+    ---
+   }
+[[
+
+    var obj = {
+        a : 5,
+        b : 5,
+        c : {a : 10},
+        d : [5, 10]
+    };
+
+]]  
+
+2. (Introduction.2)
+JavaScript is a loosely-typed language. Give an example using a function that demonstrates this.
+[[ 
+
+    var f = function(){
+    };
+    if(f.constructor() != String){
+        f = "984413";
+    }
+
+]] 
+
+3. (Introduction.3) 
+What happens if you concatenate 1 to an array object?
+[[ 
+
+  Converts array to string and concatenates 1, e.g.
+  if arr = [1,2,3] then arr + 1 will be:
+        1,2,31
+
+]]
+
+4. (Introduction.4) 
+// Here is a definition of an object using an anonymous self-invoking function
+var obj1 = (function () {
+		var a;
+		a = 5;
+		return {
+			foo: function(){console.log(a)}
+		}
+	})();  //   anonymous self-invoking function
+
+// Here is a definition of an object using a constructor function	
+    function Foo() {
+	   this.a = 5;
+    }
+    Foo.prototype.foo = function(){console.log(this.a)}	
+    var obj2 = new Foo();
+    
+Look at obj1 and obj2 in the Watch window. You will notice that the value of a is accessible in obj2
+but not in obj1. Why?
+[[ Put your answer here. ]]	
+
+5. (Introduction.5) 
+var obj = (function() {
+	var i, f;
+	f = [];
+	for (i=0; i<3; i++) {
+		f.push(function() {console.log(i)});
+	}
+	
+	return f;	
+})();
+
+obj[0]()  writes 3 to console
+obj[1]()  writes 3 to console
+obj[2]()  writes 3 to console
+
+This occurs because i is in the closure of each function created.
+
+Fix this problem so that function obj[n] writes n to the console.
+[[ Put your answer here. ]]	
+
+6. (Introduction.6)
+Put a breakpoint at line 706 of jquery-1.0.js and step into f. 
+Why does i have the value that is shown in the Watch window? (Note: the
+value depends on the selector used in your code that caused the breakpoint to be hit so I can't
+say what it will be in your case)
+[[ Put your answer here. ]]	
+
+7. (Introduction.7) 
+Why is the use of global variables discouraged?
+[[
+
+  The use of global variables is discouraged because in javascript all codes share single global namespace
+  and we may have a collision between various scripts on the same page.
+
+]]	
+
+8. (Introduction.8)
+foo.call({a:5, b:6}, [10, 15]);
+Write a function foo that will write its context and its parameters to the console when it is called this way.
+You decide on the format used by console.log().
+[[
+
+    function foo(arr) {
+      console.log("Context = " + this.a + ", " + this.b + ", Params = " + arr[0] + ", " + arr[1]);
+    }
+
+]]
+
+9. (Introduction.9) 
+Why does 0==false evaluate to true but 0===false evaluate to false
+[[
+
+Because type of 0 is integer and type of false is boolean.
+"==" doesn't compare the type, "===" also compares the type of the elements.
+
+]]
+
+10. (Introduction.10)
+What will be the result of running the following code. Please explain why the error occurred.
+  function doMath() {
+    var f = new Foo(10);
+    f.add(10).multiply(2).display();
+  }
+	
+  function Foo(value) {
+    this.value = value;		
+  }
+	
+  Foo.prototype.add = function(n) {
+    this.value += n;
+    return this;
+   }
+	
+   Foo.prototype.multiply = function(n) {
+     this.value *= n;
+   }
+	
+   Foo.prototype.display = function() {
+     alert(this.value);
+   }
+[[
+
+Result: Uncaught TypeError: Cannot read property 'display' of undefined
+Reason: 
+
+]]	
+
+11. (Introduction.11)
+How many different types of arguments can the jQuery function handle?
+In other words if jQuery were written in Java how many overloaded versions of jQuery would be required.
+Please briefly describe the different types of arguments. I want more than just a number here.
+[[ Put your answer here. ]]	
+
+12. (Introduction.12)
+Describe one use of the Call stack in the Chrome debugger.
+[[
+
+Call Stack in chrome debugger shows execution path which was led to the point where we pause the code.
+So we can view the execution path or the point from where current pause path is called using call stack.
+
+]]	
+
+13. (Demo.1)
+The code at lines 256-260 of jquery-1.0.js can be simplified. Please do so.
+[[Put your answer here]]	
+
+14. (Demo.2)
+Does document.getElementsByClassName() return a live node list? Write some code to support your answer and
+include it below.
+[[
+
+    Yes, it returns live node. e.g.
+
+    div = $("#container");
+    ps = document.getElementsByClassName("foo");
+    console.log(ps.length);             //returns 3
+    p = $("<p class=\"foo\">");
+    div.append(p);
+    p.html("Paragraph 4");
+    console.log(ps.length);       //returns 4
+
+]]	
+
+15. (Demo.3)
+console.log(foobar.privateFunction) returns undefined. Why?
+[[
+
+  Since, foobar is created as:
+        var foobar = Object.create(foo);
+
+  And foo returns {a: 10};
+
+  foobar will only have property a = 10 not privateFunction.
+
+  So foobar.privateFunction will return undefined.
+
+]]	
+
+16. (Demo.4)
+In demojQuery.html, jQuery serves as both a regular function and a constructor function. Please explain
+what I mean by this.
+[[ Put your answer here. ]]
+
+17. (Demo.5)
+In mondayTest.html
+Line 23 console.log(log1 === log2) returns false. Describe how to modify the program so that 
+log1 === log2 returns true.
+[[
+
+we add a prototype function log in Foo and remove Foo.log from inside function Foo()
+
+Foo.prototype.log = function(value){
+      console.log(value);
+  };
+
+]]
+
+18. (PhaseI.1)
+Which functions are defined at line 296 during the interpretation of jquery-1.0.js
+[[ Put your answer here. ]]
+
+19. (PhaseI.2)
+We discovered that jQuery adds 3 variables to the global name space: "jQuery", "$" and "events".
+What is the line number where "events" is added to the global namespace?
+Hint: start looking at line 1138
+[[
+
+    Line number is 829
+
+]]
+
+20. (PhaseI.3)
+Line 466 is the definition of the property ":" of the object jQuery.expr.
+Use jQuery.extend to add
+   nth-child "jQuery.sibling(a,m[3]).cur"
+to the ":' property.
+Do not modify jquery-1.0.js!
+Put your call to jQuery.extend in the space below.
+[[
+
+  jQuery.extend(jQuery.expr[":"], {
+    "nth-child" : "jQuery.sibling(a,m[3]).cur"
+  });
+
+]]
+
+21. (PhaseI.4)
+In the following code
+   var a = ["up", "down", "left", "right"];
+   var b = {};
+
+   function myconcat(suffix) {
+     b[this] = this + suffix;
+   }
+			
+   jQuery.each(a, myconcat, ["!"]);
+
+a and b are global. Modify the example so that a and b are local variables of some function. Explain 
+why the result is the same.
+[[ Put your answer here. ]]
+
+22. (PhaseI.5)
+Given the following:
+function f(...) {...}
+jQuery.each(a, f, [5, "hello", 8])
+What should the parameters of function f be?
+[[ Put your answer here.]]
+
+23. (PhaseI.6)
+Rewrite the following code so that jQuery is not used at all.
+var ps = document.querySelectorAll(".foo");
+function setBackground(i, el) {
+   el.style.backgroundColor="red";
+}
+jQuery.each(ps, setBackground);   <-- don't use each
+
+[[
+
+var ps = document.querySelectorAll(".foo");
+function setBackground(i, el) {
+   el.style.backgroundColor="red";
+}
+
+for ( var i = 0; i < ps.length; i++ )
+  setBackground(obj[i], [i, obj[i]])
+
+]]
+
+24. (PhaseI.7)
+Use jQuery.extend to add a toString method to to {a:5, b:"hello"}
+[[
+
+  var obj = {a:5, b:"hello"};
+  function f() {
+    console.log(this.a + "," + this.b)
+  }
+  jQuery.extend(obj, {toString: f});
+
+]]
+
+25. (PhaseI.8)
+Explain what the code at line 949 of modernizr.js does.
+[[
+
+Modernizr[featureName] = tests[feature]();
+
+This line in modernizer calls all the test features defined which return some values.
+
+Modernizer.featureName property will be set to that retunred value in this line.
+
+]]
+
+26. (PhaseI.9)
+Modify the merge algorithm so that it doesn't remove duplicates. 
+How can you test your code without modifying jquery-1.0.js ?
+[[
+
+  function my_merge(first, second) {
+        var i = first.length,
+        j = 0;
+
+        if ( typeof second.length === "number" ) {
+          for ( var l = second.length; j < l; j++ ) {
+            first[ i++ ] = second[ j ];
+          }
+
+        } else {
+          while ( second[j] !== undefined ) {
+            first[ i++ ] = second[ j++ ];
+          }
+        }
+
+        first.length = i;
+
+        return first;
+  }
+  jQuery.extend({merge: my_merge});
+
+]]
+
+27. (PhaseI.10)
+Here is function jQuery.merge in jquery-1.1.3a.js.
+function merge (first, second) {
+		for ( var i = 0; second[i]; i++ )
+			first.push(second[i]);
+		return first;
+	}
+	
+var result = merge([1, 2, 3], [4, 5, 0, 8 ])	
+result = [1, 2, 3, 4, 5]
+Why?
+What does this say about the expected contents of the array second?
+
+[[
+
+  For the first iteration, i = 0 and second[0] = 4, so it add second[0] as 0 < 4
+  In second iteration, i = 1 and second[1] = 5, so it will add second[1] as 1 < 5
+  In third iteration, i = 2 and second[2] = 0, so it will stop iterating as 2 is not < 0
+
+  So, the contents of array second shouldnot contain second or smaller elements than index i.
+
+]]
+	
+28. (PhaseI.11) 
+The version of jQuery.map in jquery-1.2.2b.js is as follows:
+map: function ( elems, callback ) {
+  var ret = [];
+
+  // Go through the array, translating each of the items to their
+  // new value (or values).
+  for ( var i = 0, length = elems.length; i < length; i++ ) {
+    var value = callback( elems[ i ], i );
+
+    if ( value !== null && value != undefined ) {
+      if ( value.constructor != Array ) 
+        value = [ value ]; 
+
+        ret = ret.concat( value ); 
+      }
+    }
+
+    return ret; //modified in jquery-1.2.5.js
+  }
+
+Give an example of a call to jQuery.map that will work in jquery-1.0, but will not work in jquery-1.2.2b
+[[
+
+  var a = [1, 2, 3, 4, 3, 2, 1];
+  result = jQuery.map(a, "a*2");
+
+  This will work in 1.0 but in 1.2.2b it will raise error "Callback not defined"
+
+]]
+
+29 (Phase1.12)
+Explain why line 801 is necessary.
+801	if ( val.constructor != Array ) val = [val];
+[[ Put your answer here ]]
+
+30. (Phase1.13)
+Can the first parameter jQuery.grep be an Object instead of an Array? Explain your answer. I want
+more than just a yes or no here.
+[[ Put your answer here ]]
+
+31. (Phase1.14)
+What property does pushStack add to its context? What is its value?
+[[ Put your answer here ]]
+
+32. (Phase1.15) Regular expressions used in jQuery
+The regular expression 
+/^([#.]?)([a-z0-9\\*_-]*)/
+will match any string. Why?
+[[ Put your answer here ]]
+
+33. (Phase1.16) jQuery.className.has
+Is jQuery.className.has case sensitive or not? Please justify your answer. I want more than a yes or no here.
+[[ Put your answer here ]]
+
+34. (Phase1.17)
+If you attempt to add a class that an element already has will it be added again. Please justify your answer
+I want more than a yes or no here.
+[[ Put your answer here ]]
+
+35. (Phase1.18) jQuery.className.remove
+Is 
+	var re = new RegExp("(^|\\s*\\b[^-])"+c+"($|\\b(?=[^-]))", "g");
+	o.className.replace(re, "");
+equivalent to 
+	var re = /(^|\\s*\\b[^-])"+c+"($|\\b(?=[^-]))/g;
+	o.className.replace(re, "");
+
+Please justify your answer. I want more than a yes or no here.
+[[ Put your answer here ]]
+
+36. (Phase1.19)
+Create some HTML so that getAll appears three times on the Call Stack
+[[ Put your answer here ]]
+
+37. (Phase1.20)
+Which do you think is faster, jQuery.trim() or the trim method of String? I will accept either
+if your answer is convincing.
+[[ Put your answer here. ]]
+
+38. (Phase1.21)
+Line 712: return { r: r, t: t }
+This is what is returned by filter. Please describe what r and t are. 
+In particular can r be [ ] and is t always the empty string?
+[[Put your answer here]]
+
+39. (Phase2.1)
+Line 76: [].push.apply( this, num );
+What is accomplished by this line?
+[[ Put your answer here. ]]
+
+40. (Phase2.2)
+What is accomplished by this line of jquery-1.0.js?
+Line 636: name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});
+[[ Put your answer here ]]
+
+41. (Phase2.3)
+Consider $(foo) where foo is a function.
+When is ready() called?
+[[ Put your answer here ]]
+
+42. (Phase2.4)
+What is the value of "this" when empty is called?
+[[ Put your answer here ]]
+
+43. (Phase2.5)
+$("<p>") will eventually call the function clean.
+What does clean do? Hint compare $("<p id='5'>") and $("<p foo='5'")
+[[ Put your answer here ]]
+
+44. (Phase2.6)
+Write some sample code that will cause line 233 of jquery-1.0.js to be hit.
+[[ Put your answer here ]]
+
+45. (Phase2.7)
+Put a breakpoint on line 108 of jquery-1.0.js. Give an example of a call to attr that will
+cause this breakpoint to be hit.
+[[ Put your answer here ]]
+
+46. (Phase2.8)
+Write some code that will cause a breakpoint at line 312 to be hit.
+[[ Put your answer here ]]
+
+47. (Phase2.9)
+The p.length will equal 0 in the following even if there is a p element with an id attribute.
+var p=$("p[id]")
+Please explain why.
+[[ Put your answer here ]]
+
+48. (Phase2.10)
+Make a breakpoint at line 907 of jquery-1.0.js get hit. If you look at the
+Call stack you will see that nobody called the handle function which contains the breakpoint. 
+What did jQuery have to do to make handle get called?
+[[ Put your answer here ]]
+
+49. (Phase2.11) 
+Comment on the evolution of a function or object of your choice using the Comparisons program.
+[[ Put your answer here ]]

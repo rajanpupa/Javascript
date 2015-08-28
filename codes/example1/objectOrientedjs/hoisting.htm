@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>javascript example1</title>
+</head>
+<body>
+	<div class="wrapper">
+		<h2> The concept of hoisting!</h2>
+		<ul>
+			<li>The functions are moved on top of the context.</li>
+			<li>The variables are declared before the code starts executing.</li>
+			<li>The assignments are done only on that line where it is actually assigned.</li>
+			<li>Until assignment, its value is <strong>undefined</strong>.</li>
+		</ul>
+		<script>
+			console.log( "before assignment : a = " + a +"<br/>");
+			
+			var a = "Hello World!!!";
+			
+			console.log( "after assignment : a = " + a +"<br/>");
+			
+			
+			printfn();
+			function printfn(){
+				console.log("print function called.")
+			}
+			
+			
+		</script>
+	</div>
+</body>
+</html>

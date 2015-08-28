@@ -1,0 +1,225 @@
+When done please email your exam to
+rbunker@lisco.com
+
+Please put your answers between the [[ ]] delimiters. For example
+[[ blah
+blah
+blah
+]]
+This will allow me split the tests into separate files that contain the answers to the same question.
+For example there will be a file called answer1.txt which contains all the answers given to the
+first question.
+Also please only write between the [[ ]] because I will need the question numbers to put the exams back together.
+
+Please do not be concerned if you can't answer all the questions that you said you would. I have never
+taught this type of course before and don't have a sense of how quickly students will be able to
+answer questions.
+
+0. List three ways that you can use the experience obtained from this course?
+[[Write new javascript codes, Dig and understand somebody else's code, Understand any js framework and be able to extend it ]]
+
+1. (Introduction.1)Consider this dynamic creation of an object.
+   var obj = new Object();
+   obj.a = 5
+   obj.b = "hello";
+   obj.c = {};
+   obj.c.a = 10;
+   obj.d = [];
+   obj.d.push(5)
+   obj.d.push(10);
+   
+Rewrite this as a single literal expression
+   var obj = {
+    ---
+   }   
+[[ var obj = {a: 5,b: "hello",	c: {a: 10},	d: [5, 10]   }    ]]
+
+2. (Introduction.2) Fact: JavaScript is a loosely-typed language. Give an example of this using an array.
+[[ 
+	// we can assign any type of variable to any variable.
+	arr = [5, "5"];
+	var i=0;
+	for(i=0; i<arr.length; i++){
+		console.log(arr[i] + 5 ); // should print 10 and 55, because type is determined in run time.
+	}
+	
+	arr=true;// array holding variable could hold boolean,
+]]
+
+3. (Introduction.3) What happens if you add 1 to a function object?
+[[ The result will be a string representation of the original function, with 1 appended at the end. ]]
+
+4. (Introduction.4) var obj = (function () {
+		var a;
+		a = 5;
+		return {
+			foo: function(){console.log(a)}
+		}
+	})();			// anonymous self-invoking function
+	
+	rewrite using new, e.g.,
+	obj = new Foo();
+	obj.foo(); // Writes 5 to console	
+[[ Put your answer here]]
+
+5. (Introduction.5) var obj = (function() {
+	var i, f;
+	f = [];
+	for (i=0; i<3; i++) {
+		f.push(function() {console.log(i)});
+	}
+	
+	return f;	
+})();
+
+obj[0]()  writes 3 to console
+obj[1]()  writes 3 to console
+obj[2]()  writes 3 to console
+
+Why?
+[[ Because, i is in the closure of the function, which points i by reference. So when the for loop increments the value of i, its reflected in the function.
+	It will display the most recent value of i.
+]]
+
+6. (Introduction.6) Put a breakpoint at line 706 and step into f. What is in its closure?
+[[ Put your answer here]]
+
+7. (Introduction.7) What DOM object contains global variables?
+[[ window ]]
+
+8. (Introduction.8) foo.apply({a:5, b:6}, [10, 15]);
+Write a function foo that will write its context and its parameters to the console when it is called this way.
+[[ foo=function(i, v){
+	console.log(this.toString());
+	console.log(" first arg: " + i ");
+	console.log(" second arg: " + v );
+} ]]
+
+9. (Introduction.9) Give an example of the difference between == and ===
+[[ 
+	var a = 5;
+	var b = "5";
+	if(a==b){
+		console.log("This will be logged.");
+	}
+	
+	if(a===b){
+	//js does not make any attempt to type convert it.
+		console.log("This will never be logged.");
+	}
+ ]]
+
+10. (Introduction.10) obj = $("#id");
+    obj.css("color", "red");
+    obj.html("html");
+
+Convert this to take advantage of the fact that jQuery uses the chaining pattern.
+[[ 
+	// functions after changing some attributes, returns this on which next function can be called.
+	$("#id").css("color", "red").html("html");
+]]
+
+11. (Introduction.11) Is the jQuery function overloaded in the Java sense? 
+Give an example to support your answer (I want more than a simple yes or no)
+[[ No it is not. In java we could have more than one function with same name and different parameters. In JQuery, we decide which block of code to run depending upon 
+the context, and some additional arguments' value or their type.]]
+
+12. (Introduction.12) Write some sample code that results in the Call Stack having three items on it. 
+Indicate somehow the line at which this will happen.
+[[ 
+
+	var a = function(){
+		var b = getval();//
+	
+	}
+	
+	var add = function (a, b){
+			return a + b;
+		}
+		
+	var getval = function (){
+			return this.add(5, 10);//
+		}
+	
+	var d = a();//
+	
+	
+]]
+
+13. (Demo.3) If you run demoPrivate.html console.log(foobar.a) displays 10. Why?
+[[ the function is evaluated first and assigned to the value of a. so the value of a is 10, thats why it is displayed.]]
+
+14. (Demo.3) demojQuery
+Try this in the console window
+x = $("#id");
+y = $(x);
+y.function1();
+
+This will display the alert
+In prototype function1: [object Object]
+Why?
+[[ Put your answer here]]
+
+15. (Phase1.1) Step through interpretation of jquery-1.0.js
+At what line is jQuery.fn.each added to the jQuery function during the interpretation of jquery-1.0.js?
+[[ Put your answer here]]
+
+16. (Phase1.2) jquery-1.0.js adds both $ and jQuery to the global namespace. Why both, e.g., why not just $?
+[[ Put your answer here]]
+
+17. (Phase1.3) Add a static function to the jQuery function using jQuery.extend();
+Do not modify jquery-1.0.js!
+[[ Put your answer here]]
+
+18. (Phase1.5) What happens if the third argument jQuery.each is not an array?
+[[ Put your answer here]]
+
+19. (Phase1.10) Use jQuery.map to multiply all elements of an array by two.
+Here is function jQuery.merge in jquery-1.1.3a.js.
+function merge (first, second) {
+		for ( var i = 0; second[i]; i++ )
+			first.push(second[i]);
+		return first;
+	}
+	
+var result = merge([1, 2, 3], [4, 5, 0, 8 ])	
+result = [1, 2, 3, 4, 5]
+Why?
+What does this say about the expected contents of the array second?
+[[ Put your answer here]]
+	
+
+20. (Phase1.11) Can the first parameter jQuery.grep be an Object instead of an Array? 
+Justify your answer. I want more than a simple yes or no here.
+[[ Put your answer here]]
+
+21. (Phase1.14) What property does pushStack add to its context? What is its value?
+[[ Put your answer here]]
+
+22. (Phase1.15) Consider the regular expression /^([:.#]*)([a-z*_-][a-z0-9_-]*)/
+Give an example of a string that will **not** be matched by the regular expression.
+[[ Put your answer here]]
+
+23. (Phase1.21) var obj = $("#p1,#p2");
+obj.length = 2.
+Put a breakpoint at line 597. How many times is this breakpoint hit? Please explain why.
+I want more than a simple number here.
+[[ Put your answer here]]
+
+24. (Phase2.1) Line 549: while ( t.length > 0 && last != t ) {
+The purpose of last is to prevent an infinite loop which can happen if t is not a legal css selector.
+Please give an example of a selector which will cause t.length > 0 to be true and last != t to be false.
+[[ Put your answer here]]
+
+25. (Phase2.3) Call $(foo) where foo is a function.
+a. At some point there are three jQuerys on the call stack. Please explain why each one is there.
+[[ Put your answer here]]
+
+26. (Phase2.4) obj.empty()
+Why is there no infinite loop at 1032?
+[[ Put your answer here]]
+
+27. (Phase2.11) Study the evolution of a function or object of your choice using the Comparisons program.
+For example, compare jQuery.expr in jquery-1.0.js and jquery-1.0.1.js
+Explain why you thing the addition was made.
+[[ Put your answer here]]

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.extend demo</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+ 
+<div id="log"></div>
+ 
+<script>
+    var a = [1, 2, 3, 4, 3, 2, 1];
+	var f = function(value, index) {
+	   return value*2;
+	}
+	result = jQuery.map(a, f);
+	
+	document.write(JSON.stringify(result) + "<br/>");
+	
+	
+	
+	
+	var a = [1, 2, 3, 4, 3, 2, 1];
+	result = jQuery.map(a, "b*2");
+	document.write(JSON.stringify(result));
+</script>
+ 
+</body>
+</html>

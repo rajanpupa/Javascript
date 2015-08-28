@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>javascript example1</title>
+</head>
+<body>
+	<div class="wrapper">
+		<h2> See the code; Fundamental of inheritence based on prototype.</h2>
+		<script>
+		
+			println = function (val){
+				document.write(val + "<br/>");
+			}
+			var parent = {
+				get: function fn(){
+					return this.val;
+				},
+				val: 42
+			};
+			
+			var child = Object.create(parent);
+			child.val = 3.14159;
+			
+			var grandChild = Object.create(child);
+			
+			println(parent.get()); 		//42
+			println(child.get()); 		//3.14159
+			println(grandChild.get()); 	//3.14159
+			
+			
+			// ----------------- polymorphism --------------------------
+			var answer = {
+				get: function fn1(){
+					return this.val;
+				},
+				val : 42
+			};
+			
+			var firmAnswer = Object.create(answer);
+			// change the behavior of the function
+			firmAnswer.get = function(){
+				//return answer.get() + "!!"; // won't work
+				return answer.get.call(this) + "!!";
+			}
+			
+			println(answer.get());  // 42
+			firmAnswer.val=3.14159;
+			println(firmAnswer.get()); // 42!!
+			
+			// in above code, both functions in get method are looking for this.val, in complex code, this is hard to maintain.
+			
+			
+		</script>
+	</div>
+</body>
+</html>

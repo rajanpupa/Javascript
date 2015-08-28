@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Example</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+
+<div id="divid" style="color:red;">Hello world. I am divid.</div>
+
+<p> I am paragraph 1</p>
+
+<p>I am paragraph 2</p>
+
+<p>I am para 3</p>
+
+<p> I am para 4</p>
+<script>
+	function abc(){
+		var a = "Hello ";
+		var b = "world";
+		
+		console.log( this.a + " => " + this.b);
+	}
+	
+	def = {
+	
+		a : "Hello",
+		b : "world",
+		abc: function(){
+			console.log(this.a + " def=> " + this.b);
+		}
+	}
+	
+	ghi = new abc();
+	ghi.a="new a";
+	ghi.b="new b";
+	
+	abc();
+	
+	def.abc();
+	
+	ghi.constructor();
+	
+	jkl = abc;
+	jkl();
+</script>
+ 
+</body>
+</html>

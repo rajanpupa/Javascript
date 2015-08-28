@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.extend demo</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+ 
+<div id="id3" class="cl3">Hello world!</div>
+<div id="id4" >Hi world!</div>
+<script>
+    //obj = document.getElementById("id4");
+	
+	// This case, the function returns array, which does have class undefined.
+	//obj = document.getElementsByClassName("class2");	
+	
+	// if we create our own object, then it has class as undefined.
+	obj = {abc: "def"};
+	
+	console.log(jQuery.className.has(obj, "cl2"));
+	
+	
+	
+	var myRe = /ab*/g;
+	var str = 'abbcdefabh';
+	var myArray;
+	while ((myArray = myRe.exec(str)) !== null) {
+	  var msg = 'Found ' + myArray[0] + '. ';
+	  msg += 'Next match starts at ' + myRe.lastIndex;
+	  console.log(msg);
+	}
+</script>
+ 
+</body>
+</html>

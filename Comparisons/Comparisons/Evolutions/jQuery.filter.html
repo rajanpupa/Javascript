@@ -1,0 +1,1419 @@
+<html>
+<head>
+</head>
+<body>
+<h3>arg=jQuery.filter</h3>
+<b>jQuery.filter (jquery-1.0.js)</b><br/>
+<pre>
+ function (t,r,not) {
+		// Figure out if we're doing regular, or inverse, filtering
+		var g = not !== false ? jQuery.grep :
+			function(a,f) {return jQuery.grep(a,f,true);};
+		
+		while ( t && /^[a-z[({&lt;*:.#]/i.test(t) ) {
+
+			var p = jQuery.parse;
+
+			for ( var i = 0; i &lt; p.length; i++ ) {
+<i>				var re = new RegExp( "^" + p[i][0]</i> <b>//modified in jquery-1.0.2.js</b>
+
+<i>					// Look for a string-like sequence</i> <b>//modified in jquery-1.0.2.js</b>
+<i>					.replace( 'S', "([a-z*_-][a-z0-9_-]*)" )</i> <b>//modified in jquery-1.0.2.js</b>
+
+<i>					// Look for something (optionally) enclosed with quotes</i> <b>//modified in jquery-1.0.2.js</b>
+<i>					.replace( 'Q', " *'?\"?([^'\"]*?)'?\"? *" ), "i" );</i> <b>//modified in jquery-1.0.2.js</b>
+
+				var m = re.exec( t );
+
+				if ( m ) {
+<i>					// Re-organize the match</i> <b>//modified in jquery-1.0.2.js</b>
+<i>					if ( p[i][1] )</i> <b>//modified in jquery-1.0.2.js</b>
+<i>						m = ["", m[1], m[3], m[2], m[4]];</i> <b>//modified in jquery-1.0.2.js</b>
+
+					// Remove what we just matched
+					t = t.replace( re, "" );
+
+					break;
+				}
+			}
+	
+<i>			// :not() is a special case that can be optomized by</i> <b>//modified in jquery-1.0.2.js</b>
+			// keeping it out of the expression list
+			if ( m[1] == ":" && m[2] == "not" )
+				r = jQuery.filter(m[3],r,false).r;
+			
+			// Otherwise, find the expression to execute
+			else {
+				var f = jQuery.expr[m[1]];
+				if ( f.constructor != String )
+					f = jQuery.expr[m[1]][m[2]];
+					
+				// Build a custom macro to enclose it
+				eval("f = function(a,i){" + 
+					( m[1] == "@" ? "z=jQuery.attr(a,m[3]);" : "" ) + 
+					"return " + f + "}");
+				
+				// Execute it against the current filter
+				r = g( r, f );
+			}
+		}
+	
+		// Return an array of filtered elements (r)
+		// and the modified expression string (t)
+		return { r: r, t: t };
+	}
+</pre>
+<b>jquery-1.0.1: no change</b><br/><br/>
+<b>jQuery.filter (jquery-1.0.2.js)</b><br/>
+<pre>
+ function (t,r,not) {
+<i>		// Figure out if we're doing regular, or inverse, filtering</i> <b>//modified in jquery-1.1a.js</b>
+<i>		var g = not !== false ? jQuery.grep :</i> <b>//modified in jquery-1.1a.js</b>
+<i>			function(a,f) {return jQuery.grep(a,f,true);};</i> <b>//modified in jquery-1.1a.js</b>
+
+		while ( t && /^[a-z[({&lt;*:.#]/i.test(t) ) {
+
+			var p = jQuery.parse;
+
+<i>			for ( var i = 0; i &lt; p.length; i++ ) {</i> <b>//modified in jquery-1.1a.js</b>
+		
+<span style='color:red'>				// Look for, and replace, string-like sequences</span>
+<span style='color:red'>				// and finally build a regexp out of it</span>
+<span style='color:red'>				var re = new RegExp(</span>
+<span style='color:red'>					"^" + p[i].replace("S", "([a-z*_-][a-z0-9_-]*)"), "i" );</span>
+
+				var m = re.exec( t );
+
+				if ( m ) {
+<span style='color:red'>					// Re-organize the first match</span>
+<span style='color:red'><i>					if ( !i )</i> <b>//modified in jquery-1.1a.js</b></span>
+<span style='color:red'><i>						m = ["",m[1], m[3], m[2], m[5]];</i> <b>//modified in jquery-1.1a.js</b></span>
+
+					// Remove what we just matched
+					t = t.replace( re, "" );
+
+					break;
+				}
+			}
+
+<span style='color:red'>			// :not() is a special case that can be optimized by</span>
+			// keeping it out of the expression list
+			if ( m[1] == ":" && m[2] == "not" )
+<i>				r = jQuery.filter(m[3],r,false).r;</i> <b>//modified in jquery-1.1a.js</b>
+
+			// Otherwise, find the expression to execute
+<i>			else {</i> <b>//modified in jquery-1.1a.js</b>
+				var f = jQuery.expr[m[1]];
+<i>				if ( f.constructor != String )</i> <b>//modified in jquery-1.1a.js</b>
+					f = jQuery.expr[m[1]][m[2]];
+
+				// Build a custom macro to enclose it
+				eval("f = function(a,i){" +
+<i>					( m[1] == "@" ? "z=jQuery.attr(a,m[3]);" : "" ) +</i> <b>//modified in jquery-1.1a.js</b>
+					"return " + f + "}");
+
+				// Execute it against the current filter
+<i>				r = g( r, f );</i> <b>//modified in jquery-1.1a.js</b>
+			}
+		}
+
+		// Return an array of filtered elements (r)
+		// and the modified expression string (t)
+		return { r: r, t: t };
+	}
+</pre>
+<b>jquery-1.0.3 - jquery-1.0.4: no change</b><br/><br/>
+<b>jQuery.filter (jquery-1.1a.js)</b><br/>
+<pre>
+ function (t,r,not) {
+<span style='color:red'>		// Look for common filter expressions</span>
+		while ( t && /^[a-z[({&lt;*:.#]/i.test(t) ) {
+
+<i>			var p = jQuery.parse;</i> <b>//modified in jquery-1.1.js</b>
+
+<span style='color:red'><i>			for ( var i = 0, pl = p.length; i &lt; pl; i++ ) {</i> <b>//modified in jquery-1.1.js</b></span>
+		
+				// Look for, and replace, string-like sequences
+				// and finally build a regexp out of it
+<i>				var re = new RegExp(</i> <b>//modified in jquery-1.1.js</b>
+<i>					"^" + p[i].replace("S", "([a-z*_-][a-z0-9_-]*)"), "i" );</i> <b>//modified in jquery-1.1.js</b>
+
+<i>				var m = re.exec( t );</i> <b>//modified in jquery-1.1.js</b>
+
+				if ( m ) {
+					// Re-organize the first match
+<span style='color:red'>					if ( jQuery.expr[ m[1] ]._resort )</span>
+<span style='color:red'>						m = jQuery.expr[ m[1] ]._resort( m );</span>
+
+					// Remove what we just matched
+<i>					t = t.replace( re, "" );</i> <b>//modified in jquery-1.1.js</b>
+
+<i>					break;</i> <b>//modified in jquery-1.1.js</b>
+				}
+			}
+
+			// :not() is a special case that can be optimized by
+			// keeping it out of the expression list
+			if ( m[1] == ":" && m[2] == "not" )
+<span style='color:red'>				r = jQuery.filter(m[3], r, true).r;</span>
+
+<span style='color:red'>			// Handle classes as a special case (this will help to</span>
+<span style='color:red'>			// improve the speed, as the regexp will only be compiled once)</span>
+<span style='color:red'>			else if ( m[1] == "." ) {</span>
+
+<span style='color:red'>				var re = new RegExp("(^|\\s)" + m[2] + "(\\s|$)");</span>
+<span style='color:red'>				r = jQuery.grep( r, function(e){</span>
+<span style='color:red'><i>					return re.test(e.className || '');</i> <b>//modified in jquery-1.1.js</b></span>
+<span style='color:red'>				}, not);</span>
+
+			// Otherwise, find the expression to execute
+<span style='color:red'>			} else {</span>
+				var f = jQuery.expr[m[1]];
+<span style='color:red'>				if ( typeof f != "string" )</span>
+					f = jQuery.expr[m[1]][m[2]];
+
+				// Build a custom macro to enclose it
+				eval("f = function(a,i){" +
+<span style='color:red'>					( jQuery.expr[ m[1] ]._prefix || "" ) +</span>
+					"return " + f + "}");
+
+				// Execute it against the current filter
+<span style='color:red'>				r = jQuery.grep( r, f, not );</span>
+			}
+		}
+
+		// Return an array of filtered elements (r)
+		// and the modified expression string (t)
+		return { r: r, t: t };
+	}
+</pre>
+<b>jquery-1.1b: no change</b><br/><br/>
+<b>jQuery.filter (jquery-1.1.js)</b><br/>
+<pre>
+ function (t,r,not) {
+		// Look for common filter expressions
+<i>		while ( t && /^[a-z[({&lt;*:.#]/i.test(t) ) {</i> <b>//modified in jquery-1.1.3a.js</b>
+
+<span style='color:red'>			var p = jQuery.parse, m;</span>
+
+<span style='color:red'><i>			jQuery.each( p, function(i,re){</i> <b>//modified in jquery-1.1.3a.js</b></span>
+		
+<i>				// Look for, and replace, string-like sequences</i> <b>//modified in jquery-1.1.3a.js</b>
+<i>				// and finally build a regexp out of it</i> <b>//modified in jquery-1.1.3a.js</b>
+<span style='color:red'><i>				m = re.exec( t );</i> <b>//modified in jquery-1.1.3a.js</b></span>
+
+				if ( m ) {
+					// Remove what we just matched
+<span style='color:red'>					t = t.substring( m[0].length );</span>
+
+					// Re-organize the first match
+					if ( jQuery.expr[ m[1] ]._resort )
+						m = jQuery.expr[ m[1] ]._resort( m );
+
+<span style='color:red'><i>					return false;</i> <b>//modified in jquery-1.1.3a.js</b></span>
+				}
+<span style='color:red'><i>			});</i> <b>//modified in jquery-1.1.3a.js</b></span>
+
+			// :not() is a special case that can be optimized by
+			// keeping it out of the expression list
+			if ( m[1] == ":" && m[2] == "not" )
+				r = jQuery.filter(m[3], r, true).r;
+
+<i>			// Handle classes as a special case (this will help to</i> <b>//modified in jquery-1.1.3a.js</b>
+<i>			// improve the speed, as the regexp will only be compiled once)</i> <b>//modified in jquery-1.1.3a.js</b>
+<i>			else if ( m[1] == "." ) {</i> <b>//modified in jquery-1.1.3a.js</b>
+
+<i>				var re = new RegExp("(^|\\s)" + m[2] + "(\\s|$)");</i> <b>//modified in jquery-1.1.3a.js</b>
+<i>				r = jQuery.grep( r, function(e){</i> <b>//modified in jquery-1.1.3a.js</b>
+<span style='color:red'><i>					return re.test(e.className || "");</i> <b>//modified in jquery-1.1.3a.js</b></span>
+<i>				}, not);</i> <b>//modified in jquery-1.1.3a.js</b>
+
+			// Otherwise, find the expression to execute
+<i>			} else {</i> <b>//modified in jquery-1.1.3a.js</b>
+				var f = jQuery.expr[m[1]];
+				if ( typeof f != "string" )
+					f = jQuery.expr[m[1]][m[2]];
+
+				// Build a custom macro to enclose it
+				eval("f = function(a,i){" +
+					( jQuery.expr[ m[1] ]._prefix || "" ) +
+					"return " + f + "}");
+
+				// Execute it against the current filter
+				r = jQuery.grep( r, f, not );
+			}
+		}
+
+		// Return an array of filtered elements (r)
+		// and the modified expression string (t)
+		return { r: r, t: t };
+	}
+</pre>
+<b>jquery-1.1.2: no change</b><br/><br/>
+<b>jQuery.filter (jquery-1.1.3a.js)</b><br/>
+<pre>
+ function (t,r,not) {
+<span style='color:red'>		var last;</span>
+
+		// Look for common filter expressions
+<span style='color:red'>		while ( t  && t != last ) {</span>
+<span style='color:red'>			last = t;</span>
+
+			var p = jQuery.parse, m;
+
+<span style='color:red'>			for ( var i = 0; p[i]; i++ ) {</span>
+<span style='color:red'>				m = p[i].exec( t );</span>
+
+				if ( m ) {
+					// Remove what we just matched
+					t = t.substring( m[0].length );
+
+<i>					// Re-organize the first match</i> <b>//modified in jquery-1.1.3.js</b>
+<i>					if ( jQuery.expr[ m[1] ]._resort )</i> <b>//modified in jquery-1.1.3.js</b>
+<i>						m = jQuery.expr[ m[1] ]._resort( m );</i> <b>//modified in jquery-1.1.3.js</b>
+
+<span style='color:red'>					m[2] = m[2].replace(/\\/g, "");</span>
+
+<span style='color:red'>					break;</span>
+				}
+			}
+
+<span style='color:red'>			if ( !m )</span>
+<span style='color:red'>				break;</span>
+
+			// :not() is a special case that can be optimized by
+			// keeping it out of the expression list
+			if ( m[1] == ":" && m[2] == "not" )
+				r = jQuery.filter(m[3], r, true).r;
+
+<span style='color:red'>			// We can get a big speed boost by filtering by class here</span>
+<span style='color:red'>			else if ( m[1] == "." )</span>
+<span style='color:red'>				r = jQuery.classFilter(r, m[2], not);</span>
+
+			// Otherwise, find the expression to execute
+<span style='color:red'><i>			else {</i> <b>//modified in jquery-1.1.3.js</b></span>
+				var f = jQuery.expr[m[1]];
+				if ( typeof f != "string" )
+					f = jQuery.expr[m[1]][m[2]];
+
+				// Build a custom macro to enclose it
+<i>				eval("f = function(a,i){" +</i> <b>//modified in jquery-1.1.3.js</b>
+<i>					( jQuery.expr[ m[1] ]._prefix || "" ) +</i> <b>//modified in jquery-1.1.3.js</b>
+<i>					"return " + f + "}");</i> <b>//modified in jquery-1.1.3.js</b>
+
+				// Execute it against the current filter
+				r = jQuery.grep( r, f, not );
+			}
+		}
+
+		// Return an array of filtered elements (r)
+		// and the modified expression string (t)
+		return { r: r, t: t };
+	}
+</pre>
+<b>jQuery.filter (jquery-1.1.3.js)</b><br/>
+<pre>
+ function (t,r,not) {
+		var last;
+
+		// Look for common filter expressions
+		while ( t  && t != last ) {
+			last = t;
+
+			var p = jQuery.parse, m;
+
+			for ( var i = 0; p[i]; i++ ) {
+				m = p[i].exec( t );
+
+				if ( m ) {
+					// Remove what we just matched
+					t = t.substring( m[0].length );
+
+					m[2] = m[2].replace(/\\/g, "");
+					break;
+				}
+			}
+
+			if ( !m )
+				break;
+
+			// :not() is a special case that can be optimized by
+			// keeping it out of the expression list
+			if ( m[1] == ":" && m[2] == "not" )
+				r = jQuery.filter(m[3], r, true).r;
+
+			// We can get a big speed boost by filtering by class here
+			else if ( m[1] == "." )
+				r = jQuery.classFilter(r, m[2], not);
+
+<span style='color:red'>			else if ( m[1] == "@" ) {</span>
+<span style='color:red'>				var tmp = [], type = m[3];</span>
+				
+<span style='color:red'>				for ( var i = 0, rl = r.length; i &lt; rl; i++ ) {</span>
+<span style='color:red'>					var a = r[i], z = a[ jQuery.props[m[2]] || m[2] ];</span>
+					
+<span style='color:red'><i>					if ( z == null || /href|src/.test(m[2]) )</i> <b>//modified in jquery-1.1.4.js</b></span>
+<span style='color:red'><i>						z = jQuery.attr(a,m[2]);</i> <b>//modified in jquery-1.1.4.js</b></span>
+
+<span style='color:red'>					if ( (type == "" && !!z ||</span>
+<span style='color:red'>						 type == "=" && z == m[5] ||</span>
+<span style='color:red'>						 type == "!=" && z != m[5] ||</span>
+<span style='color:red'>						 type == "^=" && z && !z.indexOf(m[5]) ||</span>
+<span style='color:red'>						 type == "$=" && z.substr(z.length - m[5].length) == m[5] ||</span>
+<span style='color:red'>						 (type == "*=" || type == "~=") && z.indexOf(m[5]) &gt;= 0) ^ not )</span>
+<span style='color:red'>							tmp.push( a );</span>
+				}
+				
+<span style='color:red'>				r = tmp;</span>
+
+<span style='color:red'>			// We can get a speed boost by handling nth-child here</span>
+<span style='color:red'>			} else if ( m[1] == ":" && m[2] == "nth-child" ) {</span>
+<span style='color:red'>				var num = jQuery.mergeNum++, tmp = [],</span>
+<span style='color:red'>					test = /(\d*)n\+?(\d*)/.exec(</span>
+<span style='color:red'>						m[3] == "even" && "2n" || m[3] == "odd" && "2n+1" ||</span>
+<span style='color:red'>						!/\D/.test(m[3]) && "n+" + m[3] || m[3]),</span>
+<span style='color:red'>					first = (test[1] || 1) - 0, last = test[2] - 0;</span>
+
+<span style='color:red'>				for ( var i = 0, rl = r.length; i &lt; rl; i++ ) {</span>
+<span style='color:red'>					var node = r[i], parentNode = node.parentNode;</span>
+
+<span style='color:red'>					if ( num != parentNode.mergeNum ) {</span>
+<span style='color:red'>						var c = 1;</span>
+
+<span style='color:red'>						for ( var n = parentNode.firstChild; n; n = n.nextSibling )</span>
+<span style='color:red'>							if ( n.nodeType == 1 )</span>
+<span style='color:red'>								n.nodeIndex = c++;</span>
+
+<span style='color:red'>						parentNode.mergeNum = num;</span>
+					}
+
+<span style='color:red'>					var add = false;</span>
+
+<span style='color:red'>					if ( first == 1 ) {</span>
+<span style='color:red'>						if ( last == 0 || node.nodeIndex == last )</span>
+<span style='color:red'>							add = true;</span>
+<span style='color:red'>					} else if ( (node.nodeIndex + last) % first == 0 )</span>
+<span style='color:red'>						add = true;</span>
+
+<span style='color:red'>					if ( add ^ not )</span>
+<span style='color:red'>						tmp.push( node );</span>
+				}
+
+<span style='color:red'>				r = tmp;</span>
+
+			// Otherwise, find the expression to execute
+<span style='color:red'>			} else {</span>
+				var f = jQuery.expr[m[1]];
+				if ( typeof f != "string" )
+					f = jQuery.expr[m[1]][m[2]];
+
+				// Build a custom macro to enclose it
+<span style='color:red'><i>				eval("f = function(a,i){return " + f + "}");</i> <b>//modified in jquery-1.1.4.js</b></span>
+
+				// Execute it against the current filter
+				r = jQuery.grep( r, f, not );
+			}
+		}
+
+		// Return an array of filtered elements (r)
+		// and the modified expression string (t)
+		return { r: r, t: t };
+	}
+</pre>
+<b>jQuery.filter (jquery-1.1.4.js)</b><br/>
+<pre>
+ function (t,r,not) {
+		var last;
+
+		// Look for common filter expressions
+		while ( t  && t != last ) {
+			last = t;
+
+			var p = jQuery.parse, m;
+
+			for ( var i = 0; p[i]; i++ ) {
+				m = p[i].exec( t );
+
+				if ( m ) {
+					// Remove what we just matched
+					t = t.substring( m[0].length );
+
+					m[2] = m[2].replace(/\\/g, "");
+					break;
+				}
+			}
+
+			if ( !m )
+				break;
+
+			// :not() is a special case that can be optimized by
+			// keeping it out of the expression list
+			if ( m[1] == ":" && m[2] == "not" )
+				r = jQuery.filter(m[3], r, true).r;
+
+			// We can get a big speed boost by filtering by class here
+			else if ( m[1] == "." )
+				r = jQuery.classFilter(r, m[2], not);
+
+<i>			else if ( m[1] == "@" ) {</i> <b>//modified in jquery-1.2.js</b>
+				var tmp = [], type = m[3];
+				
+				for ( var i = 0, rl = r.length; i &lt; rl; i++ ) {
+					var a = r[i], z = a[ jQuery.props[m[2]] || m[2] ];
+					
+<span style='color:red'>					if ( z == null || /href|src|selected/.test(m[2]) )</span>
+<span style='color:red'>						z = jQuery.attr(a,m[2]) || '';</span>
+
+					if ( (type == "" && !!z ||
+						 type == "=" && z == m[5] ||
+						 type == "!=" && z != m[5] ||
+						 type == "^=" && z && !z.indexOf(m[5]) ||
+						 type == "$=" && z.substr(z.length - m[5].length) == m[5] ||
+						 (type == "*=" || type == "~=") && z.indexOf(m[5]) &gt;= 0) ^ not )
+							tmp.push( a );
+				}
+				
+				r = tmp;
+
+			// We can get a speed boost by handling nth-child here
+			} else if ( m[1] == ":" && m[2] == "nth-child" ) {
+<i>				var num = jQuery.mergeNum++, tmp = [],</i> <b>//modified in jquery-1.2.js</b>
+					test = /(\d*)n\+?(\d*)/.exec(
+						m[3] == "even" && "2n" || m[3] == "odd" && "2n+1" ||
+						!/\D/.test(m[3]) && "n+" + m[3] || m[3]),
+					first = (test[1] || 1) - 0, last = test[2] - 0;
+
+				for ( var i = 0, rl = r.length; i &lt; rl; i++ ) {
+<i>					var node = r[i], parentNode = node.parentNode;</i> <b>//modified in jquery-1.2.js</b>
+
+<i>					if ( num != parentNode.mergeNum ) {</i> <b>//modified in jquery-1.2.js</b>
+						var c = 1;
+
+						for ( var n = parentNode.firstChild; n; n = n.nextSibling )
+							if ( n.nodeType == 1 )
+								n.nodeIndex = c++;
+
+<i>						parentNode.mergeNum = num;</i> <b>//modified in jquery-1.2.js</b>
+					}
+
+					var add = false;
+
+					if ( first == 1 ) {
+						if ( last == 0 || node.nodeIndex == last )
+							add = true;
+					} else if ( (node.nodeIndex + last) % first == 0 )
+						add = true;
+
+					if ( add ^ not )
+						tmp.push( node );
+				}
+
+				r = tmp;
+
+			// Otherwise, find the expression to execute
+			} else {
+				var f = jQuery.expr[m[1]];
+				if ( typeof f != "string" )
+					f = jQuery.expr[m[1]][m[2]];
+
+				// Build a custom macro to enclose it
+<span style='color:red'>				f = eval("false||function(a,i){return " + f + "}");</span>
+
+				// Execute it against the current filter
+				r = jQuery.grep( r, f, not );
+			}
+		}
+
+		// Return an array of filtered elements (r)
+		// and the modified expression string (t)
+		return { r: r, t: t };
+	}
+</pre>
+<b>jQuery.filter (jquery-1.2.js)</b><br/>
+<pre>
+ function (t,r,not) {
+		var last;
+
+		// Look for common filter expressions
+		while ( t  && t != last ) {
+			last = t;
+
+			var p = jQuery.parse, m;
+
+			for ( var i = 0; p[i]; i++ ) {
+				m = p[i].exec( t );
+
+				if ( m ) {
+					// Remove what we just matched
+					t = t.substring( m[0].length );
+
+					m[2] = m[2].replace(/\\/g, "");
+					break;
+				}
+			}
+
+			if ( !m )
+				break;
+
+			// :not() is a special case that can be optimized by
+			// keeping it out of the expression list
+			if ( m[1] == ":" && m[2] == "not" )
+<i>				r = jQuery.filter(m[3], r, true).r;</i> <b>//modified in jquery-1.2.2b.js</b>
+
+			// We can get a big speed boost by filtering by class here
+			else if ( m[1] == "." )
+				r = jQuery.classFilter(r, m[2], not);
+
+<span style='color:red'>			else if ( m[1] == "[" ) {</span>
+				var tmp = [], type = m[3];
+				
+				for ( var i = 0, rl = r.length; i &lt; rl; i++ ) {
+					var a = r[i], z = a[ jQuery.props[m[2]] || m[2] ];
+					
+					if ( z == null || /href|src|selected/.test(m[2]) )
+						z = jQuery.attr(a,m[2]) || '';
+
+					if ( (type == "" && !!z ||
+						 type == "=" && z == m[5] ||
+						 type == "!=" && z != m[5] ||
+						 type == "^=" && z && !z.indexOf(m[5]) ||
+						 type == "$=" && z.substr(z.length - m[5].length) == m[5] ||
+						 (type == "*=" || type == "~=") && z.indexOf(m[5]) &gt;= 0) ^ not )
+							tmp.push( a );
+				}
+				
+				r = tmp;
+
+			// We can get a speed boost by handling nth-child here
+			} else if ( m[1] == ":" && m[2] == "nth-child" ) {
+<span style='color:red'>				var merge = {}, tmp = [],</span>
+<i>					test = /(\d*)n\+?(\d*)/.exec(</i> <b>//modified in jquery-1.2.2b.js</b>
+						m[3] == "even" && "2n" || m[3] == "odd" && "2n+1" ||
+<i>						!/\D/.test(m[3]) && "n+" + m[3] || m[3]),</i> <b>//modified in jquery-1.2.2b.js</b>
+<i>					first = (test[1] || 1) - 0, last = test[2] - 0;</i> <b>//modified in jquery-1.2.2b.js</b>
+
+				for ( var i = 0, rl = r.length; i &lt; rl; i++ ) {
+<span style='color:red'>					var node = r[i], parentNode = node.parentNode, id = jQuery.data(parentNode);</span>
+
+<span style='color:red'>					if ( !merge[id] ) {</span>
+						var c = 1;
+
+						for ( var n = parentNode.firstChild; n; n = n.nextSibling )
+							if ( n.nodeType == 1 )
+								n.nodeIndex = c++;
+
+<span style='color:red'>						merge[id] = true;</span>
+					}
+
+					var add = false;
+
+<i>					if ( first == 1 ) {</i> <b>//modified in jquery-1.2.2b.js</b>
+<i>						if ( last == 0 || node.nodeIndex == last )</i> <b>//modified in jquery-1.2.2b.js</b>
+							add = true;
+<i>					} else if ( (node.nodeIndex + last) % first == 0 )</i> <b>//modified in jquery-1.2.2b.js</b>
+						add = true;
+
+					if ( add ^ not )
+						tmp.push( node );
+				}
+
+				r = tmp;
+
+			// Otherwise, find the expression to execute
+			} else {
+				var f = jQuery.expr[m[1]];
+				if ( typeof f != "string" )
+					f = jQuery.expr[m[1]][m[2]];
+
+				// Build a custom macro to enclose it
+				f = eval("false||function(a,i){return " + f + "}");
+
+				// Execute it against the current filter
+				r = jQuery.grep( r, f, not );
+			}
+		}
+
+		// Return an array of filtered elements (r)
+		// and the modified expression string (t)
+		return { r: r, t: t };
+	}
+</pre>
+<b>jquery-1.2.1: no change</b><br/><br/>
+<b>jQuery.filter (jquery-1.2.2b.js)</b><br/>
+<pre>
+ function (t,r,not) {
+		var last;
+
+		// Look for common filter expressions
+		while ( t && t != last ) {
+			last = t;
+
+			var p = jQuery.parse, m;
+
+			for ( var i = 0; p[i]; i++ ) {
+				m = p[i].exec( t );
+
+				if ( m ) {
+					// Remove what we just matched
+					t = t.substring( m[0].length );
+
+					m[2] = m[2].replace(/\\/g, "");
+					break;
+				}
+			}
+
+			if ( !m )
+				break;
+
+			// :not() is a special case that can be optimized by
+			// keeping it out of the expression list
+			if ( m[1] == ":" && m[2] == "not" )
+<span style='color:red'>				// optimize if only one selector found (most common case)</span>
+<span style='color:red'>				r = isSimple.test( m[3] ) ?</span>
+<span style='color:red'>					jQuery.filter(m[3], r, true).r :</span>
+<span style='color:red'>					jQuery( r ).not( m[3] );</span>
+
+			// We can get a big speed boost by filtering by class here
+			else if ( m[1] == "." )
+				r = jQuery.classFilter(r, m[2], not);
+
+			else if ( m[1] == "[" ) {
+				var tmp = [], type = m[3];
+				
+				for ( var i = 0, rl = r.length; i &lt; rl; i++ ) {
+					var a = r[i], z = a[ jQuery.props[m[2]] || m[2] ];
+					
+					if ( z == null || /href|src|selected/.test(m[2]) )
+						z = jQuery.attr(a,m[2]) || '';
+
+					if ( (type == "" && !!z ||
+						 type == "=" && z == m[5] ||
+						 type == "!=" && z != m[5] ||
+						 type == "^=" && z && !z.indexOf(m[5]) ||
+						 type == "$=" && z.substr(z.length - m[5].length) == m[5] ||
+						 (type == "*=" || type == "~=") && z.indexOf(m[5]) &gt;= 0) ^ not )
+							tmp.push( a );
+				}
+				
+				r = tmp;
+
+			// We can get a speed boost by handling nth-child here
+			} else if ( m[1] == ":" && m[2] == "nth-child" ) {
+				var merge = {}, tmp = [],
+<span style='color:red'>					// parse equations like 'even', 'odd', '5', '2n', '3n+2', '4n-1', '-n+6'</span>
+<span style='color:red'>					test = /(-?)(\d*)n((?:\+|-)?\d*)/.exec(</span>
+						m[3] == "even" && "2n" || m[3] == "odd" && "2n+1" ||
+<span style='color:red'>						!/\D/.test(m[3]) && "0n+" + m[3] || m[3]),</span>
+<span style='color:red'>					// calculate the numbers (first)n+(last) including if they are negative</span>
+<span style='color:red'>					first = (test[1] + (test[2] || 1)) - 0, last = test[3] - 0;</span>
+ 
+<span style='color:red'>				// loop through all the elements left in the jQuery object</span>
+				for ( var i = 0, rl = r.length; i &lt; rl; i++ ) {
+					var node = r[i], parentNode = node.parentNode, id = jQuery.data(parentNode);
+
+					if ( !merge[id] ) {
+						var c = 1;
+
+						for ( var n = parentNode.firstChild; n; n = n.nextSibling )
+							if ( n.nodeType == 1 )
+								n.nodeIndex = c++;
+
+						merge[id] = true;
+					}
+
+					var add = false;
+
+<span style='color:red'>					if ( first == 0 ) {</span>
+<span style='color:red'>						if ( node.nodeIndex == last )</span>
+							add = true;
+<span style='color:red'>					} else if ( (node.nodeIndex - last) % first == 0 && (node.nodeIndex - last) / first &gt;= 0 )</span>
+						add = true;
+
+					if ( add ^ not )
+						tmp.push( node );
+				}
+
+				r = tmp;
+
+			// Otherwise, find the expression to execute
+			} else {
+<i>				var f = jQuery.expr[m[1]];</i> <b>//modified in jquery-1.2.3a.js</b>
+<i>				if ( typeof f != "string" )</i> <b>//modified in jquery-1.2.3a.js</b>
+<i>					f = jQuery.expr[m[1]][m[2]];</i> <b>//modified in jquery-1.2.3a.js</b>
+
+<i>				// Build a custom macro to enclose it</i> <b>//modified in jquery-1.2.3a.js</b>
+<i>				f = eval("false||function(a,i){return " + f + "}");</i> <b>//modified in jquery-1.2.3a.js</b>
+
+				// Execute it against the current filter
+<i>				r = jQuery.grep( r, f, not );</i> <b>//modified in jquery-1.2.3a.js</b>
+			}
+		}
+
+		// Return an array of filtered elements (r)
+		// and the modified expression string (t)
+		return { r: r, t: t };
+	}
+</pre>
+<b>jquery-1.2.2b2 - jquery-1.2.2: no change</b><br/><br/>
+<b>jQuery.filter (jquery-1.2.3a.js)</b><br/>
+<pre>
+<i> function (t,r,not) {</i> <b>//modified in jquery-1.3b1.js</b>
+<i>		var last;</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>		// Look for common filter expressions</i> <b>//modified in jquery-1.3b1.js</b>
+<i>		while ( t && t != last ) {</i> <b>//modified in jquery-1.3b1.js</b>
+<i>			last = t;</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>			var p = jQuery.parse, m;</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>			for ( var i = 0; p[i]; i++ ) {</i> <b>//modified in jquery-1.3b1.js</b>
+<i>				m = p[i].exec( t );</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>				if ( m ) {</i> <b>//modified in jquery-1.3b1.js</b>
+<i>					// Remove what we just matched</i> <b>//modified in jquery-1.3b1.js</b>
+<i>					t = t.substring( m[0].length );</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>					m[2] = m[2].replace(/\\/g, "");</i> <b>//modified in jquery-1.3b1.js</b>
+					break;
+				}
+			}
+
+<i>			if ( !m )</i> <b>//modified in jquery-1.3b1.js</b>
+				break;
+
+<i>			// :not() is a special case that can be optimized by</i> <b>//modified in jquery-1.3b1.js</b>
+<i>			// keeping it out of the expression list</i> <b>//modified in jquery-1.3b1.js</b>
+<i>			if ( m[1] == ":" && m[2] == "not" )</i> <b>//modified in jquery-1.3b1.js</b>
+<i>				// optimize if only one selector found (most common case)</i> <b>//modified in jquery-1.3b1.js</b>
+<i>				r = isSimple.test( m[3] ) ?</i> <b>//modified in jquery-1.3b1.js</b>
+<i>					jQuery.filter(m[3], r, true).r :</i> <b>//modified in jquery-1.3b1.js</b>
+<i>					jQuery( r ).not( m[3] );</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>			// We can get a big speed boost by filtering by class here</i> <b>//modified in jquery-1.3b1.js</b>
+<i>			else if ( m[1] == "." )</i> <b>//modified in jquery-1.3b1.js</b>
+<i>				r = jQuery.classFilter(r, m[2], not);</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>			else if ( m[1] == "[" ) {</i> <b>//modified in jquery-1.3b1.js</b>
+<i>				var tmp = [], type = m[3];</i> <b>//modified in jquery-1.3b1.js</b>
+				
+<i>				for ( var i = 0, rl = r.length; i &lt; rl; i++ ) {</i> <b>//modified in jquery-1.3b1.js</b>
+<i>					var a = r[i], z = a[ jQuery.props[m[2]] || m[2] ];</i> <b>//modified in jquery-1.3b1.js</b>
+					
+<i>					if ( z == null || /href|src|selected/.test(m[2]) )</i> <b>//modified in jquery-1.3b1.js</b>
+<i>						z = jQuery.attr(a,m[2]) || '';</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>					if ( (type == "" && !!z ||</i> <b>//modified in jquery-1.3b1.js</b>
+<i>						 type == "=" && z == m[5] ||</i> <b>//modified in jquery-1.3b1.js</b>
+<i>						 type == "!=" && z != m[5] ||</i> <b>//modified in jquery-1.3b1.js</b>
+<i>						 type == "^=" && z && !z.indexOf(m[5]) ||</i> <b>//modified in jquery-1.3b1.js</b>
+<i>						 type == "$=" && z.substr(z.length - m[5].length) == m[5] ||</i> <b>//modified in jquery-1.3b1.js</b>
+<i>						 (type == "*=" || type == "~=") && z.indexOf(m[5]) &gt;= 0) ^ not )</i> <b>//modified in jquery-1.3b1.js</b>
+<i>							tmp.push( a );</i> <b>//modified in jquery-1.3b1.js</b>
+				}
+				
+<i>				r = tmp;</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>			// We can get a speed boost by handling nth-child here</i> <b>//modified in jquery-1.3b1.js</b>
+<i>			} else if ( m[1] == ":" && m[2] == "nth-child" ) {</i> <b>//modified in jquery-1.3b1.js</b>
+<i>				var merge = {}, tmp = [],</i> <b>//modified in jquery-1.3b1.js</b>
+<i>					// parse equations like 'even', 'odd', '5', '2n', '3n+2', '4n-1', '-n+6'</i> <b>//modified in jquery-1.3b1.js</b>
+<i>					test = /(-?)(\d*)n((?:\+|-)?\d*)/.exec(</i> <b>//modified in jquery-1.3b1.js</b>
+<i>						m[3] == "even" && "2n" || m[3] == "odd" && "2n+1" ||</i> <b>//modified in jquery-1.3b1.js</b>
+<i>						!/\D/.test(m[3]) && "0n+" + m[3] || m[3]),</i> <b>//modified in jquery-1.3b1.js</b>
+<i>					// calculate the numbers (first)n+(last) including if they are negative</i> <b>//modified in jquery-1.3b1.js</b>
+<i>					first = (test[1] + (test[2] || 1)) - 0, last = test[3] - 0;</i> <b>//modified in jquery-1.3b1.js</b>
+ 
+<i>				// loop through all the elements left in the jQuery object</i> <b>//modified in jquery-1.3b1.js</b>
+<i>				for ( var i = 0, rl = r.length; i &lt; rl; i++ ) {</i> <b>//modified in jquery-1.3b1.js</b>
+<i>					var node = r[i], parentNode = node.parentNode, id = jQuery.data(parentNode);</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>					if ( !merge[id] ) {</i> <b>//modified in jquery-1.3b1.js</b>
+<i>						var c = 1;</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>						for ( var n = parentNode.firstChild; n; n = n.nextSibling )</i> <b>//modified in jquery-1.3b1.js</b>
+<i>							if ( n.nodeType == 1 )</i> <b>//modified in jquery-1.3b1.js</b>
+<i>								n.nodeIndex = c++;</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>						merge[id] = true;</i> <b>//modified in jquery-1.3b1.js</b>
+					}
+
+<i>					var add = false;</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>					if ( first == 0 ) {</i> <b>//modified in jquery-1.3b1.js</b>
+<i>						if ( node.nodeIndex == last )</i> <b>//modified in jquery-1.3b1.js</b>
+<i>							add = true;</i> <b>//modified in jquery-1.3b1.js</b>
+<i>					} else if ( (node.nodeIndex - last) % first == 0 && (node.nodeIndex - last) / first &gt;= 0 )</i> <b>//modified in jquery-1.3b1.js</b>
+<i>						add = true;</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>					if ( add ^ not )</i> <b>//modified in jquery-1.3b1.js</b>
+<i>						tmp.push( node );</i> <b>//modified in jquery-1.3b1.js</b>
+				}
+
+<i>				r = tmp;</i> <b>//modified in jquery-1.3b1.js</b>
+
+<i>			// Otherwise, find the expression to execute</i> <b>//modified in jquery-1.3b1.js</b>
+<i>			} else {</i> <b>//modified in jquery-1.3b1.js</b>
+<span style='color:red'><i>				var fn = jQuery.expr[ m[1] ];</i> <b>//modified in jquery-1.3b1.js</b></span>
+<span style='color:red'><i>				if ( typeof fn == "object" )</i> <b>//modified in jquery-1.3b1.js</b></span>
+<span style='color:red'><i>					fn = fn[ m[2] ];</i> <b>//modified in jquery-1.3b1.js</b></span>
+
+<span style='color:red'><i>				if ( typeof fn == "string" )</i> <b>//modified in jquery-1.3b1.js</b></span>
+<span style='color:red'><i>					fn = eval("false||function(a,i){return " + fn + ";}");</i> <b>//modified in jquery-1.3b1.js</b></span>
+
+<i>				// Execute it against the current filter</i> <b>//modified in jquery-1.3b1.js</b>
+<span style='color:red'><i>				r = jQuery.grep( r, function(elem, i){</i> <b>//modified in jquery-1.3b1.js</b></span>
+<span style='color:red'><i>					return fn(elem, i, m, r);</i> <b>//modified in jquery-1.3b1.js</b></span>
+<span style='color:red'><i>				}, not );</i> <b>//modified in jquery-1.3b1.js</b></span>
+			}
+		}
+
+<i>		// Return an array of filtered elements (r)</i> <b>//modified in jquery-1.3b1.js</b>
+<i>		// and the modified expression string (t)</i> <b>//modified in jquery-1.3b1.js</b>
+<i>		return { r: r, t: t };</i> <b>//modified in jquery-1.3b1.js</b>
+	}
+</pre>
+<b>jquery-1.2.3b - jquery-1.2.6: no change</b><br/><br/>
+<b>jQuery.filter (jquery-1.3b1.js)</b><br/>
+<pre>
+<span style='color:red'> function (expr, set, inplace){</span>
+<span style='color:red'><i>	var old = expr, result = [], curLoop = set, match;</i> <b>//modified in jquery-1.3b2.js</b></span>
+
+<span style='color:red'>	while ( expr && set.length ) {</span>
+<span style='color:red'>		for ( var type in Expr.filter ) {</span>
+<span style='color:red'>			if ( (match = Expr.match[ type ].exec( expr )) != null ) {</span>
+<span style='color:red'><i>				var anyFound = false, filter = Expr.filter[ type ], goodArray = null;</i> <b>//modified in jquery-1.3b2.js</b></span>
+
+<span style='color:red'>				if ( curLoop == result ) {</span>
+<span style='color:red'>					result = [];</span>
+				}
+
+<span style='color:red'>				if ( Expr.preFilter[ type ] ) {</span>
+<span style='color:red'>					match = Expr.preFilter[ type ]( match, curLoop );</span>
+
+<span style='color:red'>					if ( match[0] === true ) {</span>
+<span style='color:red'>						goodArray = [];</span>
+<span style='color:red'>						var last = null, elem;</span>
+<span style='color:red'>						for ( var i = 0; (elem = curLoop[i]) !== undefined; i++ ) {</span>
+<span style='color:red'>							if ( elem && last !== elem ) {</span>
+<span style='color:red'>								goodArray.push( elem );</span>
+<span style='color:red'>								last = elem;</span>
+							}
+						}
+					}
+
+				}
+
+<span style='color:red'><i>				var goodPos = 0, found, item;</i> <b>//modified in jquery-1.3b2.js</b></span>
+
+<span style='color:red'>				for ( var i = 0; (item = curLoop[i]) !== undefined; i++ ) {</span>
+<span style='color:red'>					if ( item ) {</span>
+<span style='color:red'>						if ( goodArray && item != goodArray[goodPos] ) {</span>
+<span style='color:red'>							goodPos++;</span>
+						}
+
+<span style='color:red'>						found = filter( item, match, goodPos, goodArray );</span>
+<span style='color:red'>						if ( inplace && found != null ) {</span>
+<span style='color:red'>							curLoop[i] = found ? curLoop[i] : false;</span>
+<span style='color:red'>							if ( found ) {</span>
+<span style='color:red'>								anyFound = true;</span>
+							}
+<span style='color:red'>						} else if ( found ) {</span>
+<span style='color:red'>							result.push( item );</span>
+<span style='color:red'>							anyFound = true;</span>
+						}
+					}
+				}
+
+<span style='color:red'>				if ( found !== undefined ) {</span>
+<span style='color:red'>					if ( !inplace ) {</span>
+<span style='color:red'>						curLoop = result;</span>
+					}
+
+<span style='color:red'>					expr = expr.replace( Expr.match[ type ], "" );</span>
+
+<span style='color:red'>					if ( !anyFound ) {</span>
+<span style='color:red'>						return [];</span>
+					}
+
+					break;
+				}
+			}
+		}
+
+
+<span style='color:red'>		expr = expr.replace(/\s*,\s*/, "");</span>
+
+<span style='color:red'>		// Improper expression</span>
+<span style='color:red'>		if ( expr == old ) {</span>
+<span style='color:red'>			throw "Syntax error, unrecognized expression: " + expr;</span>
+		}
+
+<span style='color:red'>		old = expr;</span>
+	}
+
+<span style='color:red'>	return curLoop;</span>
+}
+</pre>
+<b>jQuery.filter (jquery-1.3b2.js)</b><br/>
+<pre>
+<i> function (expr, set, inplace){</i> <b>//modified in jquery-1.3rc1.js</b>
+<span style='color:red'>	var old = expr, result = [], curLoop = set, match, anyFound;</span>
+
+	while ( expr && set.length ) {
+		for ( var type in Expr.filter ) {
+			if ( (match = Expr.match[ type ].exec( expr )) != null ) {
+<span style='color:red'>				var filter = Expr.filter[ type ], goodArray = null, goodPos = 0, found, item;</span>
+<span style='color:red'>				anyFound = false;</span>
+
+				if ( curLoop == result ) {
+					result = [];
+				}
+
+				if ( Expr.preFilter[ type ] ) {
+<i>					match = Expr.preFilter[ type ]( match, curLoop );</i> <b>//modified in jquery-1.3rc1.js</b>
+
+<i>					if ( match[0] === true ) {</i> <b>//modified in jquery-1.3rc1.js</b>
+						goodArray = [];
+						var last = null, elem;
+						for ( var i = 0; (elem = curLoop[i]) !== undefined; i++ ) {
+							if ( elem && last !== elem ) {
+								goodArray.push( elem );
+								last = elem;
+							}
+						}
+					}
+				}
+
+				for ( var i = 0; (item = curLoop[i]) !== undefined; i++ ) {
+					if ( item ) {
+						if ( goodArray && item != goodArray[goodPos] ) {
+							goodPos++;
+						}
+
+						found = filter( item, match, goodPos, goodArray );
+						if ( inplace && found != null ) {
+<i>							curLoop[i] = found ? curLoop[i] : false;</i> <b>//modified in jquery-1.3rc1.js</b>
+<i>							if ( found ) {</i> <b>//modified in jquery-1.3rc1.js</b>
+								anyFound = true;
+							}
+<i>						} else if ( found ) {</i> <b>//modified in jquery-1.3rc1.js</b>
+							result.push( item );
+							anyFound = true;
+						}
+					}
+				}
+
+				if ( found !== undefined ) {
+					if ( !inplace ) {
+						curLoop = result;
+					}
+
+					expr = expr.replace( Expr.match[ type ], "" );
+
+					if ( !anyFound ) {
+						return [];
+					}
+
+					break;
+				}
+			}
+		}
+
+		expr = expr.replace(/\s*,\s*/, "");
+
+		// Improper expression
+		if ( expr == old ) {
+<span style='color:red'>			if ( anyFound == null ) {</span>
+				throw "Syntax error, unrecognized expression: " + expr;
+<span style='color:red'>			} else {</span>
+				break;
+			}
+		}
+
+		old = expr;
+	}
+
+	return curLoop;
+}
+</pre>
+<b>jQuery.filter (jquery-1.3rc1.js)</b><br/>
+<pre>
+<span style='color:red'> function (expr, set, inplace, not){</span>
+	var old = expr, result = [], curLoop = set, match, anyFound;
+
+	while ( expr && set.length ) {
+		for ( var type in Expr.filter ) {
+			if ( (match = Expr.match[ type ].exec( expr )) != null ) {
+				var filter = Expr.filter[ type ], goodArray = null, goodPos = 0, found, item;
+				anyFound = false;
+
+				if ( curLoop == result ) {
+					result = [];
+				}
+
+				if ( Expr.preFilter[ type ] ) {
+<span style='color:red'>					match = Expr.preFilter[ type ]( match, curLoop, inplace, result, not );</span>
+
+<span style='color:red'>					if ( !match ) {</span>
+<span style='color:red'>						anyFound = found = true;</span>
+<span style='color:red'>					} else if ( match[0] === true ) {</span>
+						goodArray = [];
+						var last = null, elem;
+						for ( var i = 0; (elem = curLoop[i]) !== undefined; i++ ) {
+							if ( elem && last !== elem ) {
+								goodArray.push( elem );
+								last = elem;
+							}
+						}
+					}
+				}
+
+<span style='color:red'>				if ( match ) {</span>
+					for ( var i = 0; (item = curLoop[i]) !== undefined; i++ ) {
+						if ( item ) {
+							if ( goodArray && item != goodArray[goodPos] ) {
+								goodPos++;
+							}
+	
+							found = filter( item, match, goodPos, goodArray );
+<span style='color:red'>							var pass = not ^ !!found;</span>
+
+							if ( inplace && found != null ) {
+<span style='color:red'>								if ( pass ) {</span>
+									anyFound = true;
+								} else {
+<span style='color:red'>									curLoop[i] = false;</span>
+								}
+<span style='color:red'>							} else if ( pass ) {</span>
+								result.push( item );
+								anyFound = true;
+							}
+						}
+					}
+				}
+
+				if ( found !== undefined ) {
+					if ( !inplace ) {
+						curLoop = result;
+					}
+
+					expr = expr.replace( Expr.match[ type ], "" );
+
+					if ( !anyFound ) {
+						return [];
+					}
+
+					break;
+				}
+			}
+		}
+
+		expr = expr.replace(/\s*,\s*/, "");
+
+		// Improper expression
+		if ( expr == old ) {
+			if ( anyFound == null ) {
+				throw "Syntax error, unrecognized expression: " + expr;
+			} else {
+				break;
+			}
+		}
+
+		old = expr;
+	}
+
+	return curLoop;
+}
+</pre>
+<b>jQuery.filter (jquery-1.3rc2.js)</b><br/>
+<pre>
+ function (expr, set, inplace, not){
+	var old = expr, result = [], curLoop = set, match, anyFound;
+
+	while ( expr && set.length ) {
+		for ( var type in Expr.filter ) {
+			if ( (match = Expr.match[ type ].exec( expr )) != null ) {
+<i>				var filter = Expr.filter[ type ], goodArray = null, goodPos = 0, found, item;</i> <b>//modified in jquery-1.3.1rc1.js</b>
+				anyFound = false;
+
+				if ( curLoop == result ) {
+					result = [];
+				}
+
+				if ( Expr.preFilter[ type ] ) {
+					match = Expr.preFilter[ type ]( match, curLoop, inplace, result, not );
+
+					if ( !match ) {
+						anyFound = found = true;
+<span style='color:red'>					} else if ( match === true ) {</span>
+<span style='color:red'>						continue;</span>
+<i>					} else if ( match[0] === true ) {</i> <b>//modified in jquery-1.3.1rc1.js</b>
+<i>						goodArray = [];</i> <b>//modified in jquery-1.3.1rc1.js</b>
+<i>						var last = null, elem;</i> <b>//modified in jquery-1.3.1rc1.js</b>
+<i>						for ( var i = 0; (elem = curLoop[i]) !== undefined; i++ ) {</i> <b>//modified in jquery-1.3.1rc1.js</b>
+<i>							if ( elem && last !== elem ) {</i> <b>//modified in jquery-1.3.1rc1.js</b>
+<i>								goodArray.push( elem );</i> <b>//modified in jquery-1.3.1rc1.js</b>
+<i>								last = elem;</i> <b>//modified in jquery-1.3.1rc1.js</b>
+							}
+						}
+					}
+				}
+
+				if ( match ) {
+<i>					for ( var i = 0; (item = curLoop[i]) !== undefined; i++ ) {</i> <b>//modified in jquery-1.3.1rc1.js</b>
+						if ( item ) {
+<i>							if ( goodArray && item != goodArray[goodPos] ) {</i> <b>//modified in jquery-1.3.1rc1.js</b>
+<i>								goodPos++;</i> <b>//modified in jquery-1.3.1rc1.js</b>
+							}
+	
+<i>							found = filter( item, match, goodPos, goodArray );</i> <b>//modified in jquery-1.3.1rc1.js</b>
+							var pass = not ^ !!found;
+
+							if ( inplace && found != null ) {
+								if ( pass ) {
+									anyFound = true;
+								} else {
+									curLoop[i] = false;
+								}
+							} else if ( pass ) {
+								result.push( item );
+								anyFound = true;
+							}
+						}
+					}
+				}
+
+				if ( found !== undefined ) {
+					if ( !inplace ) {
+						curLoop = result;
+					}
+
+					expr = expr.replace( Expr.match[ type ], "" );
+
+					if ( !anyFound ) {
+						return [];
+					}
+
+					break;
+				}
+			}
+		}
+
+		expr = expr.replace(/\s*,\s*/, "");
+
+		// Improper expression
+		if ( expr == old ) {
+			if ( anyFound == null ) {
+				throw "Syntax error, unrecognized expression: " + expr;
+			} else {
+				break;
+			}
+		}
+
+		old = expr;
+	}
+
+	return curLoop;
+}
+</pre>
+<b>jquery-1.3: no change</b><br/><br/>
+<b>jQuery.filter (jquery-1.3.1rc1.js)</b><br/>
+<pre>
+ function (expr, set, inplace, not){
+<i>	var old = expr, result = [], curLoop = set, match, anyFound;</i> <b>//modified in jquery-1.3.2.js</b>
+
+	while ( expr && set.length ) {
+		for ( var type in Expr.filter ) {
+			if ( (match = Expr.match[ type ].exec( expr )) != null ) {
+<span style='color:red'>				var filter = Expr.filter[ type ], found, item;</span>
+				anyFound = false;
+
+				if ( curLoop == result ) {
+					result = [];
+				}
+
+				if ( Expr.preFilter[ type ] ) {
+<i>					match = Expr.preFilter[ type ]( match, curLoop, inplace, result, not );</i> <b>//modified in jquery-1.3.2.js</b>
+
+					if ( !match ) {
+						anyFound = found = true;
+					} else if ( match === true ) {
+						continue;
+					}
+				}
+
+				if ( match ) {
+<span style='color:red'>					for ( var i = 0; (item = curLoop[i]) != null; i++ ) {</span>
+						if ( item ) {
+<span style='color:red'>							found = filter( item, match, i, curLoop );</span>
+							var pass = not ^ !!found;
+
+							if ( inplace && found != null ) {
+								if ( pass ) {
+									anyFound = true;
+								} else {
+									curLoop[i] = false;
+								}
+							} else if ( pass ) {
+								result.push( item );
+								anyFound = true;
+							}
+						}
+					}
+				}
+
+				if ( found !== undefined ) {
+					if ( !inplace ) {
+						curLoop = result;
+					}
+
+					expr = expr.replace( Expr.match[ type ], "" );
+
+					if ( !anyFound ) {
+						return [];
+					}
+
+					break;
+				}
+			}
+		}
+
+<i>		expr = expr.replace(/\s*,\s*/, "");</i> <b>//modified in jquery-1.3.2.js</b>
+
+		// Improper expression
+		if ( expr == old ) {
+			if ( anyFound == null ) {
+				throw "Syntax error, unrecognized expression: " + expr;
+			} else {
+				break;
+			}
+		}
+
+		old = expr;
+	}
+
+	return curLoop;
+}
+</pre>
+<b>jquery-1.3.1: no change</b><br/><br/>
+<b>jQuery.filter (jquery-1.3.2.js)</b><br/>
+<pre>
+<i> function (expr, set, inplace, not){</i> <b>//modified in jquery-1.4a1.js</b>
+<span style='color:red'><i>	var old = expr, result = [], curLoop = set, match, anyFound,</i> <b>//modified in jquery-1.4a1.js</b></span>
+<span style='color:red'><i>		isXMLFilter = set && set[0] && isXML(set[0]);</i> <b>//modified in jquery-1.4a1.js</b></span>
+
+<i>	while ( expr && set.length ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>		for ( var type in Expr.filter ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>			if ( (match = Expr.match[ type ].exec( expr )) != null ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>				var filter = Expr.filter[ type ], found, item;</i> <b>//modified in jquery-1.4a1.js</b>
+<i>				anyFound = false;</i> <b>//modified in jquery-1.4a1.js</b>
+
+<i>				if ( curLoop == result ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>					result = [];</i> <b>//modified in jquery-1.4a1.js</b>
+				}
+
+<i>				if ( Expr.preFilter[ type ] ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<span style='color:red'><i>					match = Expr.preFilter[ type ]( match, curLoop, inplace, result, not, isXMLFilter );</i> <b>//modified in jquery-1.4a1.js</b></span>
+
+<i>					if ( !match ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>						anyFound = found = true;</i> <b>//modified in jquery-1.4a1.js</b>
+<i>					} else if ( match === true ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>						continue;</i> <b>//modified in jquery-1.4a1.js</b>
+					}
+				}
+
+<i>				if ( match ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>					for ( var i = 0; (item = curLoop[i]) != null; i++ ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>						if ( item ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>							found = filter( item, match, i, curLoop );</i> <b>//modified in jquery-1.4a1.js</b>
+<i>							var pass = not ^ !!found;</i> <b>//modified in jquery-1.4a1.js</b>
+
+<i>							if ( inplace && found != null ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>								if ( pass ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>									anyFound = true;</i> <b>//modified in jquery-1.4a1.js</b>
+<i>								} else {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>									curLoop[i] = false;</i> <b>//modified in jquery-1.4a1.js</b>
+								}
+<i>							} else if ( pass ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>								result.push( item );</i> <b>//modified in jquery-1.4a1.js</b>
+<i>								anyFound = true;</i> <b>//modified in jquery-1.4a1.js</b>
+							}
+						}
+					}
+				}
+
+<i>				if ( found !== undefined ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>					if ( !inplace ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>						curLoop = result;</i> <b>//modified in jquery-1.4a1.js</b>
+					}
+
+<i>					expr = expr.replace( Expr.match[ type ], "" );</i> <b>//modified in jquery-1.4a1.js</b>
+
+<i>					if ( !anyFound ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>						return [];</i> <b>//modified in jquery-1.4a1.js</b>
+					}
+
+<i>					break;</i> <b>//modified in jquery-1.4a1.js</b>
+				}
+			}
+		}
+
+<i>		// Improper expression</i> <b>//modified in jquery-1.4a1.js</b>
+<i>		if ( expr == old ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>			if ( anyFound == null ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>				throw "Syntax error, unrecognized expression: " + expr;</i> <b>//modified in jquery-1.4a1.js</b>
+<i>			} else {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>				break;</i> <b>//modified in jquery-1.4a1.js</b>
+			}
+		}
+
+<i>		old = expr;</i> <b>//modified in jquery-1.4a1.js</b>
+	}
+
+<i>	return curLoop;</i> <b>//modified in jquery-1.4a1.js</b>
+}
+</pre>
+<b>jQuery.filter (jquery-1.4a1.js)</b><br/>
+<pre>
+<span style='color:red'> function ( expr, elems, not ) {</span>
+<span style='color:red'>		if ( not ) {</span>
+<span style='color:red'>			expr = ":not(" + expr + ")";</span>
+		}
+
+<span style='color:red'><i>		return jQuery.find.matches(expr, elems);</i> <b>//modified in jquery-1.4.3rc1.js</b></span>
+	}
+</pre>
+<b>jquery-1.4a2 - jquery-1.4.2: no change</b><br/><br/>
+<b>jQuery.filter (jquery-1.4.3rc1.js)</b><br/>
+<pre>
+ function ( expr, elems, not ) {
+		if ( not ) {
+			expr = ":not(" + expr + ")";
+		}
+
+<span style='color:red'><i>		return elems.length === 1 ?</i> <b>//modified in jquery-1.10.0-beta1.js</b></span>
+<span style='color:red'><i>			jQuery.find.matchesSelector(elems[0], expr) ? [ elems[0] ] : [] :</i> <b>//modified in jquery-1.10.0-beta1.js</b></span>
+<span style='color:red'><i>			jQuery.find.matches(expr, elems);</i> <b>//modified in jquery-1.10.0-beta1.js</b></span>
+	}
+</pre>
+<b>jquery-1.4.3rc2 - jquery-1.9.1: no change</b><br/><br/>
+<b>jQuery.filter (jquery-1.10.0-beta1.js)</b><br/>
+<pre>
+ function ( expr, elems, not ) {
+<span style='color:red'>		var elem = elems[ 0 ];</span>
+
+		if ( not ) {
+			expr = ":not(" + expr + ")";
+		}
+
+<span style='color:red'>		return elems.length === 1 && elem.nodeType === 1 ?</span>
+<span style='color:red'>			jQuery.find.matchesSelector( elem, expr ) ? [ elem ] : [] :</span>
+<span style='color:red'>			jQuery.find.matches( expr, jQuery.grep( elems, function( elem ) {</span>
+<span style='color:red'>				return elem.nodeType === 1;</span>
+<span style='color:red'>			}));</span>
+	}
+</pre>
+<b>jquery-1.10.0 - jquery-1.11.2: no change</b><br/><br/>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.extend demo</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+ 
+<div id="id3" class="cl3">Hello world!</div>
+<div id="id4" >Hi world!</div>
+<script>
+	// in literal we provide single \ but in new RegExp we provide double \
+    var matcher = new RegExp("d", "gi"); // /d/gi
+	item = "Dogdting";
+	console.log(matcher.test(item) + "<br/>");
+	console.log(matcher.test(item) + "<br/>");
+	console.log(matcher.test(item) + "<br/>");// this will return false because there are only two places where the pattern matches
+	
+	var re_literal = /\w+/;
+	var re_newexp = new RegExp('\\w+');
+	
+	var matcher_lit = /d/gi;
+	console.log(matcher.test(item) + "<br/>");
+	console.log(matcher.test(item) + "<br/>");
+	console.log(matcher.test(item) + "<br/>");
+</script>
+ 
+</body>
+</html>

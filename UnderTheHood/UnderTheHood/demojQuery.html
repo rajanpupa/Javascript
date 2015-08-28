@@ -1,0 +1,29 @@
+<html>
+<head>
+<script type='text/javascript'>
+//jQuery in a nutshell
+  debugger;
+  function jQuery(a, c) {
+    if (this === window) {
+      return new jQuery(a,c);
+    }
+    this.length = 0;
+    [ ].push.apply(this, [a]);
+    
+    return this;
+  }
+  jQuery.fn = jQuery.prototype = {
+    function1: function() {alert("In prototype function1: " + this[0]);}
+  }
+  jQuery.function1 = function() {alert("In static function1" + this);}		
+  $ = jQuery;
+  // end jQuery
+  
+  function demo() {
+    $("#id").function1();
+    $.function1();
+  }
+</script>
+</head>
+<body onload="demo()">
+</body>

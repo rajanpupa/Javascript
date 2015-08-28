@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>javascript example1</title>
+	<script>
+		function person(first, last, age, eyecolor) {
+			this.firstName = first;
+			this.lastName = last;
+			this.age = age;
+			this.eyeColor = eyecolor;
+		}
+		
+		/*
+			Doesnot work without window.onload because the dom may not have loaded yet.
+			
+			You can dinamically add properties in the object prototype.
+		*/
+		window.onload=function(){
+			// create objects from the class
+			var myFather = new person("John", "Doe", 50, "blue");
+			var myMother = new person("Sally", "Rally", 48, "green");
+			
+			testarea = document.getElementById("testarea");
+			
+			if(testarea){
+				testarea.innerHTML = myFather.firstName;
+			}else{
+				console.log('testarea not found')
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="wrapper">
+		<h2>Alert Example of javascript</h2>
+		<span id="testarea"></span>
+	</div>
+</body>
+</html>

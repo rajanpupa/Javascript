@@ -1,0 +1,391 @@
+<html>
+<head>
+	<title>jQuery versions</title>
+	<script type="text/javascript" src="jQueryVersions/jquery-1.0.js"></script>
+</head>
+<body onload="init(0)">
+	<h3>jQuery Evolution</h3>
+<b>jQuery (jquery-1.0.js)</b><br/>
+<pre>
+<i>*function jQuery(a,c) {</i>
+
+	// Shortcut for document ready (because $(document).each() is silly)
+<i>*	if ( a && a.constructor == Function && jQuery.fn.ready )</i>
+		return jQuery(document).ready(a);
+
+	// Make sure that a selection was provided
+	a = a || jQuery.context || document;
+
+	// Watch for when a jQuery object is passed as the selector
+	if ( a.jquery )
+<i>*		return $( jQuery.merge( a, [] ) );</i>
+
+	// Watch for when a jQuery object is passed at the context
+	if ( c && c.jquery )
+<i>*		return $( c ).find(a);</i>
+	
+	// If the context is global, return a new object
+	if ( window == this )
+		return new jQuery(a,c);
+
+	// Handle HTML strings
+	var m = /^[^<]*(<.+>)[^>]*$/.exec(a);
+	if ( m ) a = jQuery.clean( [ m[1] ] );
+
+	// Watch for when an array is passed in
+	this.get( a.constructor == Array || a.length && !a.nodeType && a[0] != undefined && a[0].nodeType ?
+		// Assume that it is an array of DOM Elements
+		jQuery.merge( a, [] ) :
+
+		// Find the matching elements and save them for later
+		jQuery.find( a, c ) );
+
+  // See if an extra function was provided
+	var fn = arguments[ arguments.length - 1 ];
+	
+	// If so, execute it in context
+<i>*	if ( fn && fn.constructor == Function )</i>
+		this.each(fn);
+}
+</pre>
+<b>jquery-1.0.1: no change</b><br/><br/>
+<b>jQuery (jquery-1.0.2.js)</b><br/>
+<pre>
+<span style='color:red'>function (a,c) {</span>
+
+	// Shortcut for document ready (because $(document).each() is silly)
+<span style='color:red'>	if ( a && typeof a == "function" && jQuery.fn.ready )</span>
+		return jQuery(document).ready(a);
+
+	// Make sure that a selection was provided
+	a = a || jQuery.context || document;
+
+	// Watch for when a jQuery object is passed as the selector
+	if ( a.jquery )
+<span style='color:red'>		return jQuery( jQuery.merge( a, [] ) );</span>
+
+	// Watch for when a jQuery object is passed at the context
+	if ( c && c.jquery )
+<span style='color:red'>		return jQuery( c ).find(a);</span>
+
+	// If the context is global, return a new object
+	if ( window == this )
+		return new jQuery(a,c);
+
+	// Handle HTML strings
+	var m = /^[^<]*(<.+>)[^>]*$/.exec(a);
+	if ( m ) a = jQuery.clean( [ m[1] ] );
+
+	// Watch for when an array is passed in
+	this.get( a.constructor == Array || a.length && !a.nodeType && a[0] != undefined && a[0].nodeType ?
+		// Assume that it is an array of DOM Elements
+		jQuery.merge( a, [] ) :
+
+		// Find the matching elements and save them for later
+		jQuery.find( a, c ) );
+
+  // See if an extra function was provided
+	var fn = arguments[ arguments.length - 1 ];
+
+	// If so, execute it in context
+<span style='color:red'>	if ( fn && typeof fn == "function" )</span>
+		this.each(fn);
+}
+</pre>
+<b>jQuery (jquery-1.0.3.js)</b><br/>
+<pre>
+function (a,c) {
+
+<i>*	// Shortcut for document ready (because $(document).each() is silly)</i>
+<i>*	if ( a && typeof a == "function" && jQuery.fn.ready )</i>
+		return jQuery(document).ready(a);
+
+	// Make sure that a selection was provided
+<i>*	a = a || jQuery.context || document;</i>
+
+	// Watch for when a jQuery object is passed as the selector
+	if ( a.jquery )
+		return jQuery( jQuery.merge( a, [] ) );
+
+	// Watch for when a jQuery object is passed at the context
+	if ( c && c.jquery )
+		return jQuery( c ).find(a);
+
+	// If the context is global, return a new object
+	if ( window == this )
+		return new jQuery(a,c);
+
+	// Handle HTML strings
+<span style='color:red'><i>*	if ( a.constructor == String ) {</i></span>
+		var m = /^[^<]*(<.+>)[^>]*$/.exec(a);
+		if ( m ) a = jQuery.clean( [ m[1] ] );
+	}
+
+	// Watch for when an array is passed in
+<i>*	this.get( a.constructor == Array || a.length && !a.nodeType && a[0] != undefined && a[0].nodeType ?</i>
+		// Assume that it is an array of DOM Elements
+		jQuery.merge( a, [] ) :
+
+		// Find the matching elements and save them for later
+		jQuery.find( a, c ) );
+
+	// See if an extra function was provided
+	var fn = arguments[ arguments.length - 1 ];
+
+	// If so, execute it in context
+	if ( fn && typeof fn == "function" )
+		this.each(fn);
+
+<span style='color:red'>	return this;</span>
+}
+</pre>
+<b>jQuery (jquery-1.0.4.js)</b><br/>
+<pre>
+function (a,c) {
+
+<span style='color:red'>	// Shortcut for document ready</span>
+<span style='color:red'><i>*	if ( a && typeof a == "function" && jQuery.fn.ready && !a.nodeType && a[0] == undefined ) // Safari reports typeof on DOM NodeLists as a function</i></span>
+<i>*		return jQuery(document).ready(a);</i>
+
+	// Make sure that a selection was provided
+<span style='color:red'>	a = a || document;</span>
+
+<i>*	// Watch for when a jQuery object is passed as the selector</i>
+<i>*	if ( a.jquery )</i>
+<i>*		return jQuery( jQuery.merge( a, [] ) );</i>
+
+<i>*	// Watch for when a jQuery object is passed at the context</i>
+<i>*	if ( c && c.jquery )</i>
+<i>*		return jQuery( c ).find(a);</i>
+
+	// If the context is global, return a new object
+	if ( window == this )
+		return new jQuery(a,c);
+
+	// Handle HTML strings
+<span style='color:red'>	if ( typeof a  == "string" ) {</span>
+		var m = /^[^<]*(<.+>)[^>]*$/.exec(a);
+<i>*		if ( m ) a = jQuery.clean( [ m[1] ] );</i>
+	}
+
+<i>*	// Watch for when an array is passed in</i>
+<span style='color:red'><i>*	this.set( a.constructor == Array || a.length && a != window && !a.nodeType && a[0] != undefined && a[0].nodeType ?</i></span>
+<i>*		// Assume that it is an array of DOM Elements</i>
+<i>*		jQuery.merge( a, [] ) :</i>
+
+<i>*		// Find the matching elements and save them for later</i>
+<i>*		jQuery.find( a, c ) );</i>
+
+<i>*	// See if an extra function was provided</i>
+<i>*	var fn = arguments[ arguments.length - 1 ];</i>
+
+<i>*	// If so, execute it in context</i>
+<i>*	if ( fn && typeof fn == "function" )</i>
+<i>*		this.each(fn);</i>
+
+<i>*	return this;</i>
+}
+</pre>
+<b>jQuery (jquery-1.1a.js)</b><br/>
+<pre>
+function (a,c) {
+	// If the context is global, return a new object
+	if ( window == this )
+		return new jQuery(a,c);
+
+	// Make sure that a selection was provided
+	a = a || document;
+	
+<span style='color:red'>	// HANDLE: $(function)</span>
+	// Shortcut for document ready
+<span style='color:red'>	// Safari reports typeof on DOM NodeLists as a function</span>
+<span style='color:red'><i>*	if ( typeof a == "function" && !a.nodeType && a[0] == undefined )</i></span>
+<span style='color:red'>		return new jQuery(document)[ jQuery.fn.ready ? "ready" : "load" ]( a );</span>
+	
+	// Handle HTML strings
+	if ( typeof a  == "string" ) {
+<span style='color:red'>		// HANDLE: $(html) -> $(array)</span>
+		var m = /^[^<]*(<.+>)[^>]*$/.exec(a);
+<span style='color:red'><i>*		if ( m )</i></span>
+<span style='color:red'><i>*			a = jQuery.clean( [ m[1] ] );</i></span>
+		
+<span style='color:red'>		// HANDLE: $(expr)</span>
+<span style='color:red'><i>*		else</i></span>
+<span style='color:red'><i>*			return new jQuery( c ).find( a );</i></span>
+	}
+	
+<span style='color:red'>	return this.setArray(</span>
+<span style='color:red'>		// HANDLE: $(array)</span>
+<span style='color:red'>		a.constructor == Array && a ||</span>
+
+<span style='color:red'>		// HANDLE: $(arraylike)</span>
+<span style='color:red'>		// Watch for when an array-like object is passed as the selector</span>
+<span style='color:red'>		(a.jquery || a.length && a != window && !a.nodeType && a[0] != undefined && a[0].nodeType) && jQuery.makeArray( a ) ||</span>
+
+<span style='color:red'>		// HANDLE: $(*)</span>
+<span style='color:red'>		[ a ] );</span>
+}
+</pre>
+<b>jquery-1.1b: no change</b><br/><br/>
+<b>jQuery (jquery-1.1.js)</b><br/>
+<pre>
+function (a,c) {
+	// If the context is global, return a new object
+	if ( window == this )
+		return new jQuery(a,c);
+
+	// Make sure that a selection was provided
+	a = a || document;
+	
+	// HANDLE: $(function)
+	// Shortcut for document ready
+<i>*	// Safari reports typeof on DOM NodeLists as a function</i>
+<span style='color:red'><i>*	if ( jQuery.isFunction(a) && !a.nodeType && a[0] == undefined )</i></span>
+		return new jQuery(document)[ jQuery.fn.ready ? "ready" : "load" ]( a );
+	
+	// Handle HTML strings
+	if ( typeof a  == "string" ) {
+<i>*		var m = /^[^<]*(<.+>)[^>]*$/.exec(a);</i>
+
+<span style='color:red'><i>*		a = m ?</i></span>
+			// HANDLE: $(html) -> $(array)
+<span style='color:red'><i>*			jQuery.clean( [ m[1] ] ) :</i></span>
+		
+			// HANDLE: $(expr)
+<span style='color:red'><i>*			jQuery.find( a, c );</i></span>
+	}
+	
+	return this.setArray(
+		// HANDLE: $(array)
+		a.constructor == Array && a ||
+
+		// HANDLE: $(arraylike)
+		// Watch for when an array-like object is passed as the selector
+		(a.jquery || a.length && a != window && !a.nodeType && a[0] != undefined && a[0].nodeType) && jQuery.makeArray( a ) ||
+
+		// HANDLE: $(*)
+		[ a ] );
+}
+</pre>
+<b>jQuery (jquery-1.1.2.js)</b><br/>
+<pre>
+function (a,c) {
+	// If the context is global, return a new object
+	if ( window == this )
+		return new jQuery(a,c);
+
+<i>*	// Make sure that a selection was provided</i>
+<i>*	a = a || document;</i>
+	
+<i>*	// HANDLE: $(function)</i>
+<i>*	// Shortcut for document ready</i>
+<span style='color:red'><i>*	if ( jQuery.isFunction(a) )</i></span>
+<i>*		return new jQuery(document)[ jQuery.fn.ready ? "ready" : "load" ]( a );</i>
+	
+<i>*	// Handle HTML strings</i>
+<i>*	if ( typeof a  == "string" ) {</i>
+<i>*		// HANDLE: $(html) -> $(array)</i>
+<span style='color:red'><i>*		var m = /^[^<]*(<(.|\s)+>)[^>]*$/.exec(a);</i></span>
+<span style='color:red'><i>*		if ( m )</i></span>
+<span style='color:red'><i>*			a = jQuery.clean( [ m[1] ] );</i></span>
+		
+<i>*		// HANDLE: $(expr)</i>
+<span style='color:red'><i>*		else</i></span>
+<span style='color:red'><i>*			return new jQuery( c ).find( a );</i></span>
+	}
+	
+<i>*	return this.setArray(</i>
+<i>*		// HANDLE: $(array)</i>
+<i>*		a.constructor == Array && a ||</i>
+
+<i>*		// HANDLE: $(arraylike)</i>
+<i>*		// Watch for when an array-like object is passed as the selector</i>
+<i>*		(a.jquery || a.length && a != window && !a.nodeType && a[0] != undefined && a[0].nodeType) && jQuery.makeArray( a ) ||</i>
+
+<i>*		// HANDLE: $(*)</i>
+<i>*		[ a ] );</i>
+}
+</pre>
+<b>jQuery (jquery-1.1.3a.js)</b><br/>
+<pre>
+function (a,c) {
+	// If the context is global, return a new object
+<i>*	if ( window == this )</i>
+		return new jQuery(a,c);
+	
+<span style='color:red'>	return this.init(a,c);</span>
+}
+</pre>
+<b>jQuery (jquery-1.1.3.js)</b><br/>
+<pre>
+<i>*function (a,c) {</i>
+<i>*	// If the context is global, return a new object</i>
+<span style='color:red'><i>*	if ( window == this || !this.init )</i></span>
+<i>*		return new jQuery(a,c);</i>
+<i>*	</i>
+<i>*	return this.init(a,c);</i>
+}
+</pre>
+<b>jquery-1.1.4 - jquery-1.2: no change</b><br/><br/>
+<b>jQuery (jquery-1.2.1.js)</b><br/>
+<pre>
+<span style='color:red'>function (selector, context) {</span>
+<span style='color:red'><i>*	// If the context is a namespace object, return a new object</i></span>
+<span style='color:red'><i>*	return this instanceof jQuery ?</i></span>
+<span style='color:red'><i>*		this.init(selector, context) :</i></span>
+<span style='color:red'><i>*		new jQuery(selector, context);</i></span>
+}
+</pre>
+<b>jQuery (jquery-1.2.2b.js)</b><br/>
+<pre>
+function ( selector, context ) {
+<span style='color:red'>	// The jQuery object is actually just the init constructor 'enhanced'</span>
+<span style='color:red'><i>*	return new jQuery.prototype.init( selector, context );</i></span>
+}
+</pre>
+<b>jquery-1.2.2b2 - jquery-1.2.4: no change</b><br/><br/>
+<b>jQuery (jquery-1.2.5.js)</b><br/>
+<pre>
+function ( selector, context ) {
+	// The jQuery object is actually just the init constructor 'enhanced'
+<span style='color:red'><i>*	return new jQuery.fn.init( selector, context );</i></span>
+}
+</pre>
+<b>jquery-1.2.6 - jquery-1.3.2: no change</b><br/><br/>
+<b>jQuery (jquery-1.4a1.js)</b><br/>
+<pre>
+function ( selector, context ) {
+		// The jQuery object is actually just the init constructor 'enhanced'
+<span style='color:red'><i>*		return arguments.length === 0 ?</i></span>
+<span style='color:red'><i>*			rootjQuery :</i></span>
+<span style='color:red'><i>*			new jQuery.fn.init( selector, context );</i></span>
+	}
+</pre>
+<b>jQuery (jquery-1.4a2.js)</b><br/>
+<pre>
+function ( selector, context ) {
+		// The jQuery object is actually just the init constructor 'enhanced'
+<span style='color:red'><i>*		return new jQuery.fn.init( selector, context );</i></span>
+	}
+</pre>
+<b>jquery-1.4rc1 - jquery-1.4.4: no change</b><br/><br/>
+<b>jQuery (jquery-1.5b1.js)</b><br/>
+<pre>
+function ( selector, context ) {
+		// The jQuery object is actually just the init constructor 'enhanced'
+<span style='color:red'><i>*		return new jQuery.fn.init( selector, context, rootjQuery );</i></span>
+	}
+</pre>
+<b>jquery-1.5rc1 - jquery-1.10.2: no change</b><br/><br/>
+<b>jQuery (jquery-1.11.0-beta1.js)</b><br/>
+<pre>
+function ( selector, context ) {
+		// The jQuery object is actually just the init constructor 'enhanced'
+<span style='color:red'>		// Need init if jQuery is called (just allow error to be thrown if not included)</span>
+<span style='color:red'>		return new jQuery.fn.init( selector, context );</span>
+	}
+</pre>
+<b>jquery-1.11.0-beta2 - jquery-1.11.3: no change</b><br/><br/>
+
+</body>
+</html>

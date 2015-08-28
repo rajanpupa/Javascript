@@ -1,0 +1,1996 @@
+<html>
+<head>
+</head>
+<body>
+<h3>fn.init Evolution</h3>
+<b>fn.init (jquery-1.1.3a.js)</b><br/>
+<pre>
+function (a,c) {
+		// Make sure that a selection was provided
+		a = a || document;
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		if ( jQuery.isFunction(a) )
+			return new jQuery(document)[ jQuery.fn.ready ? "ready" : "load" ]( a );
+
+		// Handle HTML strings
+		if ( typeof a  == "string" ) {
+			// HANDLE: $(html) -> $(array)
+			var m = /^[^<]*(<(.|\s)+>)[^>]*$/.exec(a);
+			if ( m )
+				a = jQuery.clean( [ m[1] ] );
+
+			// HANDLE: $(expr)
+			else
+				return new jQuery( c ).find( a );
+		}
+
+		return this.setArray(
+			// HANDLE: $(array)
+			a.constructor == Array && a ||
+
+			// HANDLE: $(arraylike)
+			// Watch for when an array-like object is passed as the selector
+<i>*			(a.jquery || a.length && a != window && (!a.nodeType || (jQuery.browser.msie && a.elements)) && a[0] != undefined && a[0].nodeType) && jQuery.makeArray( a ) ||</i>
+
+			// HANDLE: $(*)
+			[ a ] );
+	}
+</pre>
+<b>fn.init (jquery-1.1.3.js)</b><br/>
+<pre>
+function (a,c) {
+		// Make sure that a selection was provided
+		a = a || document;
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+<i>*		if ( jQuery.isFunction(a) )</i>
+			return new jQuery(document)[ jQuery.fn.ready ? "ready" : "load" ]( a );
+
+		// Handle HTML strings
+		if ( typeof a  == "string" ) {
+			// HANDLE: $(html) -> $(array)
+<i>*			var m = /^[^<]*(<(.|\s)+>)[^>]*$/.exec(a);</i>
+<i>*			if ( m )</i>
+				a = jQuery.clean( [ m[1] ] );
+
+			// HANDLE: $(expr)
+			else
+				return new jQuery( c ).find( a );
+		}
+
+		return this.setArray(
+			// HANDLE: $(array)
+			a.constructor == Array && a ||
+
+			// HANDLE: $(arraylike)
+			// Watch for when an array-like object is passed as the selector
+<span style='color:red'>			(a.jquery || a.length && a != window && !a.nodeType && a[0] != undefined && a[0].nodeType) && jQuery.makeArray( a ) ||</span>
+
+			// HANDLE: $(*)
+			[ a ] );
+	}
+</pre>
+<b>fn.init (jquery-1.1.4.js)</b><br/>
+<pre>
+function (a,c) {
+		// Make sure that a selection was provided
+		a = a || document;
+
+		// Handle HTML strings
+		if ( typeof a  == "string" ) {
+<span style='color:red'>			var m = quickExpr.exec(a);</span>
+<span style='color:red'>			if ( m && (m[1] || !c) ) {</span>
+				// HANDLE: $(html) -> $(array)
+<span style='color:red'>				if ( m[1] )</span>
+<i>*					a = jQuery.clean( [ m[1] ] );</i>
+
+<span style='color:red'>				// HANDLE: $("#id")</span>
+<span style='color:red'>				else {</span>
+<span style='color:red'>					var tmp = document.getElementById( m[3] );</span>
+<span style='color:red'>					if ( tmp )</span>
+<span style='color:red'>						// Handle the case where IE and Opera return items</span>
+<span style='color:red'>						// by name instead of ID</span>
+<span style='color:red'>						if ( tmp.id != m[3] )</span>
+<span style='color:red'>							return jQuery().find( a );</span>
+<span style='color:red'>						else {</span>
+<span style='color:red'>							this[0] = tmp;</span>
+<span style='color:red'>							this.length = 1;</span>
+<span style='color:red'>							return this;</span>
+						}
+					else
+<span style='color:red'>						a = [];</span>
+				}
+
+			// HANDLE: $(expr)
+<span style='color:red'>			} else</span>
+				return new jQuery( c ).find( a );
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+<span style='color:red'>		} else if ( jQuery.isFunction(a) )</span>
+			return new jQuery(document)[ jQuery.fn.ready ? "ready" : "load" ]( a );
+
+		return this.setArray(
+			// HANDLE: $(array)
+			a.constructor == Array && a ||
+
+			// HANDLE: $(arraylike)
+			// Watch for when an array-like object is passed as the selector
+			(a.jquery || a.length && a != window && !a.nodeType && a[0] != undefined && a[0].nodeType) && jQuery.makeArray( a ) ||
+
+			// HANDLE: $(*)
+			[ a ] );
+	}
+</pre>
+<b>fn.init (jquery-1.2.js)</b><br/>
+<pre>
+<i>*function (a,c) {</i>
+		// Make sure that a selection was provided
+<i>*		a = a || document;</i>
+
+		// Handle HTML strings
+<i>*		if ( typeof a  == "string" ) {</i>
+<i>*			var m = quickExpr.exec(a);</i>
+<i>*			if ( m && (m[1] || !c) ) {</i>
+				// HANDLE: $(html) -> $(array)
+				if ( m[1] )
+<span style='color:red'><i>*					a = jQuery.clean( [ m[1] ], c );</i></span>
+
+				// HANDLE: $("#id")
+				else {
+					var tmp = document.getElementById( m[3] );
+					if ( tmp )
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( tmp.id != m[3] )
+<i>*							return jQuery().find( a );</i>
+						else {
+							this[0] = tmp;
+							this.length = 1;
+							return this;
+						}
+					else
+<i>*						a = [];</i>
+				}
+
+			// HANDLE: $(expr)
+			} else
+<i>*				return new jQuery( c ).find( a );</i>
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+<i>*		} else if ( jQuery.isFunction(a) )</i>
+<i>*			return new jQuery(document)[ jQuery.fn.ready ? "ready" : "load" ]( a );</i>
+
+		return this.setArray(
+			// HANDLE: $(array)
+<i>*			a.constructor == Array && a ||</i>
+
+			// HANDLE: $(arraylike)
+			// Watch for when an array-like object is passed as the selector
+<i>*			(a.jquery || a.length && a != window && !a.nodeType && a[0] != undefined && a[0].nodeType) && jQuery.makeArray( a ) ||</i>
+
+			// HANDLE: $(*)
+<i>*			[ a ] );</i>
+	}
+</pre>
+<b>fn.init (jquery-1.2.1.js)</b><br/>
+<pre>
+<span style='color:red'>function (selector, context) {</span>
+		// Make sure that a selection was provided
+<span style='color:red'>		selector = selector || document;</span>
+
+		// Handle HTML strings
+<span style='color:red'><i>*		if ( typeof selector  == "string" ) {</i></span>
+<span style='color:red'><i>*			var m = quickExpr.exec(selector);</i></span>
+<span style='color:red'><i>*			if ( m && (m[1] || !context) ) {</i></span>
+				// HANDLE: $(html) -> $(array)
+<i>*				if ( m[1] )</i>
+<span style='color:red'><i>*					selector = jQuery.clean( [ m[1] ], context );</i></span>
+
+				// HANDLE: $("#id")
+				else {
+<i>*					var tmp = document.getElementById( m[3] );</i>
+<i>*					if ( tmp )</i>
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+<i>*						if ( tmp.id != m[3] )</i>
+<span style='color:red'>							return jQuery().find( selector );</span>
+						else {
+<i>*							this[0] = tmp;</i>
+							this.length = 1;
+							return this;
+						}
+					else
+<span style='color:red'>						selector = [];</span>
+				}
+
+<i>*			// HANDLE: $(expr)</i>
+			} else
+<span style='color:red'>				return new jQuery( context ).find( selector );</span>
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+<span style='color:red'>		} else if ( jQuery.isFunction(selector) )</span>
+<span style='color:red'>			return new jQuery(document)[ jQuery.fn.ready ? "ready" : "load" ]( selector );</span>
+
+		return this.setArray(
+			// HANDLE: $(array)
+<span style='color:red'>			selector.constructor == Array && selector ||</span>
+
+			// HANDLE: $(arraylike)
+<i>*			// Watch for when an array-like object is passed as the selector</i>
+<span style='color:red'>			(selector.jquery || selector.length && selector != window && !selector.nodeType && selector[0] != undefined && selector[0].nodeType) && jQuery.makeArray( selector ) ||</span>
+
+			// HANDLE: $(*)
+<span style='color:red'>			[ selector ] );</span>
+	}
+</pre>
+<b>fn.init (jquery-1.2.2b.js)</b><br/>
+<pre>
+function ( selector, context ) {
+		// Make sure that a selection was provided
+		selector = selector || document;
+
+<span style='color:red'>		// Handle $(DOMElement)</span>
+<span style='color:red'>		if ( selector.nodeType ) {</span>
+<span style='color:red'>			this[0] = selector;</span>
+			this.length = 1;
+			return this;
+
+		// Handle HTML strings
+<span style='color:red'><i>*		} else if ( typeof selector == "string" ) {</i></span>
+<span style='color:red'>			// Are we dealing with HTML string or an ID?</span>
+<span style='color:red'>			var match = quickExpr.exec( selector );</span>
+
+<span style='color:red'>			// Verify a match, and that no context was specified for #id</span>
+<span style='color:red'>			if ( match && (match[1] || !context) ) {</span>
+
+				// HANDLE: $(html) -> $(array)
+<span style='color:red'>				if ( match[1] )</span>
+<span style='color:red'>					selector = jQuery.clean( [ match[1] ], context );</span>
+
+				// HANDLE: $("#id")
+				else {
+<span style='color:red'>					var elem = document.getElementById( match[3] );</span>
+
+<span style='color:red'>					// Make sure an element was located</span>
+<span style='color:red'><i>*					if ( elem )</i></span>
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+<span style='color:red'>						if ( elem.id != match[3] )</span>
+							return jQuery().find( selector );
+
+<span style='color:red'>						// Otherwise, we inject the element directly into the jQuery object</span>
+						else {
+<span style='color:red'><i>*							this[0] = elem;</i></span>
+							this.length = 1;
+							return this;
+						}
+
+<i>*					else</i>
+						selector = [];
+				}
+
+<span style='color:red'>			// HANDLE: $(expr, [context])</span>
+<span style='color:red'>			// (which is just equivalent to: $(content).find(expr)</span>
+			} else
+<i>*				return new jQuery( context ).find( selector );</i>
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) )
+<i>*			return new jQuery( document )[ jQuery.fn.ready ? "ready" : "load" ]( selector );</i>
+
+<i>*		return this.setArray(</i>
+<i>*			// HANDLE: $(array)</i>
+<i>*			selector.constructor == Array && selector ||</i>
+
+<i>*			// HANDLE: $(arraylike)</i>
+<span style='color:red'><i>*			// Watch for when an array-like object, contains DOM nodes, is passed in as the selector</i></span>
+<i>*			(selector.jquery || selector.length && selector != window && !selector.nodeType && selector[0] != undefined && selector[0].nodeType) && jQuery.makeArray( selector ) ||</i>
+
+<i>*			// HANDLE: $(*)</i>
+<i>*			[ selector ] );</i>
+	}
+</pre>
+<b>jquery-1.2.2b2 - jquery-1.2.4: no change</b><br/><br/>
+<b>fn.init (jquery-1.2.5.js)</b><br/>
+<pre>
+function ( selector, context ) {
+		// Make sure that a selection was provided
+		selector = selector || document;
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this[0] = selector;
+			this.length = 1;
+			return this;
+		}
+		// Handle HTML strings
+<span style='color:red'><i>*		if ( typeof selector == "string" ) {</i></span>
+			// Are we dealing with HTML string or an ID?
+			var match = quickExpr.exec( selector );
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] )
+					selector = jQuery.clean( [ match[1] ], context );
+
+				// HANDLE: $("#id")
+				else {
+					var elem = document.getElementById( match[3] );
+
+					// Make sure an element was located
+<span style='color:red'>					if ( elem ){</span>
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id != match[3] )
+							return jQuery().find( selector );
+
+						// Otherwise, we inject the element directly into the jQuery object
+<span style='color:red'><i>*						return jQuery( elem );</i></span>
+					}
+					selector = [];
+				}
+
+			// HANDLE: $(expr, [context])
+			// (which is just equivalent to: $(content).find(expr)
+			} else
+<span style='color:red'>				return jQuery( context ).find( selector );</span>
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) )
+<span style='color:red'>			return jQuery( document )[ jQuery.fn.ready ? "ready" : "load" ]( selector );</span>
+
+<span style='color:red'>		return this.setArray(jQuery.makeArray(selector));</span>
+	}
+</pre>
+<b>jquery-1.2.6: no change</b><br/><br/>
+<b>fn.init (jquery-1.3b1.js)</b><br/>
+<pre>
+function ( selector, context ) {
+		// Make sure that a selection was provided
+		selector = selector || document;
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this[0] = selector;
+			this.length = 1;
+<span style='color:red'>			this.context = selector;</span>
+			return this;
+		}
+		// Handle HTML strings
+<span style='color:red'>		if ( typeof selector === "string" ) {</span>
+			// Are we dealing with HTML string or an ID?
+			var match = quickExpr.exec( selector );
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] )
+					selector = jQuery.clean( [ match[1] ], context );
+
+				// HANDLE: $("#id")
+				else {
+					var elem = document.getElementById( match[3] );
+
+					// Make sure an element was located
+					if ( elem ){
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id != match[3] )
+							return jQuery().find( selector );
+
+						// Otherwise, we inject the element directly into the jQuery object
+<span style='color:red'>						var ret = jQuery( elem );</span>
+<span style='color:red'>						ret.context = document;</span>
+<span style='color:red'>						ret.selector = selector;</span>
+<span style='color:red'>						return ret;</span>
+					}
+					selector = [];
+				}
+
+			// HANDLE: $(expr, [context])
+			// (which is just equivalent to: $(content).find(expr)
+			} else
+				return jQuery( context ).find( selector );
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) )
+<i>*			return jQuery( document )[ jQuery.fn.ready ? "ready" : "load" ]( selector );</i>
+
+		return this.setArray(jQuery.makeArray(selector));
+	}
+</pre>
+<b>fn.init (jquery-1.3b2.js)</b><br/>
+<pre>
+function ( selector, context ) {
+		// Make sure that a selection was provided
+		selector = selector || document;
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this[0] = selector;
+			this.length = 1;
+			this.context = selector;
+			return this;
+		}
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+			var match = quickExpr.exec( selector );
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] )
+					selector = jQuery.clean( [ match[1] ], context );
+
+				// HANDLE: $("#id")
+				else {
+					var elem = document.getElementById( match[3] );
+
+					// Make sure an element was located
+					if ( elem ){
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id != match[3] )
+							return jQuery().find( selector );
+
+						// Otherwise, we inject the element directly into the jQuery object
+						var ret = jQuery( elem );
+						ret.context = document;
+						ret.selector = selector;
+						return ret;
+					}
+					selector = [];
+				}
+
+			// HANDLE: $(expr, [context])
+			// (which is just equivalent to: $(content).find(expr)
+			} else
+				return jQuery( context ).find( selector );
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) )
+<span style='color:red'>			return jQuery( document ).ready( selector );</span>
+
+		return this.setArray(jQuery.makeArray(selector));
+	}
+</pre>
+<b>fn.init (jquery-1.3rc1.js)</b><br/>
+<pre>
+function ( selector, context ) {
+		// Make sure that a selection was provided
+		selector = selector || document;
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this[0] = selector;
+			this.length = 1;
+			this.context = selector;
+			return this;
+		}
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+			var match = quickExpr.exec( selector );
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] )
+					selector = jQuery.clean( [ match[1] ], context );
+
+				// HANDLE: $("#id")
+				else {
+					var elem = document.getElementById( match[3] );
+
+<i>*					// Make sure an element was located</i>
+<i>*					if ( elem ){</i>
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+<i>*						if ( elem.id != match[3] )</i>
+							return jQuery().find( selector );
+
+						// Otherwise, we inject the element directly into the jQuery object
+<i>*						var ret = jQuery( elem );</i>
+						ret.context = document;
+						ret.selector = selector;
+						return ret;
+					}
+<i>*					selector = [];</i>
+				}
+
+			// HANDLE: $(expr, [context])
+			// (which is just equivalent to: $(content).find(expr)
+			} else
+				return jQuery( context ).find( selector );
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) )
+			return jQuery( document ).ready( selector );
+
+<span style='color:red'>		// Make sure that old selector state is passed along</span>
+<span style='color:red'>		if ( selector.selector && selector.context ) {</span>
+<span style='color:red'>			this.selector = selector.selector;</span>
+<span style='color:red'>			this.context = selector.context;</span>
+		}
+
+		return this.setArray(jQuery.makeArray(selector));
+	}
+</pre>
+<b>jquery-1.3rc2 - jquery-1.3: no change</b><br/><br/>
+<b>fn.init (jquery-1.3.1rc1.js)</b><br/>
+<pre>
+function ( selector, context ) {
+		// Make sure that a selection was provided
+		selector = selector || document;
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this[0] = selector;
+			this.length = 1;
+			this.context = selector;
+			return this;
+		}
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+			var match = quickExpr.exec( selector );
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] )
+					selector = jQuery.clean( [ match[1] ], context );
+
+				// HANDLE: $("#id")
+				else {
+					var elem = document.getElementById( match[3] );
+
+					// Handle the case where IE and Opera return items
+					// by name instead of ID
+<span style='color:red'>					if ( elem && elem.id != match[3] )</span>
+						return jQuery().find( selector );
+
+					// Otherwise, we inject the element directly into the jQuery object
+<span style='color:red'>					var ret = jQuery( elem || [] );</span>
+					ret.context = document;
+					ret.selector = selector;
+					return ret;
+				}
+
+			// HANDLE: $(expr, [context])
+			// (which is just equivalent to: $(content).find(expr)
+			} else
+				return jQuery( context ).find( selector );
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) )
+			return jQuery( document ).ready( selector );
+
+		// Make sure that old selector state is passed along
+		if ( selector.selector && selector.context ) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+<i>*		return this.setArray(jQuery.makeArray(selector));</i>
+	}
+</pre>
+<b>jquery-1.3.1: no change</b><br/><br/>
+<b>fn.init (jquery-1.3.2.js)</b><br/>
+<pre>
+function ( selector, context ) {
+<i>*		// Make sure that a selection was provided</i>
+<i>*		selector = selector || document;</i>
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+<i>*			this[0] = selector;</i>
+			this.length = 1;
+<i>*			this.context = selector;</i>
+			return this;
+		}
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+<i>*			var match = quickExpr.exec( selector );</i>
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+<i>*				if ( match[1] )</i>
+<i>*					selector = jQuery.clean( [ match[1] ], context );</i>
+
+				// HANDLE: $("#id")
+<i>*				else {</i>
+<i>*					var elem = document.getElementById( match[3] );</i>
+
+					// Handle the case where IE and Opera return items
+					// by name instead of ID
+<i>*					if ( elem && elem.id != match[3] )</i>
+<i>*						return jQuery().find( selector );</i>
+
+					// Otherwise, we inject the element directly into the jQuery object
+<i>*					var ret = jQuery( elem || [] );</i>
+<i>*					ret.context = document;</i>
+<i>*					ret.selector = selector;</i>
+<i>*					return ret;</i>
+				}
+
+<i>*			// HANDLE: $(expr, [context])</i>
+<i>*			// (which is just equivalent to: $(content).find(expr)</i>
+<i>*			} else</i>
+				return jQuery( context ).find( selector );
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+<i>*		} else if ( jQuery.isFunction( selector ) )</i>
+<i>*			return jQuery( document ).ready( selector );</i>
+
+<i>*		// Make sure that old selector state is passed along</i>
+<i>*		if ( selector.selector && selector.context ) {</i>
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+<span style='color:red'><i>*		return this.setArray(jQuery.isArray( selector ) ?</i></span>
+<span style='color:red'><i>*			selector :</i></span>
+<span style='color:red'><i>*			jQuery.makeArray(selector));</i></span>
+	}
+</pre>
+<b>fn.init (jquery-1.4a1.js)</b><br/>
+<pre>
+function ( selector, context ) {
+<span style='color:red'>		var match, elem, ret, doc;</span>
+
+<span style='color:red'>		// Handle $(""), $(null), or $(undefined)</span>
+<span style='color:red'>		if ( !selector ) {</span>
+			return this;
+		}
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+<span style='color:red'>			this.context = this[0] = selector;</span>
+			this.length = 1;
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+<span style='color:red'>			match = quickExpr.exec( selector );</span>
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+<span style='color:red'>				if ( match[1] ) {</span>
+<span style='color:red'>					doc = (context ? context.ownerDocument || context : document);</span>
+
+<span style='color:red'>					// If a single string is passed in and it's a single tag</span>
+<span style='color:red'>					// just do a createElement and skip the rest</span>
+<span style='color:red'>					ret = rsingleTag.exec( selector );</span>
+
+<span style='color:red'>					if ( ret ) {</span>
+<span style='color:red'>						selector = [ doc.createElement( ret[1] ) ];</span>
+
+<span style='color:red'>					} else {</span>
+<span style='color:red'>						ret = buildFragment( [ match[1] ], [ doc ] );</span>
+<span style='color:red'>						selector = (ret.cacheable ? ret.fragment.cloneNode(true) : ret.fragment).childNodes;</span>
+					}
+
+				// HANDLE: $("#id")
+<span style='color:red'>				} else {</span>
+<span style='color:red'>					elem = document.getElementById( match[2] );</span>
+
+<span style='color:red'>					if ( elem ) {</span>
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+<span style='color:red'>						if ( elem.id !== match[2] ) {</span>
+<span style='color:red'>							return rootjQuery.find( selector );</span>
+						}
+
+						// Otherwise, we inject the element directly into the jQuery object
+						this.length = 1;
+<span style='color:red'>						this[0] = elem;</span>
+					}
+
+<span style='color:red'>					this.context = document;</span>
+<span style='color:red'>					this.selector = selector;</span>
+					return this;
+				}
+
+<span style='color:red'>			// HANDLE: $("TAG")</span>
+<span style='color:red'>			} else if ( !context && /^\w+$/.test( selector ) ) {</span>
+<span style='color:red'>				this.selector = selector;</span>
+<span style='color:red'>				this.context = document;</span>
+<span style='color:red'>				selector = document.getElementsByTagName( selector );</span>
+
+<span style='color:red'>			// HANDLE: $(expr, $(...))</span>
+<span style='color:red'>			} else if ( !context || context.jquery ) {</span>
+<span style='color:red'>				return (context || rootjQuery).find( selector );</span>
+
+<span style='color:red'>			// HANDLE: $(expr, context)</span>
+<span style='color:red'>			// (which is just equivalent to: $(context).find(expr)</span>
+<span style='color:red'>			} else {</span>
+				return jQuery( context ).find( selector );
+			}
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+<span style='color:red'>		} else if ( jQuery.isFunction( selector ) ) {</span>
+<span style='color:red'>			return rootjQuery.ready( selector );</span>
+		}
+
+<span style='color:red'>		if (selector.selector !== undefined) {</span>
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+<span style='color:red'>		return jQuery.isArray( selector ) ?</span>
+<span style='color:red'>			this.setArray( selector ) :</span>
+<span style='color:red'>			jQuery.makeArray( selector, this );</span>
+	}
+</pre>
+<b>fn.init (jquery-1.4a2.js)</b><br/>
+<pre>
+function ( selector, context ) {
+		var match, elem, ret, doc;
+
+		// Handle $(""), $(null), or $(undefined)
+		if ( !selector ) {
+			return this;
+		}
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+			match = quickExpr.exec( selector );
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] ) {
+					doc = (context ? context.ownerDocument || context : document);
+
+					// If a single string is passed in and it's a single tag
+					// just do a createElement and skip the rest
+					ret = rsingleTag.exec( selector );
+
+					if ( ret ) {
+<span style='color:red'>						if ( jQuery.isPlainObject( context ) ) {</span>
+<span style='color:red'>							selector = [ document.createElement( ret[1] ) ];</span>
+<span style='color:red'>							jQuery.fn.attr.call( selector, context, true );</span>
+
+						} else {
+							selector = [ doc.createElement( ret[1] ) ];
+						}
+
+					} else {
+						ret = buildFragment( [ match[1] ], [ doc ] );
+						selector = (ret.cacheable ? ret.fragment.cloneNode(true) : ret.fragment).childNodes;
+					}
+
+				// HANDLE: $("#id")
+				} else {
+					elem = document.getElementById( match[2] );
+
+					if ( elem ) {
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id !== match[2] ) {
+							return rootjQuery.find( selector );
+						}
+
+						// Otherwise, we inject the element directly into the jQuery object
+						this.length = 1;
+						this[0] = elem;
+					}
+
+					this.context = document;
+					this.selector = selector;
+					return this;
+				}
+
+			// HANDLE: $("TAG")
+			} else if ( !context && /^\w+$/.test( selector ) ) {
+				this.selector = selector;
+				this.context = document;
+				selector = document.getElementsByTagName( selector );
+
+			// HANDLE: $(expr, $(...))
+			} else if ( !context || context.jquery ) {
+				return (context || rootjQuery).find( selector );
+
+			// HANDLE: $(expr, context)
+			// (which is just equivalent to: $(context).find(expr)
+			} else {
+				return jQuery( context ).find( selector );
+			}
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) ) {
+			return rootjQuery.ready( selector );
+		}
+
+		if (selector.selector !== undefined) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+<i>*		return jQuery.isArray( selector ) ?</i>
+<i>*			this.setArray( selector ) :</i>
+<i>*			jQuery.makeArray( selector, this );</i>
+	}
+</pre>
+<b>jquery-1.4rc1 - jquery-1.4.1: no change</b><br/><br/>
+<b>fn.init (jquery-1.4.2.js)</b><br/>
+<pre>
+function ( selector, context ) {
+		var match, elem, ret, doc;
+
+		// Handle $(""), $(null), or $(undefined)
+		if ( !selector ) {
+			return this;
+		}
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+		}
+		
+<span style='color:red'>		// The body element only exists once, optimize finding it</span>
+<span style='color:red'><i>*		if ( selector === "body" && !context ) {</i></span>
+			this.context = document;
+<span style='color:red'>			this[0] = document.body;</span>
+<span style='color:red'>			this.selector = "body";</span>
+			this.length = 1;
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+			match = quickExpr.exec( selector );
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] ) {
+					doc = (context ? context.ownerDocument || context : document);
+
+					// If a single string is passed in and it's a single tag
+					// just do a createElement and skip the rest
+					ret = rsingleTag.exec( selector );
+
+					if ( ret ) {
+						if ( jQuery.isPlainObject( context ) ) {
+							selector = [ document.createElement( ret[1] ) ];
+							jQuery.fn.attr.call( selector, context, true );
+
+						} else {
+							selector = [ doc.createElement( ret[1] ) ];
+						}
+
+					} else {
+<i>*						ret = buildFragment( [ match[1] ], [ doc ] );</i>
+						selector = (ret.cacheable ? ret.fragment.cloneNode(true) : ret.fragment).childNodes;
+					}
+					
+<span style='color:red'>					return jQuery.merge( this, selector );</span>
+					
+				// HANDLE: $("#id")
+				} else {
+					elem = document.getElementById( match[2] );
+
+<i>*					if ( elem ) {</i>
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id !== match[2] ) {
+							return rootjQuery.find( selector );
+						}
+
+						// Otherwise, we inject the element directly into the jQuery object
+						this.length = 1;
+						this[0] = elem;
+					}
+
+					this.context = document;
+					this.selector = selector;
+					return this;
+				}
+
+			// HANDLE: $("TAG")
+<i>*			} else if ( !context && /^\w+$/.test( selector ) ) {</i>
+				this.selector = selector;
+				this.context = document;
+				selector = document.getElementsByTagName( selector );
+<span style='color:red'>				return jQuery.merge( this, selector );</span>
+
+			// HANDLE: $(expr, $(...))
+			} else if ( !context || context.jquery ) {
+				return (context || rootjQuery).find( selector );
+
+			// HANDLE: $(expr, context)
+			// (which is just equivalent to: $(context).find(expr)
+			} else {
+				return jQuery( context ).find( selector );
+			}
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) ) {
+			return rootjQuery.ready( selector );
+		}
+
+		if (selector.selector !== undefined) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+<span style='color:red'>		return jQuery.makeArray( selector, this );</span>
+	}
+</pre>
+<b>fn.init (jquery-1.4.3rc1.js)</b><br/>
+<pre>
+<i>*function ( selector, context ) {</i>
+		var match, elem, ret, doc;
+
+		// Handle $(""), $(null), or $(undefined)
+		if ( !selector ) {
+			return this;
+		}
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+		}
+		
+		// The body element only exists once, optimize finding it
+<span style='color:red'>		if ( selector === "body" && !context && document.body ) {</span>
+			this.context = document;
+			this[0] = document.body;
+			this.selector = "body";
+			this.length = 1;
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+			match = quickExpr.exec( selector );
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] ) {
+					doc = (context ? context.ownerDocument || context : document);
+
+					// If a single string is passed in and it's a single tag
+					// just do a createElement and skip the rest
+					ret = rsingleTag.exec( selector );
+
+					if ( ret ) {
+						if ( jQuery.isPlainObject( context ) ) {
+							selector = [ document.createElement( ret[1] ) ];
+							jQuery.fn.attr.call( selector, context, true );
+
+						} else {
+							selector = [ doc.createElement( ret[1] ) ];
+						}
+
+					} else {
+<span style='color:red'>						ret = jQuery.buildFragment( [ match[1] ], [ doc ] );</span>
+<i>*						selector = (ret.cacheable ? ret.fragment.cloneNode(true) : ret.fragment).childNodes;</i>
+					}
+					
+					return jQuery.merge( this, selector );
+					
+				// HANDLE: $("#id")
+				} else {
+					elem = document.getElementById( match[2] );
+
+<span style='color:red'>					// Check parentNode to catch when Blackberry 4.6 returns</span>
+<span style='color:red'>					// nodes that are no longer in the document #6963</span>
+<span style='color:red'>					if ( elem && elem.parentNode ) {</span>
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id !== match[2] ) {
+							return rootjQuery.find( selector );
+						}
+
+						// Otherwise, we inject the element directly into the jQuery object
+						this.length = 1;
+						this[0] = elem;
+					}
+
+					this.context = document;
+					this.selector = selector;
+					return this;
+				}
+
+			// HANDLE: $("TAG")
+<span style='color:red'>			} else if ( !context && !rnonword.test( selector ) ) {</span>
+				this.selector = selector;
+				this.context = document;
+				selector = document.getElementsByTagName( selector );
+				return jQuery.merge( this, selector );
+
+			// HANDLE: $(expr, $(...))
+			} else if ( !context || context.jquery ) {
+				return (context || rootjQuery).find( selector );
+
+			// HANDLE: $(expr, context)
+			// (which is just equivalent to: $(context).find(expr)
+			} else {
+<i>*				return jQuery( context ).find( selector );</i>
+			}
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) ) {
+			return rootjQuery.ready( selector );
+		}
+
+		if (selector.selector !== undefined) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+		return jQuery.makeArray( selector, this );
+	}
+</pre>
+<b>jquery-1.4.3rc2 - jquery-1.4.4: no change</b><br/><br/>
+<b>fn.init (jquery-1.5b1.js)</b><br/>
+<pre>
+<span style='color:red'>function ( selector, context, rootjQuery ) {</span>
+		var match, elem, ret, doc;
+
+		// Handle $(""), $(null), or $(undefined)
+		if ( !selector ) {
+			return this;
+		}
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+		}
+
+		// The body element only exists once, optimize finding it
+		if ( selector === "body" && !context && document.body ) {
+			this.context = document;
+			this[0] = document.body;
+			this.selector = "body";
+			this.length = 1;
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+			match = quickExpr.exec( selector );
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] ) {
+<span style='color:red'>					context = context instanceof jQuery ? context[0] : context;</span>
+					doc = (context ? context.ownerDocument || context : document);
+
+					// If a single string is passed in and it's a single tag
+					// just do a createElement and skip the rest
+					ret = rsingleTag.exec( selector );
+
+					if ( ret ) {
+						if ( jQuery.isPlainObject( context ) ) {
+							selector = [ document.createElement( ret[1] ) ];
+							jQuery.fn.attr.call( selector, context, true );
+
+						} else {
+							selector = [ doc.createElement( ret[1] ) ];
+						}
+
+					} else {
+						ret = jQuery.buildFragment( [ match[1] ], [ doc ] );
+<span style='color:red'><i>*						selector = (ret.cacheable ? jQuery(ret.fragment).clone()[0] : ret.fragment).childNodes;</i></span>
+					}
+
+					return jQuery.merge( this, selector );
+
+				// HANDLE: $("#id")
+				} else {
+					elem = document.getElementById( match[2] );
+
+					// Check parentNode to catch when Blackberry 4.6 returns
+					// nodes that are no longer in the document #6963
+					if ( elem && elem.parentNode ) {
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id !== match[2] ) {
+							return rootjQuery.find( selector );
+						}
+
+						// Otherwise, we inject the element directly into the jQuery object
+						this.length = 1;
+						this[0] = elem;
+					}
+
+					this.context = document;
+					this.selector = selector;
+					return this;
+				}
+
+<i>*			// HANDLE: $("TAG")</i>
+<i>*			} else if ( !context && !rnonword.test( selector ) ) {</i>
+				this.selector = selector;
+				this.context = document;
+<i>*				selector = document.getElementsByTagName( selector );</i>
+				return jQuery.merge( this, selector );
+
+			// HANDLE: $(expr, $(...))
+			} else if ( !context || context.jquery ) {
+				return (context || rootjQuery).find( selector );
+
+			// HANDLE: $(expr, context)
+			// (which is just equivalent to: $(context).find(expr)
+			} else {
+<span style='color:red'>				return this.constructor( context ).find( selector );</span>
+			}
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) ) {
+			return rootjQuery.ready( selector );
+		}
+
+		if (selector.selector !== undefined) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+		return jQuery.makeArray( selector, this );
+	}
+</pre>
+<b>fn.init (jquery-1.5rc1.js)</b><br/>
+<pre>
+function ( selector, context, rootjQuery ) {
+		var match, elem, ret, doc;
+
+		// Handle $(""), $(null), or $(undefined)
+		if ( !selector ) {
+			return this;
+		}
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+		}
+
+		// The body element only exists once, optimize finding it
+		if ( selector === "body" && !context && document.body ) {
+			this.context = document;
+			this[0] = document.body;
+<i>*			this.selector = "body";</i>
+			this.length = 1;
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+			match = quickExpr.exec( selector );
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] ) {
+					context = context instanceof jQuery ? context[0] : context;
+					doc = (context ? context.ownerDocument || context : document);
+
+					// If a single string is passed in and it's a single tag
+					// just do a createElement and skip the rest
+					ret = rsingleTag.exec( selector );
+
+					if ( ret ) {
+						if ( jQuery.isPlainObject( context ) ) {
+							selector = [ document.createElement( ret[1] ) ];
+							jQuery.fn.attr.call( selector, context, true );
+
+						} else {
+							selector = [ doc.createElement( ret[1] ) ];
+						}
+
+					} else {
+						ret = jQuery.buildFragment( [ match[1] ], [ doc ] );
+<span style='color:red'>						selector = (ret.cacheable ? jQuery.clone(ret.fragment) : ret.fragment).childNodes;</span>
+					}
+
+					return jQuery.merge( this, selector );
+
+				// HANDLE: $("#id")
+				} else {
+					elem = document.getElementById( match[2] );
+
+					// Check parentNode to catch when Blackberry 4.6 returns
+					// nodes that are no longer in the document #6963
+					if ( elem && elem.parentNode ) {
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id !== match[2] ) {
+							return rootjQuery.find( selector );
+						}
+
+						// Otherwise, we inject the element directly into the jQuery object
+						this.length = 1;
+						this[0] = elem;
+					}
+
+					this.context = document;
+					this.selector = selector;
+					return this;
+				}
+
+			// HANDLE: $(expr, $(...))
+			} else if ( !context || context.jquery ) {
+				return (context || rootjQuery).find( selector );
+
+			// HANDLE: $(expr, context)
+			// (which is just equivalent to: $(context).find(expr)
+			} else {
+				return this.constructor( context ).find( selector );
+			}
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) ) {
+			return rootjQuery.ready( selector );
+		}
+
+		if (selector.selector !== undefined) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+		return jQuery.makeArray( selector, this );
+	}
+</pre>
+<b>jquery-1.5 - jquery-1.5.2: no change</b><br/><br/>
+<b>fn.init (jquery-1.6b1.js)</b><br/>
+<pre>
+function ( selector, context, rootjQuery ) {
+		var match, elem, ret, doc;
+
+		// Handle $(""), $(null), or $(undefined)
+		if ( !selector ) {
+			return this;
+		}
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+		}
+
+		// The body element only exists once, optimize finding it
+		if ( selector === "body" && !context && document.body ) {
+			this.context = document;
+			this[0] = document.body;
+			this.selector = selector;
+			this.length = 1;
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+<span style='color:red'><i>*			if ( selector.length > 1024 ) {</i></span>
+<span style='color:red'><i>*				// Assume very large strings are HTML and skip the regex check</i></span>
+<span style='color:red'>				match = [ null, selector, null ];</span>
+			} else {
+				match = quickExpr.exec( selector );
+			}
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] ) {
+					context = context instanceof jQuery ? context[0] : context;
+					doc = (context ? context.ownerDocument || context : document);
+
+					// If a single string is passed in and it's a single tag
+					// just do a createElement and skip the rest
+					ret = rsingleTag.exec( selector );
+
+					if ( ret ) {
+						if ( jQuery.isPlainObject( context ) ) {
+							selector = [ document.createElement( ret[1] ) ];
+							jQuery.fn.attr.call( selector, context, true );
+
+						} else {
+							selector = [ doc.createElement( ret[1] ) ];
+						}
+
+					} else {
+						ret = jQuery.buildFragment( [ match[1] ], [ doc ] );
+						selector = (ret.cacheable ? jQuery.clone(ret.fragment) : ret.fragment).childNodes;
+					}
+
+					return jQuery.merge( this, selector );
+
+				// HANDLE: $("#id")
+				} else {
+					elem = document.getElementById( match[2] );
+
+					// Check parentNode to catch when Blackberry 4.6 returns
+					// nodes that are no longer in the document #6963
+					if ( elem && elem.parentNode ) {
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id !== match[2] ) {
+							return rootjQuery.find( selector );
+						}
+
+						// Otherwise, we inject the element directly into the jQuery object
+						this.length = 1;
+						this[0] = elem;
+					}
+
+					this.context = document;
+					this.selector = selector;
+					return this;
+				}
+
+			// HANDLE: $(expr, $(...))
+			} else if ( !context || context.jquery ) {
+				return (context || rootjQuery).find( selector );
+
+			// HANDLE: $(expr, context)
+			// (which is just equivalent to: $(context).find(expr)
+			} else {
+				return this.constructor( context ).find( selector );
+			}
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) ) {
+			return rootjQuery.ready( selector );
+		}
+
+		if (selector.selector !== undefined) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+		return jQuery.makeArray( selector, this );
+	}
+</pre>
+<b>jquery-1.6rc1: no change</b><br/><br/>
+<b>fn.init (jquery-1.6.js)</b><br/>
+<pre>
+function ( selector, context, rootjQuery ) {
+		var match, elem, ret, doc;
+
+		// Handle $(""), $(null), or $(undefined)
+		if ( !selector ) {
+			return this;
+		}
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+		}
+
+		// The body element only exists once, optimize finding it
+		if ( selector === "body" && !context && document.body ) {
+			this.context = document;
+			this[0] = document.body;
+			this.selector = selector;
+			this.length = 1;
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+<span style='color:red'>			if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {</span>
+<span style='color:red'>				// Assume that strings that start and end with <> are HTML and skip the regex check</span>
+				match = [ null, selector, null ];
+
+			} else {
+				match = quickExpr.exec( selector );
+			}
+
+			// Verify a match, and that no context was specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] ) {
+					context = context instanceof jQuery ? context[0] : context;
+					doc = (context ? context.ownerDocument || context : document);
+
+					// If a single string is passed in and it's a single tag
+					// just do a createElement and skip the rest
+					ret = rsingleTag.exec( selector );
+
+					if ( ret ) {
+						if ( jQuery.isPlainObject( context ) ) {
+							selector = [ document.createElement( ret[1] ) ];
+							jQuery.fn.attr.call( selector, context, true );
+
+						} else {
+							selector = [ doc.createElement( ret[1] ) ];
+						}
+
+					} else {
+						ret = jQuery.buildFragment( [ match[1] ], [ doc ] );
+						selector = (ret.cacheable ? jQuery.clone(ret.fragment) : ret.fragment).childNodes;
+					}
+
+					return jQuery.merge( this, selector );
+
+				// HANDLE: $("#id")
+				} else {
+					elem = document.getElementById( match[2] );
+
+					// Check parentNode to catch when Blackberry 4.6 returns
+					// nodes that are no longer in the document #6963
+					if ( elem && elem.parentNode ) {
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id !== match[2] ) {
+							return rootjQuery.find( selector );
+						}
+
+						// Otherwise, we inject the element directly into the jQuery object
+						this.length = 1;
+						this[0] = elem;
+					}
+
+					this.context = document;
+					this.selector = selector;
+					return this;
+				}
+
+			// HANDLE: $(expr, $(...))
+			} else if ( !context || context.jquery ) {
+				return (context || rootjQuery).find( selector );
+
+			// HANDLE: $(expr, context)
+			// (which is just equivalent to: $(context).find(expr)
+			} else {
+				return this.constructor( context ).find( selector );
+			}
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) ) {
+			return rootjQuery.ready( selector );
+		}
+
+		if (selector.selector !== undefined) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+		return jQuery.makeArray( selector, this );
+	}
+</pre>
+<b>jquery-1.6.1rc1 - jquery-1.7.2: no change</b><br/><br/>
+<b>fn.init (jquery-1.8b1.js)</b><br/>
+<pre>
+function ( selector, context, rootjQuery ) {
+		var match, elem, ret, doc;
+
+<span style='color:red'><i>*		// Handle $(""), $(null), $(undefined), $(false), or $("#") for location.hash</i></span>
+<span style='color:red'><i>*		if ( !selector || selector === "#" ) {</i></span>
+			return this;
+		}
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {
+				// Assume that strings that start and end with <> are HTML and skip the regex check
+				match = [ null, selector, null ];
+
+			} else {
+<span style='color:red'><i>*				match = rhtmlString.exec( selector );</i></span>
+			}
+
+			// HANDLE: $(html) -> $(array)
+<span style='color:red'><i>*			if ( match && match[1] ) {</i></span>
+				context = context instanceof jQuery ? context[0] : context;
+<span style='color:red'>				doc = ( context && context.nodeType ? context.ownerDocument || context : document );</span>
+
+<span style='color:red'>				// scripts is true for back-compat</span>
+<span style='color:red'>				selector = jQuery.parseHTML( match[1], doc, true );</span>
+<span style='color:red'>				if ( rsingleTag.test( match[1] ) && jQuery.isPlainObject( context ) ) {</span>
+<span style='color:red'>					this.attr.call( selector, context, true );</span>
+				}
+
+				return jQuery.merge( this, selector );
+
+			// HANDLE: $(expr, $(...))
+			} else if ( !context || context.jquery ) {
+				return ( context || rootjQuery ).find( selector );
+
+			// HANDLE: $(expr, context)
+			// (which is just equivalent to: $(context).find(expr)
+			} else {
+				return this.constructor( context ).find( selector );
+			}
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) ) {
+			return rootjQuery.ready( selector );
+		}
+
+		if ( selector.selector !== undefined ) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+		return jQuery.makeArray( selector, this );
+	}
+</pre>
+<b>fn.init (jquery-1.8b2.js)</b><br/>
+<pre>
+function ( selector, context, rootjQuery ) {
+<i>*		var match, elem, ret, doc;</i>
+
+<span style='color:red'><i>*		// Handle $(""), $(null), $(undefined), $(false)</i></span>
+<span style='color:red'>		if ( !selector ) {</span>
+			return this;
+		}
+
+<i>*		// Handle $(DOMElement)</i>
+		if ( selector.nodeType ) {
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {
+				// Assume that strings that start and end with <> are HTML and skip the regex check
+				match = [ null, selector, null ];
+
+			} else {
+<span style='color:red'>				match = rquickExpr.exec( selector );</span>
+			}
+
+<span style='color:red'>			// Match html or make sure no context is specified for #id</span>
+<span style='color:red'>			if ( match && (match[1] || !context) ) {</span>
+
+				// HANDLE: $(html) -> $(array)
+<span style='color:red'>				if ( match[1] ) {</span>
+					context = context instanceof jQuery ? context[0] : context;
+<i>*					doc = ( context && context.nodeType ? context.ownerDocument || context : document );</i>
+
+					// scripts is true for back-compat
+<i>*					selector = jQuery.parseHTML( match[1], doc, true );</i>
+					if ( rsingleTag.test( match[1] ) && jQuery.isPlainObject( context ) ) {
+<i>*						this.attr.call( selector, context, true );</i>
+					}
+
+<i>*					return jQuery.merge( this, selector );</i>
+
+<span style='color:red'>				// HANDLE: $(#id)</span>
+				} else {
+<span style='color:red'>					elem = document.getElementById( match[2] );</span>
+
+<span style='color:red'>					// Check parentNode to catch when Blackberry 4.6 returns</span>
+<span style='color:red'>					// nodes that are no longer in the document #6963</span>
+<span style='color:red'>					if ( elem && elem.parentNode ) {</span>
+<span style='color:red'>						// Handle the case where IE and Opera return items</span>
+<span style='color:red'>						// by name instead of ID</span>
+<span style='color:red'>						if ( elem.id !== match[2] ) {</span>
+<span style='color:red'>							return rootjQuery.find( selector );</span>
+						}
+
+<span style='color:red'>						// Otherwise, we inject the element directly into the jQuery object</span>
+						this.length = 1;
+<span style='color:red'>						this[0] = elem;</span>
+					}
+
+<span style='color:red'>					this.context = document;</span>
+<span style='color:red'>					this.selector = selector;</span>
+					return this;
+				}
+
+			// HANDLE: $(expr, $(...))
+			} else if ( !context || context.jquery ) {
+				return ( context || rootjQuery ).find( selector );
+
+			// HANDLE: $(expr, context)
+			// (which is just equivalent to: $(context).find(expr)
+			} else {
+				return this.constructor( context ).find( selector );
+			}
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) ) {
+			return rootjQuery.ready( selector );
+		}
+
+		if ( selector.selector !== undefined ) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+		return jQuery.makeArray( selector, this );
+	}
+</pre>
+<b>jquery-1.8rc1 - jquery-1.8.3: no change</b><br/><br/>
+<b>fn.init (jquery-1.9b1.js)</b><br/>
+<pre>
+function ( selector, context, rootjQuery ) {
+<span style='color:red'>		var match, elem;</span>
+
+<span style='color:red'>		// HANDLE: $(""), $(null), $(undefined), $(false)</span>
+		if ( !selector ) {
+			return this;
+		}
+
+<span style='color:red'>		// HANDLE: $(DOMElement)</span>
+<i>*		if ( selector.nodeType ) {</i>
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {
+				// Assume that strings that start and end with <> are HTML and skip the regex check
+				match = [ null, selector, null ];
+
+			} else {
+				match = rquickExpr.exec( selector );
+			}
+
+			// Match html or make sure no context is specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] ) {
+					context = context instanceof jQuery ? context[0] : context;
+
+					// scripts is true for back-compat
+<span style='color:red'>					jQuery.merge( this, jQuery.parseHTML(</span>
+<span style='color:red'>						match[1],</span>
+<span style='color:red'>						context && context.nodeType ? context.ownerDocument || context : document,</span>
+<span style='color:red'>						true</span>
+<span style='color:red'>					) );</span>
+
+<span style='color:red'>					// HANDLE: $(html, props)</span>
+					if ( rsingleTag.test( match[1] ) && jQuery.isPlainObject( context ) ) {
+<span style='color:red'>						for ( match in context ) {</span>
+<span style='color:red'>							// Properties of context are called as methods if possible</span>
+<span style='color:red'>							if ( jQuery.isFunction( this[ match ] ) ) {</span>
+<span style='color:red'>								this[ match ]( context[ match ] );</span>
+
+<span style='color:red'>							// ...and otherwise set as attributes</span>
+							} else {
+<span style='color:red'>								this.attr( match, context[ match ] );</span>
+							}
+						}
+					}
+
+					return this;
+
+				// HANDLE: $(#id)
+				} else {
+					elem = document.getElementById( match[2] );
+
+					// Check parentNode to catch when Blackberry 4.6 returns
+					// nodes that are no longer in the document #6963
+					if ( elem && elem.parentNode ) {
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id !== match[2] ) {
+							return rootjQuery.find( selector );
+						}
+
+						// Otherwise, we inject the element directly into the jQuery object
+						this.length = 1;
+						this[0] = elem;
+					}
+
+					this.context = document;
+					this.selector = selector;
+					return this;
+				}
+
+			// HANDLE: $(expr, $(...))
+			} else if ( !context || context.jquery ) {
+				return ( context || rootjQuery ).find( selector );
+
+			// HANDLE: $(expr, context)
+			// (which is just equivalent to: $(context).find(expr)
+			} else {
+				return this.constructor( context ).find( selector );
+			}
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) ) {
+			return rootjQuery.ready( selector );
+		}
+
+		if ( selector.selector !== undefined ) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+		return jQuery.makeArray( selector, this );
+	}
+</pre>
+<b>fn.init (jquery-1.9rc1.js)</b><br/>
+<pre>
+<i>*function ( selector, context, rootjQuery ) {</i>
+		var match, elem;
+
+		// HANDLE: $(""), $(null), $(undefined), $(false)
+		if ( !selector ) {
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {
+				// Assume that strings that start and end with <> are HTML and skip the regex check
+				match = [ null, selector, null ];
+
+			} else {
+				match = rquickExpr.exec( selector );
+			}
+
+			// Match html or make sure no context is specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] ) {
+					context = context instanceof jQuery ? context[0] : context;
+
+					// scripts is true for back-compat
+					jQuery.merge( this, jQuery.parseHTML(
+						match[1],
+						context && context.nodeType ? context.ownerDocument || context : document,
+						true
+					) );
+
+					// HANDLE: $(html, props)
+					if ( rsingleTag.test( match[1] ) && jQuery.isPlainObject( context ) ) {
+						for ( match in context ) {
+							// Properties of context are called as methods if possible
+							if ( jQuery.isFunction( this[ match ] ) ) {
+								this[ match ]( context[ match ] );
+
+							// ...and otherwise set as attributes
+							} else {
+								this.attr( match, context[ match ] );
+							}
+						}
+					}
+
+					return this;
+
+				// HANDLE: $(#id)
+				} else {
+					elem = document.getElementById( match[2] );
+
+					// Check parentNode to catch when Blackberry 4.6 returns
+					// nodes that are no longer in the document #6963
+					if ( elem && elem.parentNode ) {
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id !== match[2] ) {
+							return rootjQuery.find( selector );
+						}
+
+						// Otherwise, we inject the element directly into the jQuery object
+						this.length = 1;
+						this[0] = elem;
+					}
+
+					this.context = document;
+					this.selector = selector;
+					return this;
+				}
+
+			// HANDLE: $(expr, $(...))
+			} else if ( !context || context.jquery ) {
+				return ( context || rootjQuery ).find( selector );
+
+			// HANDLE: $(expr, context)
+			// (which is just equivalent to: $(context).find(expr)
+			} else {
+				return this.constructor( context ).find( selector );
+			}
+
+		// HANDLE: $(DOMElement)
+<span style='color:red'>		} else if ( selector.nodeType ) {</span>
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) ) {
+<i>*			return rootjQuery.ready( selector );</i>
+		}
+
+		if ( selector.selector !== undefined ) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+		return jQuery.makeArray( selector, this );
+	}
+</pre>
+<b>jquery-1.9 - jquery-1.10.2: no change</b><br/><br/>
+<b>fn.init (jquery-1.11.0-beta1.js)</b><br/>
+<pre>
+<span style='color:red'>function ( selector, context ) {</span>
+		var match, elem;
+
+		// HANDLE: $(""), $(null), $(undefined), $(false)
+		if ( !selector ) {
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {
+				// Assume that strings that start and end with <> are HTML and skip the regex check
+				match = [ null, selector, null ];
+
+			} else {
+				match = rquickExpr.exec( selector );
+			}
+
+			// Match html or make sure no context is specified for #id
+			if ( match && (match[1] || !context) ) {
+
+				// HANDLE: $(html) -> $(array)
+				if ( match[1] ) {
+					context = context instanceof jQuery ? context[0] : context;
+
+					// scripts is true for back-compat
+<span style='color:red'>					// Intentionally let the error be thrown if parseHTML is not present</span>
+					jQuery.merge( this, jQuery.parseHTML(
+						match[1],
+						context && context.nodeType ? context.ownerDocument || context : document,
+						true
+					) );
+
+					// HANDLE: $(html, props)
+					if ( rsingleTag.test( match[1] ) && jQuery.isPlainObject( context ) ) {
+						for ( match in context ) {
+							// Properties of context are called as methods if possible
+							if ( jQuery.isFunction( this[ match ] ) ) {
+								this[ match ]( context[ match ] );
+
+							// ...and otherwise set as attributes
+							} else {
+								this.attr( match, context[ match ] );
+							}
+						}
+					}
+
+					return this;
+
+				// HANDLE: $(#id)
+				} else {
+					elem = document.getElementById( match[2] );
+
+					// Check parentNode to catch when Blackberry 4.6 returns
+					// nodes that are no longer in the document #6963
+					if ( elem && elem.parentNode ) {
+						// Handle the case where IE and Opera return items
+						// by name instead of ID
+						if ( elem.id !== match[2] ) {
+							return rootjQuery.find( selector );
+						}
+
+						// Otherwise, we inject the element directly into the jQuery object
+						this.length = 1;
+						this[0] = elem;
+					}
+
+					this.context = document;
+					this.selector = selector;
+					return this;
+				}
+
+			// HANDLE: $(expr, $(...))
+			} else if ( !context || context.jquery ) {
+				return ( context || rootjQuery ).find( selector );
+
+			// HANDLE: $(expr, context)
+			// (which is just equivalent to: $(context).find(expr)
+			} else {
+				return this.constructor( context ).find( selector );
+			}
+
+		// HANDLE: $(DOMElement)
+		} else if ( selector.nodeType ) {
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+
+		// HANDLE: $(function)
+		// Shortcut for document ready
+		} else if ( jQuery.isFunction( selector ) ) {
+<span style='color:red'>			return typeof rootjQuery.ready !== "undefined" ?</span>
+<span style='color:red'>				rootjQuery.ready( selector ) :</span>
+<span style='color:red'>				// Execute immediately if ready is not present</span>
+<span style='color:red'>				selector( jQuery );</span>
+		}
+
+		if ( selector.selector !== undefined ) {
+			this.selector = selector.selector;
+			this.context = selector.context;
+		}
+
+		return jQuery.makeArray( selector, this );
+	}
+</pre>
+<b>jquery-1.11.0-beta2 - jquery-1.11.2: no change</b><br/><br/>
+
+</body>
+</html>

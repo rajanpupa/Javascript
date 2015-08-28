@@ -1,0 +1,22 @@
+
+<!-- saved from url=(0045)http://puzzlecrowd.com/demos/demoPrivate.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<script>
+	var foo = (function() {
+		var private = 10;
+		function privateFunction() {
+			return 10;
+		}
+		return {a:privateFunction(), x:function(){
+			debugger;
+			console.log(privateFunction());
+		}}
+		
+	})();
+	var foobar = Object.create(foo);		// extend foo
+	debugger;   // look at foo and foobar in Watch window
+	
+	document.write(foo.privateFunction);
+</script>
+</head>
+<body></body></html>

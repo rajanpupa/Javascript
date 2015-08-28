@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>javascript example1</title>
+</head>
+<body>
+	<div class="wrapper">
+		<h2> See the code; Fundamental of inheritence based on prototype.</h2>
+		<script>
+			var AnswerPrototype = {
+				constructor: function fn0(value){
+					this._val =value;
+				},
+				get: function fn1(){
+					return this._val;
+				}
+			};
+			
+			var lifeAnswer = Object.create(AnswerPrototype);
+			lifeAnswer.constructor(42);
+			lifeAnswer.get();//42
+			
+			var dessertAnswer = Object.create(AnswerPrototype);
+			dessertAnswer.constructor(3.14159);
+			dessertAnswer.get();	// 3.14.59
+			
+			// --------------------------------classical model -----------------------
+			function Answer(value){
+				this._val = value;
+			}
+			
+			Answer.prototype.get = function fn1(){
+				return this._val;
+			};
+			
+			var lifeAnswer = new Answer(42);
+			lifeAnswer.get();    //42
+			var dessertAnswer = new Answer(3.14159);
+			dessertAnswer.get();    //3.14159
+			
+		</script>
+	</div>
+</body>
+</html>

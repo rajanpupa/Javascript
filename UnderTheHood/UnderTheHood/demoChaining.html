@@ -1,0 +1,30 @@
+<html>
+<head>
+<script type='text/javascript'>
+	function doMath() {
+		var f = new Foo(10);
+		f.add(10).multiply(2).display();
+	}
+	
+	function Foo(value) {
+		this.value = value;		
+	}
+	Foo.prototype.add = function(n) {
+		this.value += n;
+		return this;
+	}
+	
+	Foo.prototype.multiply = function(n) {
+		this.value *= n;
+		return this;
+	}
+	
+	Foo.prototype.display = function() {
+		alert(this.value);
+		return this;
+	}
+</script>
+</head>
+<body onload="init()">
+<button onclick="doMath()">Do math</button>
+</body>

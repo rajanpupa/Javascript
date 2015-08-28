@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Experiments</title>
+		<style type="text/css">
+			table {border-collapse:collapse}
+			tr>td {padding-bottom:10px}
+			.question {color:red}
+		</style>
+		<script src="jQueryVersions/jquery-1.11.3.js"></script>
+		<script src="experiments.js"></script>
+	</head>
+	<body>
+
+	<p>Guidelines</p>
+	<ol>
+		<li>You should <b>always</b> be able to explain why <i>this</i> has the value it does.</li>
+		<li>You should be able to answer questions about the code at the given breakpoints</li>
+		<li>You should be able to answer questions marked in red</li>
+		<li>You should expand the code snippets I give to include the HTML that they work on.</li>
+		<li>A good source of information about Web APIs is <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web'>https://developer.mozilla.org/en-US/docs/Web</a></li>
+		<li>Please do not modify jquery-1.0.js. If you want to change a function use jQuery.extend or jQuery.fn.extend</li>
+		<li>The debugger will stop at any line that contains debugger;</li>
+		<li>It is often useful to use document.querySelectorAll("...") to get DOM elements that normally reside in the jQuery object so that an internal function can be called. For example, see experiment 13 below.</li>
+	</ol>
+	<table border='1'>
+		<colgroup span="1" style="width:40px"/>
+		<colgroup span="1" style="width:40px"/>
+		<colgroup span="1" style="width:100px"/>
+		<colgroup span="1" style="width:600px"/>		<!-- Width of pre element will override this -->
+			<tr><th>#</th><th>Understood</th><th>Breakpoint</th><th>Experiment</th></tr>
+		
+			<tr><td>1</td><td><input id="cb1" type="checkbox"/></td><td>13</td><td valign='top'>Step through interpretation of jquery-1.0.js. See <a href="jQueryCompilation.html">overview</a></td></tr>
+		
+			<tr><td>2</td><td><input id="cb2" type="checkbox"/></td><td>N/A</td><td valign='top'>jQuery adds three names to the global namespace. Two of them are jQuery and $. What is the third? Hint: compare properties of the Window object before and after jQuery is interpreted.</td></tr>
+		
+			<tr><td>3</td><td><input id="cb3" type="checkbox"/></td><td>268</td>
+			<td valign='top'><p>Add a function to an object using jQuery.extend(), e.g.,</p>
+			<pre>var obj = {a:[1, 2, 3]};
+function f() {
+  // do something with <i>this</i>
+}
+jQuery.extend(obj, {f: f});			
+			</pre>
+			</td></tr>
+			
+			<tr><td>4</td><td><input id="cb4" type="checkbox"/></td><td>327, 332</td>
+			<td valign='top'>
+			<p>Use jQuery.each to modify the elements of an array</p>
+			<pre>var a = ["up", "down", "left", "right"];
+var b = {};
+
+function myconcat(suffix) {
+   b[this] = this + suffix;   // note that b is in the closure of myconcat
+}
+			
+jQuery.each(a, myconcat, ["!"]);		// step through this using the debugger
+</pre>
+			</td></tr>
+			
+			<tr><td>5</td><td><input id="cb5" type="checkbox"/></td><td>332</td>
+			<td valign='top'><p>Here is an invocation of jQuery.each with 3 arguments.<span class='question'>Why is the third argument of jQuery.each required to be an array?</span><p><pre>var a = [1, 2, 3, 4];
+var b = [];
+jQuery.each(a,
+   function(fn) {	
+      b.push(fn(this));
+   },  
+   [function(n){return n+1}]);
+</td></tr>
+			
+			<tr><td>6</td><td><input id="cb6" type="checkbox"/></td><td></td>
+			<td valign='top'><p>This example uses jQuery.each with an array of DOM elements. <span class='question'>Describe the argument passed to document.querySelectorAll().</span></p><pre>var ps = document.querySelectorAll(".foo");
+function setBackground(i, el) {
+   el.style.backgroundColor="red";
+}
+jQuery.each(ps, setBackground);</pre>
+</p></td></tr>
+			
+			<tr><td>7</td><td><input id="cb7" type="checkbox"/></td><td>268</td>
+			<td valign='top'><p>Use jQuery.extend to add a toString method to jQuery.browser. <span class='question'>What would happen if the jQuery.browser argument were omitted from the call to jQuery.extend?</span></p><pre>var el;
+var f = function () {
+   var buffer = "safari: " + this.safari;
+   buffer += "&lt;br/&gt;opera: " + this.opera;
+   buffer += "&lt;br/&gt;msie: " + this.msie;
+   buffer += "&lt;br/&gt;mozilla: " + this.mozilla;
+   return buffer;
+}
+jQuery.extend(<span class='question'>jQuery.browser,</span> {toString: f});
+console.log(jQuery.browser.toString());</pre>
+			</td></tr>
+			
+			<tr><td>8</td><td><input id="cb8" type="checkbox"/></td><td></td>
+			<td valign='top'><p>jQuery.browser was deprecated in jQuery 1.3. Because jQuery.browser uses navigator.userAgent to determine the platform, it is vulnerable to spoofing by the user or misrepresentation by the browser itself. Instead of relying on jQuery.browser it's better to use libraries like Modernizr, for example</p><pre>if (Modernizr.canvas) {   // Use &lt;script src='jQueryVersions/modernizr.js'&gt;&lt;/script&gt;
+   console.log("Browser supports canvas");
+}</pre><p class='question'>At what line in modernizr.js is Modernizr.canvas is set to true?</p>
+			</td></tr>
+			
+			<tr><td>9</td><td><input id="cb9" type="checkbox"/></td><td>751</td>
+			<td valign='top'><p>Use jQuery.merge to merge two arrays getting rid of duplicates, e.g.</p><pre>var a1 = [1, 2, 3, 4];
+var a2 = [1, 3, 6, 8];
+var result = jQuery.merge(a1, a2);</pre>
+			<ol class='question'>
+			<li>What is a StaticNodeList instance?</li>
+			<li>What do you think of the comments in jQuery.merge?</li>
+			<li>Can you make the loop at line 760 more efficient?</li>
+			</ol>
+			</td></tr>
+			
+			<tr><td>10</td><td><input id="cb10" type="checkbox"/></td><td>790, 801</td>
+			<td valign='top'><p>Use jQuery.map to multiply all elements of an array by two, e.g.,</p><pre>var a = [1, 2, 3, 4, 3, 2, 1];
+var f = function(value, index) {
+   return value*2;
+}
+result = jQuery.map(a, f);</pre><p class='question'>How does jQuery.map remove duplicates?</p>
+			</td>
+			</tr>
+			
+			<tr><td>11</td><td><input id="cb11" type="checkbox"/></td><td></td>
+			<td valign='top'><p>Pass a string rather than a function as the second argument of jQuery.map, e.g, </p><pre>var a = [1, 2, 3, 4, 3, 2, 1];
+result = jQuery.map(a, "a*2");</pre><p class='question'>Would "b*2" work? Why or why not?</p>
+			</td></tr>
+			
+			<tr><td>12</td><td><input id="cb12" type="checkbox"/></td><td></td>
+			<td valign='top'><p>Use jQuery.map to modify DOM elements, e.g.,</p><pre>var els = document.querySelectorAll("p");
+result = jQuery.map(els, "a.style.background-color='red';");</pre><p class='question'>Is the above equivalent to $("p").css("background-color", "red")?</p>
+			</td></tr>
+
+			<tr><td>13</td><td><input id="cb13" type="checkbox"/></td><td>782</td>
+			<td valign='top'><p>Use jQuery.grep to select the even elements from an array, e.g.,</p><pre>a = [1, 2, 3, 4];
+result = jQuery.grep(a, "a % 2 == 0");</pre>
+<p class='question'>How could you use "a % 2 == 0" to select the odd elements of the array?</p></td></tr>
+			
+			<tr><td>14</td><td><input id="cb14" type="checkbox"/></td><td>76, 258, 259</td>
+			<td valign='top'><p>Google pushStack and end to see what they do. Then step through this code with the debugger</p><pre>var a = [1, 2, 3, 4], result, i;
+jQuery.extend(a, {get:jQuery.fn.get});     // because pushStack uses get
+var result = jQuery.fn.pushStack.apply(a); // push a onto a.stack
+for (i=0; i&lt;a.length; i++) {               // modify a to [2, 3, 4, 5]
+   a[i]++;
+}
+jQuery.fn.end.apply(a);                    // restore a to [1, 2, 3, 4]</pre>
+<ol class='question'>
+<li>How does this code snippet demonstrate that Javascript arrays are different than Java arrays?</li>
+<li>When is the constructor property of an object set?</li>
+<li>Modify the code snippet so that breakpoint 259 is hit.</li>
+</ol></p>
+			</td></tr>
+			
+			<tr><td>15</td><td><input id="cb15" type="checkbox"/></td><td></td>
+			<td valign='top'><p>jQuery makes frequent use of regular expressions. If you aren't familiar with regular expressions you should seek out a tutorial on the Internet that explains them. Here is one that is well done <a target='_blank' href='http://www.regular-expressions.info/'>http://www.regular-expressions.info/</a>. The program below evaluates some of the regular expressions used by jQuery. Please run it and verify that all match the string associated with them. </p><pre>var i, len, regexps, regexp;
+			// Here are some regular expressions that are used by jQuery.
+regexps = [
+   {line:36,  s:"  <p>  ", re:/^[^<]*(<.+>)[^>]*$/},
+   {line:344, s:"cl1 cl2 cl3", re:/(^|\s*\b[^-])cl2($|\b(?=[^-]))/, usage:""},
+   {line:349, s:" foo def", re:/(^|\s)foo(\s|$)/, usage:""},
+   {line:553, s:"//abc", re:/^\/\//i, usage:'jQuery.trim(t).replace( /^\/\//i, "" )'},
+   {line:558, s:"/..abc", re:/^(\.\.|\/\.\.)/, usage:""},
+   {line:558, s:">abc", re:/^(>|\/)/, usage:""},
+   {line:558, s:"+abc", re:/^(\+)/, usage:""},
+   {line:558, s:"~abc", re:/^(~)/, usage:""},
+   {line:575, s:".foo", re:/^([#.]?)([a-z0-9\\*_-]*)/i, usage:""},
+   {line:662, s:"a[b]", re:/^[a-z[({<*:.#]/},
+   {line:675, s:"[@abc='def']", 
+      re:/^\[ *(@)([a-z*_-][a-z0-9_-]*) *([!*$^=]*) * *'?"?([^'"]*?)'?"? *\]/i},
+   {line:675, s:"['abc']", re:/^(\[) *'?"?([^'"]*?)'?"? *\]/i},
+   {line:675, s:":aBc('def')", re:/^(:)([a-z*_-][a-z0-9_-]*)\( *'?"?([^'"]*?)'?"? *\)/i},
+   {line:675, s:"#ID", re:/^([:.#]*)([a-z*_-][a-z0-9_-]*)/i},
+   {line:715, s:"  abc", re:/^\s+|\s+$/, usage:'t.replace(/^\s+|\s+$/g, "")'} 
+];
+len = regexps.length;
+for (i=0; &lt;len; i++) {
+   regexp = regexps[i];
+   if (regexp.re.test(regexp.s)) {
+      console.log("" + regexp.line + " matched.")
+   } else {
+      console.log("" + regexp.line + " not matched.");
+   }
+}
+</pre><p class="question">Modify each string so that its associated regular expression does not match</p>
+			</td></tr>
+			
+			<tr><td>16</td><td><input id="cb16" type="checkbox"/></td><td>349</td>
+			<td valign='top'><p>The following code snippet tests if a DOM element has a particular class name. Step into jQuery.className.has with the debugger. Recall that the class attribute allows multiple classes separated by blanks, e.g. class="cl1 cl2 cl3"</p><pre>obj = document.getElementById("id3");
+console.log(jQuery.className.has(obj, "cl2"));</pre><ol class='question'>
+<li>What happens if the DOM element does not have a className property?</li>
+<li>Line 347 tests whether e.className is undefined. Can you think of a situation where this will be true?</li>
+<li>Line 349 demonstrates the difference between the RegExp constructor function and the // literal. What is it?</li>
+</ol>			
+			</td></tr>
+			
+			<tr><td>17</td><td><input id="cb17" type="checkbox"/></td><td>339</td>
+			<td valign='top'><p>Step through the follow snippet using &lt;div id="id3" class="cl1 cl3"/&gt;. In Developer Tools verify that it worked.</p><pre>var obj = document.getElementById("id3");
+jQuery.className.add(obj, "cl4");</pre><p class="question">Why are the parentheses necessary in line 339?</p>
+			</td></tr>
+			
+			<tr><td>18</td><td><input id="cb18" type="checkbox"/></td><td>344</td>
+			<td valign='top'><p>Verify that this code works with &lt;div id="id3" class="cl1 cl2 cl3"&gt;. Note that - is a legal character in a class name but is not a character matched by \w.</p><pre>var obj = document.getElementById("id3");
+jQuery.className.remove(obj, "cl2");</pre><p class="question">However, it does not remove cl2 if two blanks separate cl2 from cl1. Why?</p>
+			</td></tr>
+
+			<tr><td>19</td><td><input id="cb19" type="checkbox"/></td><td>615</td>
+			<td valign='top'><p>Step through the following snippet of code. <span class='question'>What HTML do you need to cause the breakpoint at 615 to be hit?</span></p><pre>var el = document.getElementById("id");
+var a = jQuery.getAll(el); 
+</pre>
+			</td></tr>
+
+			<tr><td>20</td><td><input id="cb20" type="checkbox"/></td><td></td><td valign='top'>
+			<p>http://www.w3schools.com/jsref/jsref_trim_string.asp indicates that the String object has a trim method. 
+			<span class='question'>Does jQuery.trim do the same thing? If so why is it in jQuery. If not how does it differ?</span>
+</p><pre>var s = jQuery.trim(" \tabc\t ");
+</pre></td></tr>
+			
+			<tr><td>21</td><td><input id="cb21" type="checkbox"/></td><td>659, 662, 706</td>
+			<td valign='top'><p>Filtering is arguably the most important thing that jQuery does, so it is important to understand the filter function. Be patient. I had to step through this code at least 50 times before I felt that I understood it.</p><p>There are two versions of filter: jQuery.filter and jQuery.fn.filter. This code snippet uses jQuery.filter and hence is required to pass an array of DOM elements to it.</p><pre>
+var els = document.querySelectorAll("p");    // get DOM elements to filter	
+var filtered = jQuery.filter(".foo", els);   // get DOM element with class = 'foo'
+var selected = filtered.r;                   // these are the .foo DOM elements
+for (i=0; i&lt;selected.length; i++) {
+   selected[i].style.backgroundColor = "red";  // make their background colors red
+}</pre><ol class='question'>
+<li>What is the value of f at line 706 (Use f.toString() in the console). Does this function make sense?</li>
+<li>What regular expressions are executed before a match is found?</li>
+<li>What regular expression matches ".foo"?</li>
+<li>What is g at line 706?</li>
+<li>What gets returned by jQuery.filter?</li>
+</ol>
+			</td></tr>
+			
+			
+			<!--tr><td>22</td><td><input id="cb22" type="checkbox"/></td><td></td><td valign='top'></td></tr>
+			
+			<tr><td>23</td><td><input id="cb23" type="checkbox"/></td><td></td><td valign='top'></td></tr>
+			
+			<tr><td>24</td><td><input id="cb24" type="checkbox"/></td><td></td><td valign='top'></td></tr>
+			
+			<tr><td>25</td><td><input id="cb25" type="checkbox"/></td><td></td><td valign='top'></td></tr>
+			
+			<tr><td>26</td><td><input id="cb26" type="checkbox"/></td><td></td><td valign='top'></td></tr>
+			
+			<tr><td>27</td><td><input id="cb27" type="checkbox"/></td><td></td><td valign='top'></td></tr>
+			
+			<tr><td>28</td><td><input id="cb28" type="checkbox"/></td><td></td><td valign='top'></td></tr>
+			
+			<tr><td>29</td><td><input id="cb29" type="checkbox"/></td><td></td><td valign='top'></td></tr>
+			
+			<tr><td>30</td><td><input id="cb30" type="checkbox"/></td><td></td><td valign='top'></td></tr-->
+	</table>
+	</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>javascript example1</title>
+	<script>
+		var a = [];
+		for(i in window){
+			//document.write(i + "<br/>");
+			a.push(i);
+		}
+	</script>
+	
+	<script language="javascript" src="jquery-1.0.js"></script>
+	<script>
+		//delete i;
+		//delete index;
+		//document.write("------------------------After jquery has been added.-----------------------------------------<br/>");
+		for(i in window){
+			//document.write(i + "<br/>");
+		}
+		document.write("------------------------difference.-----------------------------------------<br/>");
+		 //index;
+		for(i in window){
+			var index = a.indexOf(i);
+			if(index < 0){
+				document.write(i + "<br/>");
+			}
+		}
+		
+		
+	</script>
+</head>
+<body>
+	<div class="wrapper">
+		
+		
+	</div>
+</body>
+</html>

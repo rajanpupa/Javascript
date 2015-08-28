@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.extend demo</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+ 
+<div id="log"></div>
+ 
+<script>
+    var a = ["up", "down", "left", "right"];
+    var b = {};
+
+    function myconcat(suffix) {
+       b[this] = this + suffix;   // note that b is in the closure of myconcat
+    }
+    
+    // jQuery.each(target, function, args);
+    jQuery.each(a, myconcat, ["!"]);		// step through this using the debugger
+    
+    document.write(JSON.stringify(b) );
+</script>
+ 
+</body>
+</html>

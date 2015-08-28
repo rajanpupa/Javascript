@@ -1,0 +1,12 @@
+jQuery.merge: 
+	Input(two arrays), 
+	Output(union array of inputs)
+jQuery.trim:
+	Input (string),
+	Output(String with removed white space characters from the beginning and end)
+jQuery.map:
+	
+jQuery.find:
+	
+jQuery.add:  
+	adds a dom element to another dom element

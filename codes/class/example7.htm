@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.extend demo</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+ 
+<div id="log"></div>
+ 
+<script>
+    var el;
+	var f = function () {
+	   var buffer = "safari: " + this.safari;
+	   buffer += "<br/>opera: " + this.opera;
+	   buffer += "<br/>msie: " + this.msie;
+	   buffer += "<br/>mozilla: " + this.mozilla;
+	   return buffer;
+	}
+	var n = {toString: f};
+	jQuery.extend(n);
+	//document.write(jQuery.browser.toString());
+	document.write(n);
+</script>
+ 
+</body>
+</html>

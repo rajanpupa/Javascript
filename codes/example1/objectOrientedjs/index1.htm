@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>javascript example1</title>
+</head>
+<body>
+	<div class="wrapper">
+		<h2> See the code to know how the value of this is changing, rather then where the function is defined.</h2>
+		<script>
+			var myObject = {
+				get : function myMethod(){
+					return this.val;
+				},
+				val: 42
+			}
+			
+			document.write(myObject.get() + "<br/>--------------------------------------------<br/>");
+			
+			// ---------------------------------------------section 2 -------------------------------
+			val = 100;
+			
+			function myMethod(){
+				return this.val;
+			}
+			
+			var object1 = {
+				get: myMethod ,
+				val: 40
+			}
+			
+			var object2 = {
+				get : myMethod,
+				val: 3.14159
+			}
+			document.write(myMethod() + "<br/>");
+			document.write(object1.get() + "<br/>");
+			document.write(object2.get() + "<br/>");
+			
+			document.write("call() example: myMethod.call(object1) = " + myMethod.call(object1) + "<br/>");
+			document.write("call() example: myMethod.call(object2) = " + myMethod.call(object2) + "<br/>");
+		</script>
+	</div>
+</body>
+</html>

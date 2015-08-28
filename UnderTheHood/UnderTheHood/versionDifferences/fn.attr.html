@@ -1,0 +1,2931 @@
+<html>
+<head>
+</head>
+<body>
+<h3>attr Evolution</h3>
+<b>attr (jquery-1.0.js)</b><br/>
+<pre>
+function (elem, name, value){
+		var fix = {
+			"for": "htmlFor",
+			"class": "className",
+			"float": "cssFloat",
+			innerHTML: "innerHTML",
+<i>*			className: "className"</i>
+		};
+
+		if ( fix[name] ) {
+			if ( value != undefined ) elem[fix[name]] = value;
+			return elem[fix[name]];
+		} else if ( elem.getAttribute ) {
+			if ( value != undefined ) elem.setAttribute( name, value );
+			return elem.getAttribute( name, 2 );
+		} else {
+			name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});
+			if ( value != undefined ) elem[name] = value;
+			return elem[name];
+		}
+	}
+</pre>
+<b>attr (jquery-1.0.1.js)</b><br/>
+<pre>
+function (elem, name, value){
+		var fix = {
+			"for": "htmlFor",
+			"class": "className",
+			"float": "cssFloat",
+			innerHTML: "innerHTML",
+<span style='color:red'>			className: "className",</span>
+<span style='color:red'>			value: "value",</span>
+<span style='color:red'><i>*			disabled: "disabled"</i></span>
+		};
+
+		if ( fix[name] ) {
+			if ( value != undefined ) elem[fix[name]] = value;
+			return elem[fix[name]];
+<i>*		} else if ( elem.getAttribute ) {</i>
+			if ( value != undefined ) elem.setAttribute( name, value );
+			return elem.getAttribute( name, 2 );
+		} else {
+			name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});
+			if ( value != undefined ) elem[name] = value;
+			return elem[name];
+		}
+	}
+</pre>
+<b>attr (jquery-1.0.2.js)</b><br/>
+<pre>
+function (elem, name, value){
+		var fix = {
+			"for": "htmlFor",
+			"class": "className",
+<i>*			"float": "cssFloat",</i>
+			innerHTML: "innerHTML",
+			className: "className",
+			value: "value",
+<span style='color:red'>			disabled: "disabled",</span>
+<span style='color:red'><i>*			checked: "checked"</i></span>
+		};
+		
+<span style='color:red'>		// IE actually uses filters for opacity ... elem is actually elem.style</span>
+<span style='color:red'>		if (name == "opacity" && jQuery.browser.msie && value != undefined) {</span>
+<span style='color:red'>			// IE has trouble with opacity if it does not have layout</span>
+<span style='color:red'>			// Would prefer to check element.hasLayout first but don't have access to the element here</span>
+<span style='color:red'>			elem['zoom'] = 1; </span>
+<span style='color:red'>			if (value == 1) // Remove filter to avoid more IE weirdness</span>
+<span style='color:red'>				return elem["filter"] = elem["filter"].replace(/alpha\([^\)]*\)/gi,"");</span>
+<span style='color:red'>			else</span>
+<span style='color:red'>				return elem["filter"] = elem["filter"].replace(/alpha\([^\)]*\)/gi,"") + "alpha(opacity=" + value * 100 + ")";</span>
+<span style='color:red'>		} else if (name == "opacity" && jQuery.browser.msie) {</span>
+<span style='color:red'>			return elem["filter"] ? parseFloat( elem["filter"].match(/alpha\(opacity=(.*)\)/)[1] )/100 : 1;</span>
+		}
+		
+<span style='color:red'>		// Mozilla doesn't play well with opacity 1</span>
+<span style='color:red'>		if (name == "opacity" && jQuery.browser.mozilla && value == 1) value = 0.9999;</span>
+
+		if ( fix[name] ) {
+			if ( value != undefined ) elem[fix[name]] = value;
+			return elem[fix[name]];
+<span style='color:red'>		} else if( value == undefined && jQuery.browser.msie && elem.nodeName && elem.nodeName.toUpperCase() == 'FORM' && (name == 'action' || name == 'method') ) {</span>
+<span style='color:red'>			return elem.getAttributeNode(name).nodeValue;</span>
+<span style='color:red'><i>*		} else if ( elem.getAttribute != undefined ) {</i></span>
+			if ( value != undefined ) elem.setAttribute( name, value );
+<i>*			return elem.getAttribute( name, 2 );</i>
+		} else {
+			name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});
+			if ( value != undefined ) elem[name] = value;
+			return elem[name];
+		}
+	}
+</pre>
+<b>attr (jquery-1.0.3.js)</b><br/>
+<pre>
+function (elem, name, value){
+		var fix = {
+			"for": "htmlFor",
+			"class": "className",
+<span style='color:red'>			"float": jQuery.browser.msie ? "styleFloat" : "cssFloat",</span>
+<span style='color:red'>			cssFloat: jQuery.browser.msie ? "styleFloat" : "cssFloat",</span>
+			innerHTML: "innerHTML",
+			className: "className",
+			value: "value",
+			disabled: "disabled",
+<span style='color:red'>			checked: "checked",</span>
+<span style='color:red'>			readonly: "readOnly"</span>
+		};
+		
+		// IE actually uses filters for opacity ... elem is actually elem.style
+		if (name == "opacity" && jQuery.browser.msie && value != undefined) {
+			// IE has trouble with opacity if it does not have layout
+			// Would prefer to check element.hasLayout first but don't have access to the element here
+			elem['zoom'] = 1; 
+			if (value == 1) // Remove filter to avoid more IE weirdness
+				return elem["filter"] = elem["filter"].replace(/alpha\([^\)]*\)/gi,"");
+			else
+				return elem["filter"] = elem["filter"].replace(/alpha\([^\)]*\)/gi,"") + "alpha(opacity=" + value * 100 + ")";
+		} else if (name == "opacity" && jQuery.browser.msie) {
+			return elem["filter"] ? parseFloat( elem["filter"].match(/alpha\(opacity=(.*)\)/)[1] )/100 : 1;
+		}
+		
+		// Mozilla doesn't play well with opacity 1
+		if (name == "opacity" && jQuery.browser.mozilla && value == 1) value = 0.9999;
+
+		if ( fix[name] ) {
+			if ( value != undefined ) elem[fix[name]] = value;
+			return elem[fix[name]];
+		} else if( value == undefined && jQuery.browser.msie && elem.nodeName && elem.nodeName.toUpperCase() == 'FORM' && (name == 'action' || name == 'method') ) {
+			return elem.getAttributeNode(name).nodeValue;
+<span style='color:red'><i>*		} else if ( elem.getAttribute != undefined && elem.tagName ) { // IE elem.getAttribute passes even for style</i></span>
+			if ( value != undefined ) elem.setAttribute( name, value );
+<span style='color:red'>			return elem.getAttribute( name );</span>
+		} else {
+			name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});
+			if ( value != undefined ) elem[name] = value;
+			return elem[name];
+		}
+	}
+</pre>
+<b>attr (jquery-1.0.4.js)</b><br/>
+<pre>
+function (elem, name, value){
+		var fix = {
+			"for": "htmlFor",
+			"class": "className",
+			"float": jQuery.browser.msie ? "styleFloat" : "cssFloat",
+			cssFloat: jQuery.browser.msie ? "styleFloat" : "cssFloat",
+			innerHTML: "innerHTML",
+			className: "className",
+			value: "value",
+			disabled: "disabled",
+			checked: "checked",
+<i>*			readonly: "readOnly"</i>
+		};
+		
+		// IE actually uses filters for opacity ... elem is actually elem.style
+		if (name == "opacity" && jQuery.browser.msie && value != undefined) {
+			// IE has trouble with opacity if it does not have layout
+<i>*			// Would prefer to check element.hasLayout first but don't have access to the element here</i>
+<i>*			elem['zoom'] = 1; </i>
+<i>*			if (value == 1) // Remove filter to avoid more IE weirdness</i>
+<i>*				return elem["filter"] = elem["filter"].replace(/alpha\([^\)]*\)/gi,"");</i>
+<i>*			else</i>
+<i>*				return elem["filter"] = elem["filter"].replace(/alpha\([^\)]*\)/gi,"") + "alpha(opacity=" + value * 100 + ")";</i>
+<i>*		} else if (name == "opacity" && jQuery.browser.msie) {</i>
+<i>*			return elem["filter"] ? parseFloat( elem["filter"].match(/alpha\(opacity=(.*)\)/)[1] )/100 : 1;</i>
+		}
+		
+		// Mozilla doesn't play well with opacity 1
+<i>*		if (name == "opacity" && jQuery.browser.mozilla && value == 1) value = 0.9999;</i>
+
+		if ( fix[name] ) {
+			if ( value != undefined ) elem[fix[name]] = value;
+			return elem[fix[name]];
+<i>*		} else if( value == undefined && jQuery.browser.msie && elem.nodeName && elem.nodeName.toUpperCase() == 'FORM' && (name == 'action' || name == 'method') ) {</i>
+			return elem.getAttributeNode(name).nodeValue;
+<span style='color:red'><i>*		} else if ( elem.tagName ) { // IE elem.getAttribute passes even for style</i></span>
+			if ( value != undefined ) elem.setAttribute( name, value );
+			return elem.getAttribute( name );
+		} else {
+			name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});
+			if ( value != undefined ) elem[name] = value;
+			return elem[name];
+		}
+	}
+</pre>
+<b>attr (jquery-1.1a.js)</b><br/>
+<pre>
+function (elem, name, value){
+<i>*		var fix = {</i>
+			"for": "htmlFor",
+			"class": "className",
+			"float": jQuery.browser.msie ? "styleFloat" : "cssFloat",
+			cssFloat: jQuery.browser.msie ? "styleFloat" : "cssFloat",
+			innerHTML: "innerHTML",
+			className: "className",
+			value: "value",
+			disabled: "disabled",
+			checked: "checked",
+<span style='color:red'>			readonly: "readOnly",</span>
+<span style='color:red'>			selected: "selected"</span>
+		};
+		
+		// IE actually uses filters for opacity ... elem is actually elem.style
+		if ( name == "opacity" && jQuery.browser.msie && value != undefined ) {
+			// IE has trouble with opacity if it does not have layout
+<span style='color:red'>			// Force it by setting the zoom level</span>
+<span style='color:red'>			elem.zoom = 1; </span>
+
+<span style='color:red'>			// Set the alpha filter to set the opacity</span>
+<span style='color:red'>			return elem.filter = elem.filter.replace(/alpha\([^\)]*\)/gi,"") +</span>
+<span style='color:red'>				( value == 1 ? "" : "alpha(opacity=" + value * 100 + ")" );</span>
+
+<span style='color:red'>		} else if ( name == "opacity" && jQuery.browser.msie )</span>
+<span style='color:red'>			return elem.filter ? </span>
+<span style='color:red'>				parseFloat( elem.filter.match(/alpha\(opacity=(.*)\)/)[1] ) / 100 : 1;</span>
+		
+		// Mozilla doesn't play well with opacity 1
+<span style='color:red'>		if ( name == "opacity" && jQuery.browser.mozilla && value == 1 )</span>
+<span style='color:red'>			value = 0.9999;</span>
+
+<span style='color:red'>		// Certain attributes only work when accessed via the old DOM 0 way</span>
+		if ( fix[name] ) {
+			if ( value != undefined ) elem[fix[name]] = value;
+			return elem[fix[name]];
+
+<span style='color:red'><i>*		} else if ( value == undefined && jQuery.browser.msie && elem.nodeName && elem.nodeName.toUpperCase() == 'FORM' && (name == 'action' || name == 'method') )</i></span>
+			return elem.getAttributeNode(name).nodeValue;
+
+<span style='color:red'>		// IE elem.getAttribute passes even for style</span>
+<span style='color:red'>		else if ( elem.tagName ) {</span>
+			if ( value != undefined ) elem.setAttribute( name, value );
+			return elem.getAttribute( name );
+
+		} else {
+			name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});
+			if ( value != undefined ) elem[name] = value;
+			return elem[name];
+		}
+	}
+</pre>
+<b>jquery-1.1b - jquery-1.1: no change</b><br/><br/>
+<b>attr (jquery-1.1.2.js)</b><br/>
+<pre>
+function (elem, name, value){
+<span style='color:red'>		var fix = jQuery.isXMLDoc(elem) ? {} : {</span>
+			"for": "htmlFor",
+			"class": "className",
+			"float": jQuery.browser.msie ? "styleFloat" : "cssFloat",
+			cssFloat: jQuery.browser.msie ? "styleFloat" : "cssFloat",
+			innerHTML: "innerHTML",
+			className: "className",
+			value: "value",
+			disabled: "disabled",
+			checked: "checked",
+			readonly: "readOnly",
+<i>*			selected: "selected"</i>
+		};
+		
+		// IE actually uses filters for opacity ... elem is actually elem.style
+<i>*		if ( name == "opacity" && jQuery.browser.msie && value != undefined ) {</i>
+			// IE has trouble with opacity if it does not have layout
+			// Force it by setting the zoom level
+			elem.zoom = 1; 
+
+			// Set the alpha filter to set the opacity
+<i>*			return elem.filter = elem.filter.replace(/alpha\([^\)]*\)/gi,"") +</i>
+<i>*				( value == 1 ? "" : "alpha(opacity=" + value * 100 + ")" );</i>
+
+<i>*		} else if ( name == "opacity" && jQuery.browser.msie )</i>
+			return elem.filter ? 
+<i>*				parseFloat( elem.filter.match(/alpha\(opacity=(.*)\)/)[1] ) / 100 : 1;</i>
+		
+<i>*		// Mozilla doesn't play well with opacity 1</i>
+<i>*		if ( name == "opacity" && jQuery.browser.mozilla && value == 1 )</i>
+<i>*			value = 0.9999;</i>
+			
+
+		// Certain attributes only work when accessed via the old DOM 0 way
+		if ( fix[name] ) {
+			if ( value != undefined ) elem[fix[name]] = value;
+			return elem[fix[name]];
+
+<span style='color:red'>		} else if ( value == undefined && jQuery.browser.msie && jQuery.nodeName(elem, "form") && (name == "action" || name == "method") )</span>
+			return elem.getAttributeNode(name).nodeValue;
+
+		// IE elem.getAttribute passes even for style
+		else if ( elem.tagName ) {
+			if ( value != undefined ) elem.setAttribute( name, value );
+<span style='color:red'>			if ( jQuery.browser.msie && /href|src/.test(name) && !jQuery.isXMLDoc(elem) ) </span>
+<span style='color:red'>				return elem.getAttribute( name, 2 );</span>
+			return elem.getAttribute( name );
+
+<span style='color:red'>		// elem is actually elem.style ... set the style</span>
+		} else {
+			name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});
+			if ( value != undefined ) elem[name] = value;
+			return elem[name];
+		}
+	}
+</pre>
+<b>attr (jquery-1.1.3a.js)</b><br/>
+<pre>
+function (elem, name, value){
+<i>*		var fix = jQuery.isXMLDoc(elem) ? {} : {</i>
+<i>*			"for": "htmlFor",</i>
+<i>*			"class": "className",</i>
+<i>*			"float": jQuery.browser.msie ? "styleFloat" : "cssFloat",</i>
+<i>*			cssFloat: jQuery.browser.msie ? "styleFloat" : "cssFloat",</i>
+<span style='color:red'><i>*			styleFloat: jQuery.browser.msie ? "styleFloat" : "cssFloat",</i></span>
+<i>*			innerHTML: "innerHTML",</i>
+<i>*			className: "className",</i>
+<i>*			value: "value",</i>
+<i>*			disabled: "disabled",</i>
+<i>*			checked: "checked",</i>
+<i>*			readonly: "readOnly",</i>
+<span style='color:red'><i>*			selected: "selected",</i></span>
+<span style='color:red'><i>*			maxlength: "maxLength"</i></span>
+<i>*		};</i>
+		
+		// IE actually uses filters for opacity ... elem is actually elem.style
+<span style='color:red'>		if ( name == "opacity" && jQuery.browser.msie ) {</span>
+<span style='color:red'>			if ( value != undefined ) {</span>
+				// IE has trouble with opacity if it does not have layout
+				// Force it by setting the zoom level
+				elem.zoom = 1; 
+
+				// Set the alpha filter to set the opacity
+<span style='color:red'>				elem.filter = (elem.filter || "").replace(/alpha\([^)]*\)/,"") +</span>
+<span style='color:red'>					(parseFloat(value).toString() == "NaN" ? "" : "alpha(opacity=" + value * 100 + ")");</span>
+			}
+
+			return elem.filter ? 
+<span style='color:red'>				(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100).toString() : "";</span>
+		}
+		
+		// Certain attributes only work when accessed via the old DOM 0 way
+		if ( fix[name] ) {
+			if ( value != undefined ) elem[fix[name]] = value;
+			return elem[fix[name]];
+
+		} else if ( value == undefined && jQuery.browser.msie && jQuery.nodeName(elem, "form") && (name == "action" || name == "method") )
+			return elem.getAttributeNode(name).nodeValue;
+
+		// IE elem.getAttribute passes even for style
+		else if ( elem.tagName ) {
+			if ( value != undefined ) elem.setAttribute( name, value );
+			if ( jQuery.browser.msie && /href|src/.test(name) && !jQuery.isXMLDoc(elem) ) 
+				return elem.getAttribute( name, 2 );
+			return elem.getAttribute( name );
+
+		// elem is actually elem.style ... set the style
+		} else {
+			name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});
+			if ( value != undefined ) elem[name] = value;
+			return elem[name];
+		}
+	}
+</pre>
+<b>attr (jquery-1.1.3.js)</b><br/>
+<pre>
+function (elem, name, value){
+<span style='color:red'>		var fix = jQuery.isXMLDoc(elem) ? {} : jQuery.props;</span>
+		
+		// Certain attributes only work when accessed via the old DOM 0 way
+		if ( fix[name] ) {
+			if ( value != undefined ) elem[fix[name]] = value;
+			return elem[fix[name]];
+
+<i>*		} else if ( value == undefined && jQuery.browser.msie && jQuery.nodeName(elem, "form") && (name == "action" || name == "method") )</i>
+			return elem.getAttributeNode(name).nodeValue;
+
+		// IE elem.getAttribute passes even for style
+		else if ( elem.tagName ) {
+<i>*			// IE actually uses filters for opacity ... elem is actually elem.style</i>
+			if ( name == "opacity" && jQuery.browser.msie ) {
+				if ( value != undefined ) {
+					// IE has trouble with opacity if it does not have layout
+					// Force it by setting the zoom level
+					elem.zoom = 1; 
+	
+					// Set the alpha filter to set the opacity
+					elem.filter = (elem.filter || "").replace(/alpha\([^)]*\)/,"") +
+						(parseFloat(value).toString() == "NaN" ? "" : "alpha(opacity=" + value * 100 + ")");
+				}
+	
+				return elem.filter ? 
+					(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100).toString() : "";
+			}
+
+			if ( value != undefined ) elem.setAttribute( name, value );
+			if ( jQuery.browser.msie && /href|src/.test(name) && !jQuery.isXMLDoc(elem) ) 
+				return elem.getAttribute( name, 2 );
+			return elem.getAttribute( name );
+
+		// elem is actually elem.style ... set the style
+		} else {
+			name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});
+			if ( value != undefined ) elem[name] = value;
+			return elem[name];
+		}
+	}
+</pre>
+<b>attr (jquery-1.1.4.js)</b><br/>
+<pre>
+function (elem, name, value){
+		var fix = jQuery.isXMLDoc(elem) ? {} : jQuery.props;
+
+<span style='color:red'>		// Safari mis-reports the default selected property of a hidden option</span>
+<span style='color:red'>		// Accessing the parent's selectedIndex property fixes it</span>
+<span style='color:red'>		if ( name == "selected" && jQuery.browser.safari )</span>
+<span style='color:red'>			elem.parentNode.selectedIndex;</span>
+		
+		// Certain attributes only work when accessed via the old DOM 0 way
+		if ( fix[name] ) {
+			if ( value != undefined ) elem[fix[name]] = value;
+			return elem[fix[name]];
+<span style='color:red'>		} else if ( jQuery.browser.msie && name == "style" )</span>
+<span style='color:red'>			return jQuery.attr( elem.style, "cssText", value );</span>
+
+<span style='color:red'>		else if ( value == undefined && jQuery.browser.msie && jQuery.nodeName(elem, "form") && (name == "action" || name == "method") )</span>
+			return elem.getAttributeNode(name).nodeValue;
+
+		// IE elem.getAttribute passes even for style
+		else if ( elem.tagName ) {
+
+<i>*			if ( value != undefined ) elem.setAttribute( name, value );</i>
+			if ( jQuery.browser.msie && /href|src/.test(name) && !jQuery.isXMLDoc(elem) ) 
+				return elem.getAttribute( name, 2 );
+			return elem.getAttribute( name );
+
+		// elem is actually elem.style ... set the style
+		} else {
+<span style='color:red'>			// IE actually uses filters for opacity</span>
+			if ( name == "opacity" && jQuery.browser.msie ) {
+				if ( value != undefined ) {
+					// IE has trouble with opacity if it does not have layout
+					// Force it by setting the zoom level
+					elem.zoom = 1; 
+	
+					// Set the alpha filter to set the opacity
+					elem.filter = (elem.filter || "").replace(/alpha\([^)]*\)/,"") +
+						(parseFloat(value).toString() == "NaN" ? "" : "alpha(opacity=" + value * 100 + ")");
+				}
+	
+				return elem.filter ? 
+					(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100).toString() : "";
+			}
+			name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});
+			if ( value != undefined ) elem[name] = value;
+			return elem[name];
+		}
+	}
+</pre>
+<b>attr (jquery-1.2.js)</b><br/>
+<pre>
+function (elem, name, value){
+<i>*		var fix = jQuery.isXMLDoc(elem) ? {} : jQuery.props;</i>
+
+		// Safari mis-reports the default selected property of a hidden option
+		// Accessing the parent's selectedIndex property fixes it
+		if ( name == "selected" && jQuery.browser.safari )
+			elem.parentNode.selectedIndex;
+		
+		// Certain attributes only work when accessed via the old DOM 0 way
+		if ( fix[name] ) {
+<i>*			if ( value != undefined ) elem[fix[name]] = value;</i>
+			return elem[fix[name]];
+		} else if ( jQuery.browser.msie && name == "style" )
+			return jQuery.attr( elem.style, "cssText", value );
+
+		else if ( value == undefined && jQuery.browser.msie && jQuery.nodeName(elem, "form") && (name == "action" || name == "method") )
+			return elem.getAttributeNode(name).nodeValue;
+
+		// IE elem.getAttribute passes even for style
+		else if ( elem.tagName ) {
+
+			if ( value != undefined ) {
+<span style='color:red'>				if ( name == "type" && jQuery.nodeName(elem,"input") && elem.parentNode )</span>
+<span style='color:red'>					throw "type property can't be changed";</span>
+<span style='color:red'><i>*				elem.setAttribute( name, value );</i></span>
+			}
+
+			if ( jQuery.browser.msie && /href|src/.test(name) && !jQuery.isXMLDoc(elem) ) 
+				return elem.getAttribute( name, 2 );
+
+			return elem.getAttribute( name );
+
+		// elem is actually elem.style ... set the style
+		} else {
+			// IE actually uses filters for opacity
+			if ( name == "opacity" && jQuery.browser.msie ) {
+				if ( value != undefined ) {
+					// IE has trouble with opacity if it does not have layout
+					// Force it by setting the zoom level
+					elem.zoom = 1; 
+	
+					// Set the alpha filter to set the opacity
+					elem.filter = (elem.filter || "").replace(/alpha\([^)]*\)/,"") +
+						(parseFloat(value).toString() == "NaN" ? "" : "alpha(opacity=" + value * 100 + ")");
+				}
+	
+<i>*				return elem.filter ? </i>
+<i>*					(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100).toString() : "";</i>
+			}
+<i>*			name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});</i>
+<i>*			if ( value != undefined ) elem[name] = value;</i>
+			return elem[name];
+		}
+	}
+</pre>
+<b>jquery-1.2.1: no change</b><br/><br/>
+<b>attr (jquery-1.2.2b.js)</b><br/>
+<pre>
+function ( elem, name, value ) {
+<span style='color:red'>		// don't set attributes on text and comment nodes</span>
+<span style='color:red'>		if (!elem || elem.nodeType == 3 || elem.nodeType == 8)</span>
+<span style='color:red'>			return undefined;</span>
+
+<span style='color:red'><i>*		var fix = jQuery.isXMLDoc( elem ) ?</i></span>
+<span style='color:red'><i>*			{} :</i></span>
+<span style='color:red'><i>*			jQuery.props;</i></span>
+
+		// Safari mis-reports the default selected property of a hidden option
+		// Accessing the parent's selectedIndex property fixes it
+		if ( name == "selected" && jQuery.browser.safari )
+			elem.parentNode.selectedIndex;
+		
+<i>*		// Certain attributes only work when accessed via the old DOM 0 way</i>
+<i>*		if ( fix[ name ] ) {</i>
+<span style='color:red'><i>*			if ( value != undefined )</i></span>
+<span style='color:red'><i>*				elem[ fix[ name ] ] = value;</i></span>
+
+<i>*			return elem[ fix[ name ] ];</i>
+
+<i>*		} else if ( jQuery.browser.msie && name == "style" )</i>
+			return jQuery.attr( elem.style, "cssText", value );
+
+<i>*		else if ( value == undefined && jQuery.browser.msie && jQuery.nodeName( elem, "form" ) && (name == "action" || name == "method") )</i>
+			return elem.getAttributeNode( name ).nodeValue;
+
+		// IE elem.getAttribute passes even for style
+<i>*		else if ( elem.tagName ) {</i>
+
+<i>*			if ( value != undefined ) {</i>
+<span style='color:red'>				// We can't allow the type property to be changed (since it causes problems in IE)</span>
+				if ( name == "type" && jQuery.nodeName( elem, "input" ) && elem.parentNode )
+					throw "type property can't be changed";
+
+<span style='color:red'>				// convert the value to a string (all browsers do this but IE) see #1070</span>
+<span style='color:red'>				elem.setAttribute( name, "" + value );</span>
+			}
+
+<i>*			if ( jQuery.browser.msie && /href|src/.test( name ) && !jQuery.isXMLDoc( elem ) ) </i>
+				return elem.getAttribute( name, 2 );
+
+			return elem.getAttribute( name );
+
+		// elem is actually elem.style ... set the style
+<i>*		} else {</i>
+<i>*			// IE actually uses filters for opacity</i>
+<i>*			if ( name == "opacity" && jQuery.browser.msie ) {</i>
+<i>*				if ( value != undefined ) {</i>
+					// IE has trouble with opacity if it does not have layout
+					// Force it by setting the zoom level
+					elem.zoom = 1; 
+	
+					// Set the alpha filter to set the opacity
+					elem.filter = (elem.filter || "").replace( /alpha\([^)]*\)/, "" ) +
+<i>*						(parseFloat( value ).toString() == "NaN" ? "" : "alpha(opacity=" + value * 100 + ")");</i>
+				}
+	
+<span style='color:red'>				return elem.filter && elem.filter.indexOf("opacity=") >= 0 ?</span>
+<span style='color:red'><i>*					(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100).toString() :</i></span>
+<span style='color:red'>					"";</span>
+			}
+
+<span style='color:red'>			name = name.replace(/-([a-z])/ig, function(all, letter){</span>
+<span style='color:red'>				return letter.toUpperCase();</span>
+<span style='color:red'>			});</span>
+
+<span style='color:red'><i>*			if ( value != undefined )</i></span>
+<span style='color:red'>				elem[ name ] = value;</span>
+
+			return elem[ name ];
+		}
+	}
+</pre>
+<b>jquery-1.2.2b2 - jquery-1.2.4: no change</b><br/><br/>
+<b>attr (jquery-1.2.5.js)</b><br/>
+<pre>
+function ( elem, name, value ) {
+		// don't set attributes on text and comment nodes
+		if (!elem || elem.nodeType == 3 || elem.nodeType == 8)
+			return undefined;
+
+<span style='color:red'>		var notxml = !jQuery.isXMLDoc( elem ),</span>
+<span style='color:red'>			// Whether we are setting (or getting)</span>
+<span style='color:red'>			set = value !== undefined,</span>
+<span style='color:red'>			msie = jQuery.browser.msie;</span>
+
+<span style='color:red'>		// Try to normalize/fix the name</span>
+<span style='color:red'>		name = notxml && jQuery.props[ name ] || name;</span>
+
+<span style='color:red'>		// Only do all the following if this is a node (faster for style)</span>
+		// IE elem.getAttribute passes even for style
+<span style='color:red'>		if ( elem.tagName ) {</span>
+
+<span style='color:red'>			// These attributes require special treatment</span>
+<span style='color:red'>			var special = /href|src|style/.test( name );</span>
+
+			// Safari mis-reports the default selected property of a hidden option
+			// Accessing the parent's selectedIndex property fixes it
+			if ( name == "selected" && jQuery.browser.safari )
+				elem.parentNode.selectedIndex;
+
+<span style='color:red'>			// If applicable, access the attribute via the DOM 0 way</span>
+<span style='color:red'><i>*			if ( notxml && !special && name in elem ) {</i></span>
+<span style='color:red'>				if ( set ){</span>
+					// We can't allow the type property to be changed (since it causes problems in IE)
+					if ( name == "type" && jQuery.nodeName( elem, "input" ) && elem.parentNode )
+						throw "type property can't be changed";
+
+					elem[ name ] = value;
+				}
+
+<span style='color:red'>				// browsers index elements by id/name on forms, give priority to attributes.</span>
+<span style='color:red'>				if( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) )</span>
+					return elem.getAttributeNode( name ).nodeValue;
+
+				return elem[ name ];
+			}
+
+<span style='color:red'>			if ( msie && notxml &&  name == "style" )</span>
+				return jQuery.attr( elem.style, "cssText", value );
+
+<span style='color:red'>			if ( set )</span>
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+
+<span style='color:red'><i>*			if ( msie && special && notxml )</i></span>
+<i>*				return elem.getAttribute( name, 2 );</i>
+
+<i>*			return elem.getAttribute( name );</i>
+
+		}
+
+		// elem is actually elem.style ... set the style
+
+<span style='color:red'>		// IE uses filters for opacity</span>
+<span style='color:red'>		if ( msie && name == "opacity" ) {</span>
+<span style='color:red'>			if ( set ) {</span>
+				// IE has trouble with opacity if it does not have layout
+				// Force it by setting the zoom level
+				elem.zoom = 1;
+
+				// Set the alpha filter to set the opacity
+				elem.filter = (elem.filter || "").replace( /alpha\([^)]*\)/, "" ) +
+<span style='color:red'>					(parseInt( value ) + '' == "NaN" ? "" : "alpha(opacity=" + value * 100 + ")");</span>
+			}
+
+			return elem.filter && elem.filter.indexOf("opacity=") >= 0 ?
+<span style='color:red'>				(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100) + '':</span>
+				"";
+		}
+
+		name = name.replace(/-([a-z])/ig, function(all, letter){
+			return letter.toUpperCase();
+		});
+
+<span style='color:red'>		if ( set )</span>
+			elem[ name ] = value;
+
+		return elem[ name ];
+	}
+</pre>
+<b>attr (jquery-1.2.6.js)</b><br/>
+<pre>
+function ( elem, name, value ) {
+		// don't set attributes on text and comment nodes
+		if (!elem || elem.nodeType == 3 || elem.nodeType == 8)
+			return undefined;
+
+		var notxml = !jQuery.isXMLDoc( elem ),
+			// Whether we are setting (or getting)
+<i>*			set = value !== undefined,</i>
+<i>*			msie = jQuery.browser.msie;</i>
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+		// Only do all the following if this is a node (faster for style)
+		// IE elem.getAttribute passes even for style
+		if ( elem.tagName ) {
+
+			// These attributes require special treatment
+			var special = /href|src|style/.test( name );
+
+			// Safari mis-reports the default selected property of a hidden option
+			// Accessing the parent's selectedIndex property fixes it
+<i>*			if ( name == "selected" && jQuery.browser.safari )</i>
+				elem.parentNode.selectedIndex;
+
+			// If applicable, access the attribute via the DOM 0 way
+<span style='color:red'>			if ( name in elem && notxml && !special ) {</span>
+				if ( set ){
+					// We can't allow the type property to be changed (since it causes problems in IE)
+					if ( name == "type" && jQuery.nodeName( elem, "input" ) && elem.parentNode )
+						throw "type property can't be changed";
+
+					elem[ name ] = value;
+				}
+
+				// browsers index elements by id/name on forms, give priority to attributes.
+				if( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) )
+					return elem.getAttributeNode( name ).nodeValue;
+
+				return elem[ name ];
+			}
+
+<i>*			if ( msie && notxml &&  name == "style" )</i>
+				return jQuery.attr( elem.style, "cssText", value );
+
+			if ( set )
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+
+<span style='color:red'><i>*			var attr = msie && notxml && special</i></span>
+<span style='color:red'>					// Some attributes require a special call on IE</span>
+<span style='color:red'>					? elem.getAttribute( name, 2 )</span>
+<span style='color:red'>					: elem.getAttribute( name );</span>
+
+<span style='color:red'>			// Non-existent attributes return null, we normalize to undefined</span>
+<span style='color:red'>			return attr === null ? undefined : attr;</span>
+		}
+
+		// elem is actually elem.style ... set the style
+
+		// IE uses filters for opacity
+<i>*		if ( msie && name == "opacity" ) {</i>
+			if ( set ) {
+				// IE has trouble with opacity if it does not have layout
+				// Force it by setting the zoom level
+				elem.zoom = 1;
+
+				// Set the alpha filter to set the opacity
+				elem.filter = (elem.filter || "").replace( /alpha\([^)]*\)/, "" ) +
+					(parseInt( value ) + '' == "NaN" ? "" : "alpha(opacity=" + value * 100 + ")");
+			}
+
+			return elem.filter && elem.filter.indexOf("opacity=") >= 0 ?
+				(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100) + '':
+				"";
+		}
+
+		name = name.replace(/-([a-z])/ig, function(all, letter){
+			return letter.toUpperCase();
+		});
+
+		if ( set )
+			elem[ name ] = value;
+
+		return elem[ name ];
+	}
+</pre>
+<b>attr (jquery-1.3b1.js)</b><br/>
+<pre>
+function ( elem, name, value ) {
+		// don't set attributes on text and comment nodes
+		if (!elem || elem.nodeType == 3 || elem.nodeType == 8)
+			return undefined;
+
+		var notxml = !jQuery.isXMLDoc( elem ),
+			// Whether we are setting (or getting)
+<span style='color:red'>			set = value !== undefined;</span>
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+		// Only do all the following if this is a node (faster for style)
+		// IE elem.getAttribute passes even for style
+		if ( elem.tagName ) {
+
+			// These attributes require special treatment
+			var special = /href|src|style/.test( name );
+
+			// Safari mis-reports the default selected property of a hidden option
+			// Accessing the parent's selectedIndex property fixes it
+<span style='color:red'>			if ( name == "selected" )</span>
+				elem.parentNode.selectedIndex;
+
+			// If applicable, access the attribute via the DOM 0 way
+			if ( name in elem && notxml && !special ) {
+				if ( set ){
+					// We can't allow the type property to be changed (since it causes problems in IE)
+					if ( name == "type" && jQuery.nodeName( elem, "input" ) && elem.parentNode )
+						throw "type property can't be changed";
+
+					elem[ name ] = value;
+				}
+
+				// browsers index elements by id/name on forms, give priority to attributes.
+				if( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) )
+					return elem.getAttributeNode( name ).nodeValue;
+
+				return elem[ name ];
+			}
+
+<span style='color:red'>			if ( !jQuery.support.style && notxml &&  name == "style" )</span>
+				return jQuery.attr( elem.style, "cssText", value );
+
+			if ( set )
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+
+<span style='color:red'>			var attr = !jQuery.support.hrefNormalized && notxml && special</span>
+					// Some attributes require a special call on IE
+					? elem.getAttribute( name, 2 )
+					: elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return attr === null ? undefined : attr;
+		}
+
+		// elem is actually elem.style ... set the style
+
+		// IE uses filters for opacity
+<span style='color:red'>		if ( !jQuery.support.opacity && name == "opacity" ) {</span>
+			if ( set ) {
+				// IE has trouble with opacity if it does not have layout
+				// Force it by setting the zoom level
+				elem.zoom = 1;
+
+				// Set the alpha filter to set the opacity
+				elem.filter = (elem.filter || "").replace( /alpha\([^)]*\)/, "" ) +
+					(parseInt( value ) + '' == "NaN" ? "" : "alpha(opacity=" + value * 100 + ")");
+			}
+
+			return elem.filter && elem.filter.indexOf("opacity=") >= 0 ?
+				(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100) + '':
+				"";
+		}
+
+		name = name.replace(/-([a-z])/ig, function(all, letter){
+			return letter.toUpperCase();
+		});
+
+		if ( set )
+			elem[ name ] = value;
+
+		return elem[ name ];
+	}
+</pre>
+<b>attr (jquery-1.3b2.js)</b><br/>
+<pre>
+function ( elem, name, value ) {
+		// don't set attributes on text and comment nodes
+		if (!elem || elem.nodeType == 3 || elem.nodeType == 8)
+			return undefined;
+
+		var notxml = !jQuery.isXMLDoc( elem ),
+			// Whether we are setting (or getting)
+			set = value !== undefined;
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+		// Only do all the following if this is a node (faster for style)
+		// IE elem.getAttribute passes even for style
+		if ( elem.tagName ) {
+
+			// These attributes require special treatment
+			var special = /href|src|style/.test( name );
+
+			// Safari mis-reports the default selected property of a hidden option
+			// Accessing the parent's selectedIndex property fixes it
+			if ( name == "selected" )
+				elem.parentNode.selectedIndex;
+
+			// If applicable, access the attribute via the DOM 0 way
+			if ( name in elem && notxml && !special ) {
+				if ( set ){
+					// We can't allow the type property to be changed (since it causes problems in IE)
+					if ( name == "type" && jQuery.nodeName( elem, "input" ) && elem.parentNode )
+						throw "type property can't be changed";
+
+					elem[ name ] = value;
+				}
+
+				// browsers index elements by id/name on forms, give priority to attributes.
+				if( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) )
+					return elem.getAttributeNode( name ).nodeValue;
+
+<span style='color:red'><i>*				// elem.tabindex doesn't always return the correct value</i></span>
+<span style='color:red'>				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/</span>
+<span style='color:red'><i>*				if ( name == jQuery.props.tabindex ) {</i></span>
+<span style='color:red'><i>*					var attributeNode = elem.getAttributeNode(jQuery.props.tabindex);</i></span>
+<span style='color:red'><i>*					return attributeNode && attributeNode.specified && attributeNode.value || undefined;</i></span>
+				}
+
+				return elem[ name ];
+			}
+
+			if ( !jQuery.support.style && notxml &&  name == "style" )
+				return jQuery.attr( elem.style, "cssText", value );
+
+			if ( set )
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+
+			var attr = !jQuery.support.hrefNormalized && notxml && special
+					// Some attributes require a special call on IE
+					? elem.getAttribute( name, 2 )
+					: elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return attr === null ? undefined : attr;
+		}
+
+		// elem is actually elem.style ... set the style
+
+		// IE uses filters for opacity
+		if ( !jQuery.support.opacity && name == "opacity" ) {
+			if ( set ) {
+				// IE has trouble with opacity if it does not have layout
+				// Force it by setting the zoom level
+				elem.zoom = 1;
+
+				// Set the alpha filter to set the opacity
+				elem.filter = (elem.filter || "").replace( /alpha\([^)]*\)/, "" ) +
+					(parseInt( value ) + '' == "NaN" ? "" : "alpha(opacity=" + value * 100 + ")");
+			}
+
+			return elem.filter && elem.filter.indexOf("opacity=") >= 0 ?
+				(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100) + '':
+				"";
+		}
+
+		name = name.replace(/-([a-z])/ig, function(all, letter){
+			return letter.toUpperCase();
+		});
+
+		if ( set )
+			elem[ name ] = value;
+
+		return elem[ name ];
+	}
+</pre>
+<b>attr (jquery-1.3rc1.js)</b><br/>
+<pre>
+function ( elem, name, value ) {
+		// don't set attributes on text and comment nodes
+		if (!elem || elem.nodeType == 3 || elem.nodeType == 8)
+			return undefined;
+
+		var notxml = !jQuery.isXMLDoc( elem ),
+			// Whether we are setting (or getting)
+			set = value !== undefined;
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+		// Only do all the following if this is a node (faster for style)
+		// IE elem.getAttribute passes even for style
+		if ( elem.tagName ) {
+
+			// These attributes require special treatment
+			var special = /href|src|style/.test( name );
+
+			// Safari mis-reports the default selected property of a hidden option
+			// Accessing the parent's selectedIndex property fixes it
+<i>*			if ( name == "selected" )</i>
+				elem.parentNode.selectedIndex;
+
+			// If applicable, access the attribute via the DOM 0 way
+			if ( name in elem && notxml && !special ) {
+				if ( set ){
+					// We can't allow the type property to be changed (since it causes problems in IE)
+					if ( name == "type" && jQuery.nodeName( elem, "input" ) && elem.parentNode )
+						throw "type property can't be changed";
+
+					elem[ name ] = value;
+				}
+
+				// browsers index elements by id/name on forms, give priority to attributes.
+				if( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) )
+					return elem.getAttributeNode( name ).nodeValue;
+
+<span style='color:red'>				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set</span>
+				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+<span style='color:red'>				if ( name == "tabIndex" ) {</span>
+<span style='color:red'>					var attributeNode = elem.getAttributeNode( "tabIndex" );</span>
+<span style='color:red'>					return attributeNode && attributeNode.specified</span>
+<span style='color:red'>						? attributeNode.value</span>
+<span style='color:red'>						: elem.nodeName.match(/^(a|area|button|input|object|select|textarea)$/i)</span>
+<span style='color:red'>							? 0</span>
+<span style='color:red'>							: undefined;</span>
+				}
+
+				return elem[ name ];
+			}
+
+			if ( !jQuery.support.style && notxml &&  name == "style" )
+				return jQuery.attr( elem.style, "cssText", value );
+
+			if ( set )
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+
+			var attr = !jQuery.support.hrefNormalized && notxml && special
+					// Some attributes require a special call on IE
+					? elem.getAttribute( name, 2 )
+					: elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return attr === null ? undefined : attr;
+		}
+
+		// elem is actually elem.style ... set the style
+
+		// IE uses filters for opacity
+		if ( !jQuery.support.opacity && name == "opacity" ) {
+			if ( set ) {
+				// IE has trouble with opacity if it does not have layout
+				// Force it by setting the zoom level
+				elem.zoom = 1;
+
+				// Set the alpha filter to set the opacity
+				elem.filter = (elem.filter || "").replace( /alpha\([^)]*\)/, "" ) +
+					(parseInt( value ) + '' == "NaN" ? "" : "alpha(opacity=" + value * 100 + ")");
+			}
+
+			return elem.filter && elem.filter.indexOf("opacity=") >= 0 ?
+				(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100) + '':
+				"";
+		}
+
+		name = name.replace(/-([a-z])/ig, function(all, letter){
+			return letter.toUpperCase();
+		});
+
+		if ( set )
+			elem[ name ] = value;
+
+		return elem[ name ];
+	}
+</pre>
+<b>attr (jquery-1.3rc2.js)</b><br/>
+<pre>
+function ( elem, name, value ) {
+		// don't set attributes on text and comment nodes
+		if (!elem || elem.nodeType == 3 || elem.nodeType == 8)
+			return undefined;
+
+		var notxml = !jQuery.isXMLDoc( elem ),
+			// Whether we are setting (or getting)
+			set = value !== undefined;
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+		// Only do all the following if this is a node (faster for style)
+		// IE elem.getAttribute passes even for style
+		if ( elem.tagName ) {
+
+			// These attributes require special treatment
+			var special = /href|src|style/.test( name );
+
+			// Safari mis-reports the default selected property of a hidden option
+			// Accessing the parent's selectedIndex property fixes it
+<span style='color:red'>			if ( name == "selected" && elem.parentNode )</span>
+				elem.parentNode.selectedIndex;
+
+			// If applicable, access the attribute via the DOM 0 way
+			if ( name in elem && notxml && !special ) {
+				if ( set ){
+					// We can't allow the type property to be changed (since it causes problems in IE)
+					if ( name == "type" && jQuery.nodeName( elem, "input" ) && elem.parentNode )
+						throw "type property can't be changed";
+
+					elem[ name ] = value;
+				}
+
+				// browsers index elements by id/name on forms, give priority to attributes.
+				if( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) )
+					return elem.getAttributeNode( name ).nodeValue;
+
+				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
+				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+				if ( name == "tabIndex" ) {
+					var attributeNode = elem.getAttributeNode( "tabIndex" );
+					return attributeNode && attributeNode.specified
+						? attributeNode.value
+<i>*						: elem.nodeName.match(/^(a|area|button|input|object|select|textarea)$/i)</i>
+							? 0
+							: undefined;
+				}
+
+				return elem[ name ];
+			}
+
+			if ( !jQuery.support.style && notxml &&  name == "style" )
+				return jQuery.attr( elem.style, "cssText", value );
+
+			if ( set )
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+
+			var attr = !jQuery.support.hrefNormalized && notxml && special
+					// Some attributes require a special call on IE
+					? elem.getAttribute( name, 2 )
+					: elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return attr === null ? undefined : attr;
+		}
+
+		// elem is actually elem.style ... set the style
+
+		// IE uses filters for opacity
+		if ( !jQuery.support.opacity && name == "opacity" ) {
+			if ( set ) {
+				// IE has trouble with opacity if it does not have layout
+				// Force it by setting the zoom level
+				elem.zoom = 1;
+
+				// Set the alpha filter to set the opacity
+				elem.filter = (elem.filter || "").replace( /alpha\([^)]*\)/, "" ) +
+					(parseInt( value ) + '' == "NaN" ? "" : "alpha(opacity=" + value * 100 + ")");
+			}
+
+			return elem.filter && elem.filter.indexOf("opacity=") >= 0 ?
+				(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100) + '':
+				"";
+		}
+
+		name = name.replace(/-([a-z])/ig, function(all, letter){
+			return letter.toUpperCase();
+		});
+
+		if ( set )
+			elem[ name ] = value;
+
+		return elem[ name ];
+	}
+</pre>
+<b>jquery-1.3: no change</b><br/><br/>
+<b>attr (jquery-1.3.1rc1.js)</b><br/>
+<pre>
+function ( elem, name, value ) {
+		// don't set attributes on text and comment nodes
+<i>*		if (!elem || elem.nodeType == 3 || elem.nodeType == 8)</i>
+			return undefined;
+
+<i>*		var notxml = !jQuery.isXMLDoc( elem ),</i>
+			// Whether we are setting (or getting)
+			set = value !== undefined;
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+		// Only do all the following if this is a node (faster for style)
+<i>*		// IE elem.getAttribute passes even for style</i>
+<i>*		if ( elem.tagName ) {</i>
+
+			// These attributes require special treatment
+			var special = /href|src|style/.test( name );
+
+			// Safari mis-reports the default selected property of a hidden option
+			// Accessing the parent's selectedIndex property fixes it
+<i>*			if ( name == "selected" && elem.parentNode )</i>
+				elem.parentNode.selectedIndex;
+
+			// If applicable, access the attribute via the DOM 0 way
+			if ( name in elem && notxml && !special ) {
+				if ( set ){
+					// We can't allow the type property to be changed (since it causes problems in IE)
+<i>*					if ( name == "type" && jQuery.nodeName( elem, "input" ) && elem.parentNode )</i>
+						throw "type property can't be changed";
+
+					elem[ name ] = value;
+				}
+
+				// browsers index elements by id/name on forms, give priority to attributes.
+<i>*				if( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) )</i>
+					return elem.getAttributeNode( name ).nodeValue;
+
+				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
+				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+				if ( name == "tabIndex" ) {
+					var attributeNode = elem.getAttributeNode( "tabIndex" );
+					return attributeNode && attributeNode.specified
+						? attributeNode.value
+<span style='color:red'><i>*						: elem.nodeName.match(/(button|input|object|select|textarea)/i)</i></span>
+							? 0
+<span style='color:red'><i>*							: elem.nodeName.match(/^(a|area)$/i) && elem.href</i></span>
+								? 0
+								: undefined;
+				}
+
+				return elem[ name ];
+			}
+
+<i>*			if ( !jQuery.support.style && notxml &&  name == "style" )</i>
+<i>*				return jQuery.attr( elem.style, "cssText", value );</i>
+
+<i>*			if ( set )</i>
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+
+			var attr = !jQuery.support.hrefNormalized && notxml && special
+					// Some attributes require a special call on IE
+					? elem.getAttribute( name, 2 )
+					: elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return attr === null ? undefined : attr;
+		}
+
+		// elem is actually elem.style ... set the style
+
+<i>*		// IE uses filters for opacity</i>
+<i>*		if ( !jQuery.support.opacity && name == "opacity" ) {</i>
+			if ( set ) {
+<i>*				// IE has trouble with opacity if it does not have layout</i>
+<i>*				// Force it by setting the zoom level</i>
+<i>*				elem.zoom = 1;</i>
+
+<i>*				// Set the alpha filter to set the opacity</i>
+<i>*				elem.filter = (elem.filter || "").replace( /alpha\([^)]*\)/, "" ) +</i>
+<i>*					(parseInt( value ) + '' == "NaN" ? "" : "alpha(opacity=" + value * 100 + ")");</i>
+			}
+
+<i>*			return elem.filter && elem.filter.indexOf("opacity=") >= 0 ?</i>
+<i>*				(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100) + '':</i>
+<i>*				"";</i>
+		}
+
+<i>*		name = name.replace(/-([a-z])/ig, function(all, letter){</i>
+<i>*			return letter.toUpperCase();</i>
+<i>*		});</i>
+
+<i>*		if ( set )</i>
+			elem[ name ] = value;
+
+		return elem[ name ];
+	}
+</pre>
+<b>jquery-1.3.1 - jquery-1.3.2: no change</b><br/><br/>
+<b>attr (jquery-1.4a1.js)</b><br/>
+<pre>
+<i>*function ( elem, name, value ) {</i>
+		// don't set attributes on text and comment nodes
+<span style='color:red'><i>*		if (!elem || elem.nodeType == 3 || elem.nodeType == 8) {</i></span>
+			return undefined;
+		}
+<span style='color:red'><i>*		if ( name in jQuery.fn && name !== "attr" ) {</i></span>
+<span style='color:red'>			return jQuery(elem)[name](value);</span>
+		}
+		
+<span style='color:red'>		var notxml = elem.nodeType !== 1 || !jQuery.isXMLDoc( elem ),</span>
+			// Whether we are setting (or getting)
+			set = value !== undefined;
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+		// Only do all the following if this is a node (faster for style)
+<span style='color:red'>		if ( elem.nodeType === 1 ) {</span>
+
+			// These attributes require special treatment
+<i>*			var special = /href|src|style/.test( name );</i>
+
+			// Safari mis-reports the default selected property of a hidden option
+			// Accessing the parent's selectedIndex property fixes it
+<span style='color:red'><i>*			if ( name == "selected" && elem.parentNode ) {</i></span>
+				elem.parentNode.selectedIndex;
+			}
+			// If applicable, access the attribute via the DOM 0 way
+			if ( name in elem && notxml && !special ) {
+				if ( set ) {
+					// We can't allow the type property to be changed (since it causes problems in IE)
+<span style='color:red'><i>*					if ( name == "type" && /(button|input)/i.test(elem.nodeName) && elem.parentNode ) {</i></span>
+						throw "type property can't be changed";
+					}
+					elem[ name ] = value;
+				}
+
+				// browsers index elements by id/name on forms, give priority to attributes.
+<span style='color:red'>				if( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) ) {</span>
+					return elem.getAttributeNode( name ).nodeValue;
+				}
+				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
+				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+<i>*				if ( name == "tabIndex" ) {</i>
+					var attributeNode = elem.getAttributeNode( "tabIndex" );
+<i>*					return attributeNode && attributeNode.specified</i>
+<i>*						? attributeNode.value</i>
+<span style='color:red'><i>*						: /(button|input|object|select|textarea)/i.test(elem.nodeName)</i></span>
+<i>*							? 0</i>
+<span style='color:red'><i>*							: /^(a|area)$/i.test(elem.nodeName) && elem.href</i></span>
+<i>*								? 0</i>
+<i>*								: undefined;</i>
+				}
+
+				return elem[ name ];
+			}
+
+<span style='color:red'><i>*			if ( !jQuery.support.style && notxml && name == "style" ) {</i></span>
+				if ( set ) {
+<span style='color:red'>					elem.style.cssText = "" + value;</span>
+				}
+<span style='color:red'>				return elem.style.cssText;</span>
+			}
+
+			if ( set ) {
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+			}
+<i>*			var attr = !jQuery.support.hrefNormalized && notxml && special</i>
+					// Some attributes require a special call on IE
+<i>*					? elem.getAttribute( name, 2 )</i>
+<i>*					: elem.getAttribute( name );</i>
+
+			// Non-existent attributes return null, we normalize to undefined
+			return attr === null ? undefined : attr;
+		}
+
+		// elem is actually elem.style ... set the style
+<span style='color:red'>		// Using attr for specific style information is now deprecated. Use style insead.</span>
+<span style='color:red'>		return jQuery.style(elem, name, value);</span>
+	}
+</pre>
+<b>attr (jquery-1.4a2.js)</b><br/>
+<pre>
+<span style='color:red'>function ( elem, name, value, pass ) {</span>
+		// don't set attributes on text and comment nodes
+<span style='color:red'>		if ( !elem || elem.nodeType === 3 || elem.nodeType === 8 ) {</span>
+			return undefined;
+		}
+
+<span style='color:red'>		if ( pass && name in jQuery.attrFn ) {</span>
+			return jQuery(elem)[name](value);
+		}
+
+		var notxml = elem.nodeType !== 1 || !jQuery.isXMLDoc( elem ),
+			// Whether we are setting (or getting)
+			set = value !== undefined;
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+		// Only do all the following if this is a node (faster for style)
+		if ( elem.nodeType === 1 ) {
+			// These attributes require special treatment
+<span style='color:red'>			var special = rspecialurl.test( name );</span>
+
+<i>*			// Safari mis-reports the default selected property of a hidden option</i>
+			// Accessing the parent's selectedIndex property fixes it
+<span style='color:red'><i>*			if ( name === "selected" && elem.parentNode ) {</i></span>
+<i>*				elem.parentNode.selectedIndex;</i>
+			}
+
+			// If applicable, access the attribute via the DOM 0 way
+			if ( name in elem && notxml && !special ) {
+				if ( set ) {
+					// We can't allow the type property to be changed (since it causes problems in IE)
+<span style='color:red'>					if ( name === "type" && rtype.test( elem.nodeName ) && elem.parentNode ) {</span>
+						throw "type property can't be changed";
+					}
+
+					elem[ name ] = value;
+				}
+
+				// browsers index elements by id/name on forms, give priority to attributes.
+				if ( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) ) {
+					return elem.getAttributeNode( name ).nodeValue;
+				}
+
+				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
+				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+<span style='color:red'>				if ( name === "tabIndex" ) {</span>
+					var attributeNode = elem.getAttributeNode( "tabIndex" );
+
+<span style='color:red'>					return attributeNode && attributeNode.specified ?</span>
+<span style='color:red'>						attributeNode.value :</span>
+<span style='color:red'>						rfocusable.test( elem.nodeName ) || rclickable.test( elem.nodeName ) && elem.href ?</span>
+<span style='color:red'>							0 :</span>
+<span style='color:red'>							undefined;</span>
+				}
+
+				return elem[ name ];
+			}
+
+<span style='color:red'>			if ( !jQuery.support.style && notxml && name === "style" ) {</span>
+				if ( set ) {
+					elem.style.cssText = "" + value;
+				}
+
+				return elem.style.cssText;
+			}
+
+			if ( set ) {
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+			}
+
+<span style='color:red'>			var attr = !jQuery.support.hrefNormalized && notxml && special ?</span>
+					// Some attributes require a special call on IE
+<span style='color:red'>					elem.getAttribute( name, 2 ) :</span>
+<span style='color:red'>					elem.getAttribute( name );</span>
+
+			// Non-existent attributes return null, we normalize to undefined
+			return attr === null ? undefined : attr;
+		}
+
+		// elem is actually elem.style ... set the style
+		// Using attr for specific style information is now deprecated. Use style insead.
+		return jQuery.style( elem, name, value );
+	}
+</pre>
+<b>attr (jquery-1.4rc1.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+		// don't set attributes on text and comment nodes
+		if ( !elem || elem.nodeType === 3 || elem.nodeType === 8 ) {
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery(elem)[name](value);
+		}
+
+		var notxml = elem.nodeType !== 1 || !jQuery.isXMLDoc( elem ),
+			// Whether we are setting (or getting)
+			set = value !== undefined;
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+		// Only do all the following if this is a node (faster for style)
+		if ( elem.nodeType === 1 ) {
+			// These attributes require special treatment
+			var special = rspecialurl.test( name );
+
+<span style='color:red'>			// Safari mis-reports the default selected property of an option</span>
+			// Accessing the parent's selectedIndex property fixes it
+<span style='color:red'>			if ( name === "selected" && !jQuery.support.optSelected ) {</span>
+<span style='color:red'>				var parent = elem.parentNode;</span>
+<span style='color:red'>				if ( parent ) {</span>
+<span style='color:red'>					parent.selectedIndex;</span>
+	
+<span style='color:red'>					// Make sure that it also works with optgroups, see #5701</span>
+<span style='color:red'>					if ( parent.parentNode ) {</span>
+<span style='color:red'>						parent.parentNode.selectedIndex;</span>
+					}
+				}
+			}
+
+			// If applicable, access the attribute via the DOM 0 way
+			if ( name in elem && notxml && !special ) {
+				if ( set ) {
+					// We can't allow the type property to be changed (since it causes problems in IE)
+					if ( name === "type" && rtype.test( elem.nodeName ) && elem.parentNode ) {
+<i>*						throw "type property can't be changed";</i>
+					}
+
+					elem[ name ] = value;
+				}
+
+				// browsers index elements by id/name on forms, give priority to attributes.
+				if ( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) ) {
+					return elem.getAttributeNode( name ).nodeValue;
+				}
+
+				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
+				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+				if ( name === "tabIndex" ) {
+					var attributeNode = elem.getAttributeNode( "tabIndex" );
+
+					return attributeNode && attributeNode.specified ?
+						attributeNode.value :
+						rfocusable.test( elem.nodeName ) || rclickable.test( elem.nodeName ) && elem.href ?
+							0 :
+							undefined;
+				}
+
+				return elem[ name ];
+			}
+
+			if ( !jQuery.support.style && notxml && name === "style" ) {
+				if ( set ) {
+					elem.style.cssText = "" + value;
+				}
+
+				return elem.style.cssText;
+			}
+
+			if ( set ) {
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+			}
+
+			var attr = !jQuery.support.hrefNormalized && notxml && special ?
+					// Some attributes require a special call on IE
+					elem.getAttribute( name, 2 ) :
+					elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return attr === null ? undefined : attr;
+		}
+
+		// elem is actually elem.style ... set the style
+		// Using attr for specific style information is now deprecated. Use style insead.
+		return jQuery.style( elem, name, value );
+	}
+</pre>
+<b>jquery-1.4: no change</b><br/><br/>
+<b>attr (jquery-1.4.1.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+		// don't set attributes on text and comment nodes
+		if ( !elem || elem.nodeType === 3 || elem.nodeType === 8 ) {
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery(elem)[name](value);
+		}
+
+		var notxml = elem.nodeType !== 1 || !jQuery.isXMLDoc( elem ),
+			// Whether we are setting (or getting)
+			set = value !== undefined;
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+		// Only do all the following if this is a node (faster for style)
+		if ( elem.nodeType === 1 ) {
+			// These attributes require special treatment
+			var special = rspecialurl.test( name );
+
+			// Safari mis-reports the default selected property of an option
+			// Accessing the parent's selectedIndex property fixes it
+			if ( name === "selected" && !jQuery.support.optSelected ) {
+				var parent = elem.parentNode;
+				if ( parent ) {
+					parent.selectedIndex;
+	
+					// Make sure that it also works with optgroups, see #5701
+					if ( parent.parentNode ) {
+						parent.parentNode.selectedIndex;
+					}
+				}
+			}
+
+			// If applicable, access the attribute via the DOM 0 way
+			if ( name in elem && notxml && !special ) {
+				if ( set ) {
+					// We can't allow the type property to be changed (since it causes problems in IE)
+					if ( name === "type" && rtype.test( elem.nodeName ) && elem.parentNode ) {
+<span style='color:red'>						jQuery.error( "type property can't be changed" );</span>
+					}
+
+					elem[ name ] = value;
+				}
+
+				// browsers index elements by id/name on forms, give priority to attributes.
+				if ( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) ) {
+					return elem.getAttributeNode( name ).nodeValue;
+				}
+
+				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
+				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+				if ( name === "tabIndex" ) {
+					var attributeNode = elem.getAttributeNode( "tabIndex" );
+
+					return attributeNode && attributeNode.specified ?
+						attributeNode.value :
+						rfocusable.test( elem.nodeName ) || rclickable.test( elem.nodeName ) && elem.href ?
+							0 :
+							undefined;
+				}
+
+				return elem[ name ];
+			}
+
+			if ( !jQuery.support.style && notxml && name === "style" ) {
+				if ( set ) {
+					elem.style.cssText = "" + value;
+				}
+
+				return elem.style.cssText;
+			}
+
+			if ( set ) {
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+			}
+
+			var attr = !jQuery.support.hrefNormalized && notxml && special ?
+					// Some attributes require a special call on IE
+					elem.getAttribute( name, 2 ) :
+					elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return attr === null ? undefined : attr;
+		}
+
+		// elem is actually elem.style ... set the style
+<i>*		// Using attr for specific style information is now deprecated. Use style insead.</i>
+		return jQuery.style( elem, name, value );
+	}
+</pre>
+<b>attr (jquery-1.4.2.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+		// don't set attributes on text and comment nodes
+		if ( !elem || elem.nodeType === 3 || elem.nodeType === 8 ) {
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery(elem)[name](value);
+		}
+
+		var notxml = elem.nodeType !== 1 || !jQuery.isXMLDoc( elem ),
+			// Whether we are setting (or getting)
+			set = value !== undefined;
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+		// Only do all the following if this is a node (faster for style)
+		if ( elem.nodeType === 1 ) {
+			// These attributes require special treatment
+			var special = rspecialurl.test( name );
+
+			// Safari mis-reports the default selected property of an option
+			// Accessing the parent's selectedIndex property fixes it
+			if ( name === "selected" && !jQuery.support.optSelected ) {
+				var parent = elem.parentNode;
+				if ( parent ) {
+					parent.selectedIndex;
+	
+					// Make sure that it also works with optgroups, see #5701
+					if ( parent.parentNode ) {
+						parent.parentNode.selectedIndex;
+					}
+				}
+			}
+
+			// If applicable, access the attribute via the DOM 0 way
+<i>*			if ( name in elem && notxml && !special ) {</i>
+				if ( set ) {
+					// We can't allow the type property to be changed (since it causes problems in IE)
+					if ( name === "type" && rtype.test( elem.nodeName ) && elem.parentNode ) {
+						jQuery.error( "type property can't be changed" );
+					}
+
+					elem[ name ] = value;
+				}
+
+				// browsers index elements by id/name on forms, give priority to attributes.
+				if ( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) ) {
+					return elem.getAttributeNode( name ).nodeValue;
+				}
+
+				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
+				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+				if ( name === "tabIndex" ) {
+					var attributeNode = elem.getAttributeNode( "tabIndex" );
+
+					return attributeNode && attributeNode.specified ?
+						attributeNode.value :
+						rfocusable.test( elem.nodeName ) || rclickable.test( elem.nodeName ) && elem.href ?
+							0 :
+							undefined;
+				}
+
+				return elem[ name ];
+			}
+
+			if ( !jQuery.support.style && notxml && name === "style" ) {
+				if ( set ) {
+					elem.style.cssText = "" + value;
+				}
+
+				return elem.style.cssText;
+			}
+
+			if ( set ) {
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+			}
+
+			var attr = !jQuery.support.hrefNormalized && notxml && special ?
+					// Some attributes require a special call on IE
+					elem.getAttribute( name, 2 ) :
+					elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return attr === null ? undefined : attr;
+		}
+
+<i>*		// elem is actually elem.style ... set the style</i>
+<span style='color:red'><i>*		// Using attr for specific style information is now deprecated. Use style instead.</i></span>
+<i>*		return jQuery.style( elem, name, value );</i>
+	}
+</pre>
+<b>attr (jquery-1.4.3rc1.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+		// don't set attributes on text and comment nodes
+		if ( !elem || elem.nodeType === 3 || elem.nodeType === 8 ) {
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery(elem)[name](value);
+		}
+
+		var notxml = elem.nodeType !== 1 || !jQuery.isXMLDoc( elem ),
+			// Whether we are setting (or getting)
+			set = value !== undefined;
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+<i>*		// Only do all the following if this is a node (faster for style)</i>
+		if ( elem.nodeType === 1 ) {
+			// These attributes require special treatment
+			var special = rspecialurl.test( name );
+
+			// Safari mis-reports the default selected property of an option
+			// Accessing the parent's selectedIndex property fixes it
+			if ( name === "selected" && !jQuery.support.optSelected ) {
+				var parent = elem.parentNode;
+				if ( parent ) {
+					parent.selectedIndex;
+	
+					// Make sure that it also works with optgroups, see #5701
+					if ( parent.parentNode ) {
+						parent.parentNode.selectedIndex;
+					}
+				}
+			}
+
+			// If applicable, access the attribute via the DOM 0 way
+<span style='color:red'>			// 'in' checks fail in Blackberry 4.7 #6931</span>
+<span style='color:red'>			if ( (name in elem || elem[ name ] !== undefined) && notxml && !special ) {</span>
+				if ( set ) {
+					// We can't allow the type property to be changed (since it causes problems in IE)
+					if ( name === "type" && rtype.test( elem.nodeName ) && elem.parentNode ) {
+						jQuery.error( "type property can't be changed" );
+					}
+
+<span style='color:red'>					if ( value === null ) {</span>
+						if ( elem.nodeType === 1 ) {
+<span style='color:red'>							elem.removeAttribute( name );</span>
+						}
+
+<span style='color:red'>					} else {</span>
+						elem[ name ] = value;
+					}
+				}
+
+				// browsers index elements by id/name on forms, give priority to attributes.
+				if ( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) ) {
+					return elem.getAttributeNode( name ).nodeValue;
+				}
+
+				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
+				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+				if ( name === "tabIndex" ) {
+					var attributeNode = elem.getAttributeNode( "tabIndex" );
+
+					return attributeNode && attributeNode.specified ?
+						attributeNode.value :
+						rfocusable.test( elem.nodeName ) || rclickable.test( elem.nodeName ) && elem.href ?
+							0 :
+							undefined;
+				}
+
+				return elem[ name ];
+			}
+
+			if ( !jQuery.support.style && notxml && name === "style" ) {
+				if ( set ) {
+					elem.style.cssText = "" + value;
+				}
+
+				return elem.style.cssText;
+			}
+
+			if ( set ) {
+				// convert the value to a string (all browsers do this but IE) see #1070
+				elem.setAttribute( name, "" + value );
+			}
+
+<span style='color:red'>			// Ensure that missing attributes return undefined</span>
+<span style='color:red'>			// Blackberry 4.7 returns "" from getAttribute #6938</span>
+<span style='color:red'>			if ( !elem.attributes[ name ] && (elem.hasAttribute && !elem.hasAttribute( name )) ) {</span>
+				return undefined;
+			}
+
+			var attr = !jQuery.support.hrefNormalized && notxml && special ?
+					// Some attributes require a special call on IE
+					elem.getAttribute( name, 2 ) :
+					elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return attr === null ? undefined : attr;
+		}
+	}
+</pre>
+<b>jquery-1.4.3rc2 - jquery-1.4.4rc2: no change</b><br/><br/>
+<b>attr (jquery-1.4.4rc3.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+<i>*		// don't set attributes on text and comment nodes</i>
+<i>*		if ( !elem || elem.nodeType === 3 || elem.nodeType === 8 ) {</i>
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery(elem)[name](value);
+		}
+
+		var notxml = elem.nodeType !== 1 || !jQuery.isXMLDoc( elem ),
+			// Whether we are setting (or getting)
+			set = value !== undefined;
+
+		// Try to normalize/fix the name
+		name = notxml && jQuery.props[ name ] || name;
+
+		// These attributes require special treatment
+		var special = rspecialurl.test( name );
+
+		// Safari mis-reports the default selected property of an option
+		// Accessing the parent's selectedIndex property fixes it
+		if ( name === "selected" && !jQuery.support.optSelected ) {
+			var parent = elem.parentNode;
+			if ( parent ) {
+				parent.selectedIndex;
+
+				// Make sure that it also works with optgroups, see #5701
+				if ( parent.parentNode ) {
+					parent.parentNode.selectedIndex;
+				}
+			}
+		}
+
+		// If applicable, access the attribute via the DOM 0 way
+		// 'in' checks fail in Blackberry 4.7 #6931
+		if ( (name in elem || elem[ name ] !== undefined) && notxml && !special ) {
+			if ( set ) {
+				// We can't allow the type property to be changed (since it causes problems in IE)
+				if ( name === "type" && rtype.test( elem.nodeName ) && elem.parentNode ) {
+					jQuery.error( "type property can't be changed" );
+				}
+
+				if ( value === null ) {
+					if ( elem.nodeType === 1 ) {
+						elem.removeAttribute( name );
+					}
+
+				} else {
+					elem[ name ] = value;
+				}
+			}
+
+			// browsers index elements by id/name on forms, give priority to attributes.
+			if ( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) ) {
+				return elem.getAttributeNode( name ).nodeValue;
+			}
+
+			// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
+			// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+			if ( name === "tabIndex" ) {
+				var attributeNode = elem.getAttributeNode( "tabIndex" );
+
+				return attributeNode && attributeNode.specified ?
+					attributeNode.value :
+					rfocusable.test( elem.nodeName ) || rclickable.test( elem.nodeName ) && elem.href ?
+						0 :
+						undefined;
+			}
+
+			return elem[ name ];
+		}
+
+		if ( !jQuery.support.style && notxml && name === "style" ) {
+			if ( set ) {
+				elem.style.cssText = "" + value;
+			}
+
+			return elem.style.cssText;
+		}
+
+		if ( set ) {
+			// convert the value to a string (all browsers do this but IE) see #1070
+			elem.setAttribute( name, "" + value );
+		}
+
+		// Ensure that missing attributes return undefined
+		// Blackberry 4.7 returns "" from getAttribute #6938
+		if ( !elem.attributes[ name ] && (elem.hasAttribute && !elem.hasAttribute( name )) ) {
+			return undefined;
+		}
+
+		var attr = !jQuery.support.hrefNormalized && notxml && special ?
+				// Some attributes require a special call on IE
+				elem.getAttribute( name, 2 ) :
+				elem.getAttribute( name );
+
+		// Non-existent attributes return null, we normalize to undefined
+		return attr === null ? undefined : attr;
+	}
+</pre>
+<b>jquery-1.4.4: no change</b><br/><br/>
+<b>attr (jquery-1.5b1.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+<span style='color:red'>		// don't get/set attributes on text, comment and attribute nodes</span>
+<span style='color:red'><i>*		if ( !elem || elem.nodeType === 3 || elem.nodeType === 8 || elem.nodeType === 2 ) {</i></span>
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery(elem)[name](value);
+		}
+
+<i>*		var notxml = elem.nodeType !== 1 || !jQuery.isXMLDoc( elem ),</i>
+<i>*			// Whether we are setting (or getting)</i>
+<i>*			set = value !== undefined;</i>
+
+<i>*		// Try to normalize/fix the name</i>
+<i>*		name = notxml && jQuery.props[ name ] || name;</i>
+
+<span style='color:red'><i>*		// Only do all the following if this is a node (faster for style)</i></span>
+<i>*		if ( elem.nodeType === 1 ) {</i>
+<i>*			// These attributes require special treatment</i>
+<i>*			var special = rspecialurl.test( name );</i>
+
+<i>*			// Safari mis-reports the default selected property of an option</i>
+<i>*			// Accessing the parent's selectedIndex property fixes it</i>
+<i>*			if ( name === "selected" && !jQuery.support.optSelected ) {</i>
+<i>*				var parent = elem.parentNode;</i>
+<i>*				if ( parent ) {</i>
+<i>*					parent.selectedIndex;</i>
+
+<i>*					// Make sure that it also works with optgroups, see #5701</i>
+<i>*					if ( parent.parentNode ) {</i>
+<i>*						parent.parentNode.selectedIndex;</i>
+					}
+				}
+			}
+
+<i>*			// If applicable, access the attribute via the DOM 0 way</i>
+<i>*			// 'in' checks fail in Blackberry 4.7 #6931</i>
+<i>*			if ( (name in elem || elem[ name ] !== undefined) && notxml && !special ) {</i>
+<i>*				if ( set ) {</i>
+<i>*					// We can't allow the type property to be changed (since it causes problems in IE)</i>
+<i>*					if ( name === "type" && rtype.test( elem.nodeName ) && elem.parentNode ) {</i>
+<i>*						jQuery.error( "type property can't be changed" );</i>
+					}
+
+					if ( value === null ) {
+<i>*						if ( elem.nodeType === 1 ) {</i>
+<i>*							elem.removeAttribute( name );</i>
+						}
+
+					} else {
+<i>*						elem[ name ] = value;</i>
+					}
+				}
+
+<i>*				// browsers index elements by id/name on forms, give priority to attributes.</i>
+<i>*				if ( jQuery.nodeName( elem, "form" ) && elem.getAttributeNode(name) ) {</i>
+<i>*					return elem.getAttributeNode( name ).nodeValue;</i>
+				}
+
+<i>*				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set</i>
+<i>*				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/</i>
+<i>*				if ( name === "tabIndex" ) {</i>
+<i>*					var attributeNode = elem.getAttributeNode( "tabIndex" );</i>
+
+<i>*					return attributeNode && attributeNode.specified ?</i>
+<i>*						attributeNode.value :</i>
+<i>*						rfocusable.test( elem.nodeName ) || rclickable.test( elem.nodeName ) && elem.href ?</i>
+<i>*							0 :</i>
+<i>*							undefined;</i>
+				}
+
+<i>*				return elem[ name ];</i>
+			}
+
+<i>*			if ( !jQuery.support.style && notxml && name === "style" ) {</i>
+<i>*				if ( set ) {</i>
+<i>*					elem.style.cssText = "" + value;</i>
+				}
+
+<i>*				return elem.style.cssText;</i>
+			}
+
+<i>*			if ( set ) {</i>
+<i>*				// convert the value to a string (all browsers do this but IE) see #1070</i>
+				elem.setAttribute( name, "" + value );
+			}
+
+<i>*			// Ensure that missing attributes return undefined</i>
+<i>*			// Blackberry 4.7 returns "" from getAttribute #6938</i>
+<i>*			if ( !elem.attributes[ name ] && (elem.hasAttribute && !elem.hasAttribute( name )) ) {</i>
+				return undefined;
+			}
+
+<i>*			var attr = !jQuery.support.hrefNormalized && notxml && special ?</i>
+<i>*					// Some attributes require a special call on IE</i>
+<i>*					elem.getAttribute( name, 2 ) :</i>
+<i>*					elem.getAttribute( name );</i>
+
+			// Non-existent attributes return null, we normalize to undefined
+<i>*			return attr === null ? undefined : attr;</i>
+		}
+<span style='color:red'><i>*		// Handle everything which isn't a DOM element node</i></span>
+<i>*		if ( set ) {</i>
+<i>*			elem[ name ] = value;</i>
+		}
+<i>*		return elem[ name ];</i>
+	}
+</pre>
+<b>jquery-1.5rc1 - jquery-1.5.2: no change</b><br/><br/>
+<b>attr (jquery-1.6b1.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+<span style='color:red'>		var nType = elem.nodeType;</span>
+		
+		// don't get/set attributes on text, comment and attribute nodes
+<span style='color:red'>		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {</span>
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery( elem )[ name ]( value );
+		}
+		
+<span style='color:red'>		var ret, hooks,</span>
+<span style='color:red'>			notxml = nType !== 1 || !jQuery.isXMLDoc( elem );</span>
+		
+<span style='color:red'>		// Normalize the name if needed</span>
+<span style='color:red'>		name = notxml && jQuery.attrFix[ name ] || name;</span>
+
+<span style='color:red'>		// Get the appropriate hook, or the formHook</span>
+<span style='color:red'>		// if getSetAttribute is not supported and we have form objects in IE6/7</span>
+<span style='color:red'><i>*		hooks = jQuery.attrHooks[ name ] || ( elem.nodeName === "FORM" && formHook );</i></span>
+
+<span style='color:red'>		if ( value !== undefined ) {</span>
+
+<i>*			if ( value === null ) {</i>
+<span style='color:red'>				jQuery.removeAttr( elem, name );</span>
+				return undefined;
+
+<span style='color:red'>			} else if ( hooks && "set" in hooks && notxml && (ret = hooks.set( elem, value, name )) !== undefined ) {</span>
+<span style='color:red'>				return ret;</span>
+
+			} else {
+				elem.setAttribute( name, "" + value );
+<span style='color:red'>				return value;</span>
+			}
+
+		} else {
+
+<span style='color:red'>			if ( hooks && "get" in hooks && notxml ) {</span>
+<span style='color:red'>				return hooks.get( elem, name );</span>
+
+			} else {
+
+<span style='color:red'>				ret = elem.getAttribute( name );</span>
+
+				// Non-existent attributes return null, we normalize to undefined
+<span style='color:red'>				return ret === null ?</span>
+<span style='color:red'>					undefined :</span>
+<span style='color:red'>					ret;</span>
+			}
+		}
+	}
+</pre>
+<b>attr (jquery-1.6rc1.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+		var nType = elem.nodeType;
+		
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery( elem )[ name ]( value );
+		}
+		
+		var ret, hooks,
+			notxml = nType !== 1 || !jQuery.isXMLDoc( elem );
+		
+		// Normalize the name if needed
+		name = notxml && jQuery.attrFix[ name ] || name;
+
+		// Get the appropriate hook, or the formHook
+		// if getSetAttribute is not supported and we have form objects in IE6/7
+<span style='color:red'><i>*		hooks = jQuery.attrHooks[ name ] || ( jQuery.nodeName( elem, "form" ) && formHook );</i></span>
+
+		if ( value !== undefined ) {
+
+<span style='color:red'>			if ( value === null || (value === false && !rspecial.test( name )) ) {</span>
+				jQuery.removeAttr( elem, name );
+				return undefined;
+
+			} else if ( hooks && "set" in hooks && notxml && (ret = hooks.set( elem, value, name )) !== undefined ) {
+				return ret;
+
+			} else {
+
+<span style='color:red'>				// Set boolean attributes to the same name</span>
+<span style='color:red'>				if ( value === true && !rspecial.test( name ) ) {</span>
+<span style='color:red'>					value = name;</span>
+				}
+
+				elem.setAttribute( name, "" + value );
+				return value;
+			}
+
+		} else {
+
+			if ( hooks && "get" in hooks && notxml ) {
+				return hooks.get( elem, name );
+
+			} else {
+
+				ret = elem.getAttribute( name );
+
+				// Non-existent attributes return null, we normalize to undefined
+				return ret === null ?
+					undefined :
+					ret;
+			}
+		}
+	}
+</pre>
+<b>attr (jquery-1.6.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+		var nType = elem.nodeType;
+		
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery( elem )[ name ]( value );
+		}
+		
+		var ret, hooks,
+			notxml = nType !== 1 || !jQuery.isXMLDoc( elem );
+		
+		// Normalize the name if needed
+		name = notxml && jQuery.attrFix[ name ] || name;
+
+<i>*		// Get the appropriate hook, or the formHook</i>
+<i>*		// if getSetAttribute is not supported and we have form objects in IE6/7</i>
+<span style='color:red'><i>*		hooks = jQuery.attrHooks[ name ] ||</i></span>
+<span style='color:red'><i>*			( formHook && (jQuery.nodeName( elem, "form" ) || rinvalidChar.test( name )) ?</i></span>
+<span style='color:red'><i>*				formHook :</i></span>
+<span style='color:red'><i>*				undefined );</i></span>
+
+		if ( value !== undefined ) {
+
+<i>*			if ( value === null || (value === false && !rspecial.test( name )) ) {</i>
+				jQuery.removeAttr( elem, name );
+				return undefined;
+
+			} else if ( hooks && "set" in hooks && notxml && (ret = hooks.set( elem, value, name )) !== undefined ) {
+				return ret;
+
+			} else {
+
+<i>*				// Set boolean attributes to the same name</i>
+<i>*				if ( value === true && !rspecial.test( name ) ) {</i>
+<i>*					value = name;</i>
+				}
+
+				elem.setAttribute( name, "" + value );
+				return value;
+			}
+
+		} else {
+
+<i>*			if ( hooks && "get" in hooks && notxml ) {</i>
+				return hooks.get( elem, name );
+
+			} else {
+
+				ret = elem.getAttribute( name );
+
+				// Non-existent attributes return null, we normalize to undefined
+				return ret === null ?
+					undefined :
+					ret;
+			}
+		}
+	}
+</pre>
+<b>attr (jquery-1.6.1rc1.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+		var nType = elem.nodeType;
+		
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery( elem )[ name ]( value );
+		}
+
+<span style='color:red'>		// Fallback to prop when attributes are not supported</span>
+<span style='color:red'>		if ( !("getAttribute" in elem) ) {</span>
+<span style='color:red'>			return jQuery.prop( elem, name, value );</span>
+		}
+
+		var ret, hooks,
+			notxml = nType !== 1 || !jQuery.isXMLDoc( elem );
+
+		// Normalize the name if needed
+<i>*		name = notxml && jQuery.attrFix[ name ] || name;</i>
+
+<span style='color:red'>		hooks = jQuery.attrHooks[ name ];</span>
+
+<span style='color:red'>		if ( !hooks ) {</span>
+<span style='color:red'>			// Use boolHook for boolean attributes</span>
+<span style='color:red'><i>*			if ( rboolean.test( name ) &&</i></span>
+<span style='color:red'><i>*				(typeof value === "boolean" || value === undefined || value.toLowerCase() === name.toLowerCase()) ) {</i></span>
+
+<span style='color:red'>				hooks = boolHook;</span>
+
+<span style='color:red'>			// Use formHook for forms and if the name contains certain characters</span>
+<span style='color:red'><i>*			} else if ( formHook && (jQuery.nodeName( elem, "form" ) || rinvalidChar.test( name )) ) {</i></span>
+<span style='color:red'>				hooks = formHook;</span>
+			}
+		}
+
+		if ( value !== undefined ) {
+
+<span style='color:red'>			if ( value === null ) {</span>
+				jQuery.removeAttr( elem, name );
+				return undefined;
+
+			} else if ( hooks && "set" in hooks && notxml && (ret = hooks.set( elem, value, name )) !== undefined ) {
+				return ret;
+
+			} else {
+				elem.setAttribute( name, "" + value );
+				return value;
+			}
+
+<span style='color:red'><i>*		} else if ( hooks && "get" in hooks && notxml ) {</i></span>
+<i>*			return hooks.get( elem, name );</i>
+
+		} else {
+
+			ret = elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return ret === null ?
+				undefined :
+				ret;
+		}
+	}
+</pre>
+<b>jquery-1.6.1: no change</b><br/><br/>
+<b>attr (jquery-1.6.2rc1.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+		var nType = elem.nodeType;
+		
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery( elem )[ name ]( value );
+		}
+
+		// Fallback to prop when attributes are not supported
+		if ( !("getAttribute" in elem) ) {
+			return jQuery.prop( elem, name, value );
+		}
+
+		var ret, hooks,
+			notxml = nType !== 1 || !jQuery.isXMLDoc( elem );
+
+		// Normalize the name if needed
+<span style='color:red'>		if ( notxml ) {</span>
+<span style='color:red'>			name = jQuery.attrFix[ name ] || name;</span>
+
+			hooks = jQuery.attrHooks[ name ];
+
+			if ( !hooks ) {
+				// Use boolHook for boolean attributes
+<span style='color:red'>				if ( rboolean.test( name ) ) {</span>
+
+					hooks = boolHook;
+
+<i>*				// Use formHook for forms and if the name contains certain characters</i>
+<span style='color:red'><i>*				} else if ( formHook && name !== "className" &&</i></span>
+<span style='color:red'><i>*					(jQuery.nodeName( elem, "form" ) || rinvalidChar.test( name )) ) {</i></span>
+
+<i>*					hooks = formHook;</i>
+				}
+			}
+		}
+
+		if ( value !== undefined ) {
+
+			if ( value === null ) {
+				jQuery.removeAttr( elem, name );
+				return undefined;
+
+			} else if ( hooks && "set" in hooks && notxml && (ret = hooks.set( elem, value, name )) !== undefined ) {
+				return ret;
+
+			} else {
+				elem.setAttribute( name, "" + value );
+				return value;
+			}
+
+<span style='color:red'>		} else if ( hooks && "get" in hooks && notxml && (ret = hooks.get( elem, name )) !== null ) {</span>
+			return ret;
+
+		} else {
+
+			ret = elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return ret === null ?
+				undefined :
+				ret;
+		}
+	}
+</pre>
+<b>jquery-1.6.2: no change</b><br/><br/>
+<b>attr (jquery-1.6.3rc1.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+		var nType = elem.nodeType;
+		
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery( elem )[ name ]( value );
+		}
+
+		// Fallback to prop when attributes are not supported
+		if ( !("getAttribute" in elem) ) {
+			return jQuery.prop( elem, name, value );
+		}
+
+		var ret, hooks,
+			notxml = nType !== 1 || !jQuery.isXMLDoc( elem );
+
+		// Normalize the name if needed
+		if ( notxml ) {
+			name = jQuery.attrFix[ name ] || name;
+
+			hooks = jQuery.attrHooks[ name ];
+
+			if ( !hooks ) {
+				// Use boolHook for boolean attributes
+				if ( rboolean.test( name ) ) {
+					hooks = boolHook;
+
+<span style='color:red'>				// Use nodeHook if available( IE6/7 )</span>
+<span style='color:red'>				} else if ( nodeHook ) {</span>
+<span style='color:red'>					hooks = nodeHook;</span>
+				}
+			}
+		}
+
+		if ( value !== undefined ) {
+
+			if ( value === null ) {
+				jQuery.removeAttr( elem, name );
+				return undefined;
+
+			} else if ( hooks && "set" in hooks && notxml && (ret = hooks.set( elem, value, name )) !== undefined ) {
+				return ret;
+
+			} else {
+				elem.setAttribute( name, "" + value );
+				return value;
+			}
+
+		} else if ( hooks && "get" in hooks && notxml && (ret = hooks.get( elem, name )) !== null ) {
+			return ret;
+
+		} else {
+
+			ret = elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return ret === null ?
+				undefined :
+				ret;
+		}
+	}
+</pre>
+<b>jquery-1.6.3 - jquery-1.7b1: no change</b><br/><br/>
+<b>attr (jquery-1.7b2.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+<i>*		var nType = elem.nodeType;</i>
+
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery( elem )[ name ]( value );
+		}
+
+		// Fallback to prop when attributes are not supported
+		if ( !("getAttribute" in elem) ) {
+			return jQuery.prop( elem, name, value );
+		}
+
+<i>*		var ret, hooks,</i>
+			notxml = nType !== 1 || !jQuery.isXMLDoc( elem );
+
+<i>*		// Normalize the name if needed</i>
+		if ( notxml ) {
+<span style='color:red'>			name = name.toLowerCase();</span>
+<span style='color:red'>			hooks = jQuery.attrHooks[ name ] || (rboolean.test( name ) ? boolHook : nodeHook);</span>
+		}
+
+		if ( value !== undefined ) {
+
+			if ( value === null ) {
+				jQuery.removeAttr( elem, name );
+				return undefined;
+
+			} else if ( hooks && "set" in hooks && notxml && (ret = hooks.set( elem, value, name )) !== undefined ) {
+				return ret;
+
+			} else {
+				elem.setAttribute( name, "" + value );
+				return value;
+			}
+
+		} else if ( hooks && "get" in hooks && notxml && (ret = hooks.get( elem, name )) !== null ) {
+			return ret;
+
+		} else {
+
+			ret = elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return ret === null ?
+				undefined :
+				ret;
+		}
+	}
+</pre>
+<b>attr (jquery-1.7rc1.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+<span style='color:red'>		var ret, hooks, notxml,</span>
+<span style='color:red'>			nType = elem.nodeType;</span>
+
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return undefined;
+		}
+
+		if ( pass && name in jQuery.attrFn ) {
+			return jQuery( elem )[ name ]( value );
+		}
+
+		// Fallback to prop when attributes are not supported
+		if ( !("getAttribute" in elem) ) {
+			return jQuery.prop( elem, name, value );
+		}
+
+		notxml = nType !== 1 || !jQuery.isXMLDoc( elem );
+
+<span style='color:red'>		// All attributes are lowercase</span>
+<span style='color:red'>		// Grab necessary hook if one is defined</span>
+		if ( notxml ) {
+			name = name.toLowerCase();
+			hooks = jQuery.attrHooks[ name ] || (rboolean.test( name ) ? boolHook : nodeHook);
+		}
+
+		if ( value !== undefined ) {
+
+			if ( value === null ) {
+				jQuery.removeAttr( elem, name );
+				return undefined;
+
+			} else if ( hooks && "set" in hooks && notxml && (ret = hooks.set( elem, value, name )) !== undefined ) {
+				return ret;
+
+			} else {
+				elem.setAttribute( name, "" + value );
+				return value;
+			}
+
+		} else if ( hooks && "get" in hooks && notxml && (ret = hooks.get( elem, name )) !== null ) {
+			return ret;
+
+		} else {
+
+			ret = elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return ret === null ?
+				undefined :
+				ret;
+		}
+	}
+</pre>
+<b>jquery-1.7rc2 - jquery-1.7: no change</b><br/><br/>
+<b>attr (jquery-1.7.1rc1.js)</b><br/>
+<pre>
+function ( elem, name, value, pass ) {
+		var ret, hooks, notxml,
+			nType = elem.nodeType;
+
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+<span style='color:red'>			return;</span>
+		}
+
+<i>*		if ( pass && name in jQuery.attrFn ) {</i>
+			return jQuery( elem )[ name ]( value );
+		}
+
+		// Fallback to prop when attributes are not supported
+<span style='color:red'>		if ( typeof elem.getAttribute === "undefined" ) {</span>
+			return jQuery.prop( elem, name, value );
+		}
+
+		notxml = nType !== 1 || !jQuery.isXMLDoc( elem );
+
+		// All attributes are lowercase
+		// Grab necessary hook if one is defined
+		if ( notxml ) {
+			name = name.toLowerCase();
+			hooks = jQuery.attrHooks[ name ] || ( rboolean.test( name ) ? boolHook : nodeHook );
+		}
+
+		if ( value !== undefined ) {
+
+			if ( value === null ) {
+				jQuery.removeAttr( elem, name );
+<span style='color:red'>				return;</span>
+
+			} else if ( hooks && "set" in hooks && notxml && (ret = hooks.set( elem, value, name )) !== undefined ) {
+				return ret;
+
+			} else {
+				elem.setAttribute( name, "" + value );
+				return value;
+			}
+
+		} else if ( hooks && "get" in hooks && notxml && (ret = hooks.get( elem, name )) !== null ) {
+			return ret;
+
+		} else {
+
+			ret = elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return ret === null ?
+				undefined :
+				ret;
+		}
+	}
+</pre>
+<b>jquery-1.7.1 - jquery-1.8b1: no change</b><br/><br/>
+<b>attr (jquery-1.8b2.js)</b><br/>
+<pre>
+<i>*function ( elem, name, value, pass ) {</i>
+		var ret, hooks, notxml,
+			nType = elem.nodeType;
+
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return;
+		}
+
+<span style='color:red'><i>*		if ( pass && jQuery.isFunction( jQuery.fn[ name ] ) ) {</i></span>
+<i>*			return jQuery( elem )[ name ]( value );</i>
+		}
+
+		// Fallback to prop when attributes are not supported
+		if ( typeof elem.getAttribute === "undefined" ) {
+			return jQuery.prop( elem, name, value );
+		}
+
+		notxml = nType !== 1 || !jQuery.isXMLDoc( elem );
+
+		// All attributes are lowercase
+		// Grab necessary hook if one is defined
+		if ( notxml ) {
+			name = name.toLowerCase();
+			hooks = jQuery.attrHooks[ name ] || ( rboolean.test( name ) ? boolHook : nodeHook );
+		}
+
+		if ( value !== undefined ) {
+
+			if ( value === null ) {
+				jQuery.removeAttr( elem, name );
+				return;
+
+<i>*			} else if ( hooks && "set" in hooks && notxml && (ret = hooks.set( elem, value, name )) !== undefined ) {</i>
+				return ret;
+
+			} else {
+<i>*				elem.setAttribute( name, "" + value );</i>
+				return value;
+			}
+
+<i>*		} else if ( hooks && "get" in hooks && notxml && (ret = hooks.get( elem, name )) !== null ) {</i>
+			return ret;
+
+		} else {
+
+			ret = elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+<i>*			return ret === null ?</i>
+				undefined :
+				ret;
+		}
+	}
+</pre>
+<b>jquery-1.8rc1 - jquery-1.8.3: no change</b><br/><br/>
+<b>attr (jquery-1.9b1.js)</b><br/>
+<pre>
+<span style='color:red'>function ( elem, name, value ) {</span>
+		var ret, hooks, notxml,
+			nType = elem.nodeType;
+
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return;
+		}
+
+		// Fallback to prop when attributes are not supported
+		if ( typeof elem.getAttribute === "undefined" ) {
+			return jQuery.prop( elem, name, value );
+		}
+
+		notxml = nType !== 1 || !jQuery.isXMLDoc( elem );
+
+		// All attributes are lowercase
+		// Grab necessary hook if one is defined
+		if ( notxml ) {
+			name = name.toLowerCase();
+			hooks = jQuery.attrHooks[ name ] || ( rboolean.test( name ) ? boolHook : nodeHook );
+		}
+
+		if ( value !== undefined ) {
+
+			if ( value === null ) {
+				jQuery.removeAttr( elem, name );
+
+<span style='color:red'>			} else if ( hooks && notxml && "set" in hooks && (ret = hooks.set( elem, value, name )) !== undefined ) {</span>
+				return ret;
+
+			} else {
+<span style='color:red'>				elem.setAttribute( name, value + "" );</span>
+				return value;
+			}
+
+<span style='color:red'>		} else if ( hooks && notxml && "get" in hooks && (ret = hooks.get( elem, name )) !== null ) {</span>
+			return ret;
+
+		} else {
+
+			ret = elem.getAttribute( name );
+
+			// Non-existent attributes return null, we normalize to undefined
+<span style='color:red'>			return ret == null ?</span>
+				undefined :
+				ret;
+		}
+	}
+</pre>
+<b>attr (jquery-1.9rc1.js)</b><br/>
+<pre>
+function ( elem, name, value ) {
+<i>*		var ret, hooks, notxml,</i>
+			nType = elem.nodeType;
+
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return;
+		}
+
+		// Fallback to prop when attributes are not supported
+<i>*		if ( typeof elem.getAttribute === "undefined" ) {</i>
+			return jQuery.prop( elem, name, value );
+		}
+
+		notxml = nType !== 1 || !jQuery.isXMLDoc( elem );
+
+		// All attributes are lowercase
+		// Grab necessary hook if one is defined
+		if ( notxml ) {
+			name = name.toLowerCase();
+			hooks = jQuery.attrHooks[ name ] || ( rboolean.test( name ) ? boolHook : nodeHook );
+		}
+
+		if ( value !== undefined ) {
+
+			if ( value === null ) {
+				jQuery.removeAttr( elem, name );
+
+			} else if ( hooks && notxml && "set" in hooks && (ret = hooks.set( elem, value, name )) !== undefined ) {
+				return ret;
+
+			} else {
+				elem.setAttribute( name, value + "" );
+				return value;
+			}
+
+		} else if ( hooks && notxml && "get" in hooks && (ret = hooks.get( elem, name )) !== null ) {
+			return ret;
+
+		} else {
+
+<span style='color:red'>			// In IE9+, Flash objects don't have .getAttribute (#12945)</span>
+<span style='color:red'>			// Support: IE9+</span>
+<span style='color:red'><i>*			if ( typeof elem.getAttribute !== "undefined" ) {</i></span>
+				ret =  elem.getAttribute( name );
+			}
+
+			// Non-existent attributes return null, we normalize to undefined
+			return ret == null ?
+				undefined :
+				ret;
+		}
+	}
+</pre>
+<b>jquery-1.9: no change</b><br/><br/>
+<b>attr (jquery-1.9.1.js)</b><br/>
+<pre>
+function ( elem, name, value ) {
+<span style='color:red'><i>*		var hooks, notxml, ret,</i></span>
+			nType = elem.nodeType;
+
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return;
+		}
+
+		// Fallback to prop when attributes are not supported
+<span style='color:red'>		if ( typeof elem.getAttribute === core_strundefined ) {</span>
+			return jQuery.prop( elem, name, value );
+		}
+
+<i>*		notxml = nType !== 1 || !jQuery.isXMLDoc( elem );</i>
+
+		// All attributes are lowercase
+		// Grab necessary hook if one is defined
+<i>*		if ( notxml ) {</i>
+			name = name.toLowerCase();
+<i>*			hooks = jQuery.attrHooks[ name ] || ( rboolean.test( name ) ? boolHook : nodeHook );</i>
+		}
+
+		if ( value !== undefined ) {
+
+			if ( value === null ) {
+				jQuery.removeAttr( elem, name );
+
+<i>*			} else if ( hooks && notxml && "set" in hooks && (ret = hooks.set( elem, value, name )) !== undefined ) {</i>
+				return ret;
+
+			} else {
+				elem.setAttribute( name, value + "" );
+				return value;
+			}
+
+<i>*		} else if ( hooks && notxml && "get" in hooks && (ret = hooks.get( elem, name )) !== null ) {</i>
+			return ret;
+
+		} else {
+
+<i>*			// In IE9+, Flash objects don't have .getAttribute (#12945)</i>
+<i>*			// Support: IE9+</i>
+<span style='color:red'><i>*			if ( typeof elem.getAttribute !== core_strundefined ) {</i></span>
+<i>*				ret =  elem.getAttribute( name );</i>
+			}
+
+			// Non-existent attributes return null, we normalize to undefined
+			return ret == null ?
+				undefined :
+				ret;
+		}
+	}
+</pre>
+<b>attr (jquery-1.10.0-beta1.js)</b><br/>
+<pre>
+function ( elem, name, value ) {
+<span style='color:red'>		var hooks, ret,</span>
+			nType = elem.nodeType;
+
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return;
+		}
+
+		// Fallback to prop when attributes are not supported
+<i>*		if ( typeof elem.getAttribute === core_strundefined ) {</i>
+			return jQuery.prop( elem, name, value );
+		}
+
+		// All attributes are lowercase
+		// Grab necessary hook if one is defined
+<span style='color:red'>		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {</span>
+			name = name.toLowerCase();
+<span style='color:red'>			hooks = jQuery.attrHooks[ name ] ||</span>
+<span style='color:red'>				( jQuery.expr.match.bool.test( name ) ? boolHook : nodeHook );</span>
+		}
+
+		if ( value !== undefined ) {
+
+			if ( value === null ) {
+				jQuery.removeAttr( elem, name );
+
+<span style='color:red'>			} else if ( hooks && "set" in hooks && (ret = hooks.set( elem, value, name )) !== undefined ) {</span>
+				return ret;
+
+			} else {
+				elem.setAttribute( name, value + "" );
+				return value;
+			}
+
+<span style='color:red'>		} else if ( hooks && "get" in hooks && (ret = hooks.get( elem, name )) !== null ) {</span>
+			return ret;
+
+		} else {
+<span style='color:red'>			ret = jQuery.find.attr( elem, name );</span>
+
+			// Non-existent attributes return null, we normalize to undefined
+			return ret == null ?
+				undefined :
+				ret;
+		}
+	}
+</pre>
+<b>jquery-1.10.0 - jquery-1.10.2: no change</b><br/><br/>
+<b>attr (jquery-1.11.0-beta1.js)</b><br/>
+<pre>
+function ( elem, name, value ) {
+		var hooks, ret,
+			nType = elem.nodeType;
+
+		// don't get/set attributes on text, comment and attribute nodes
+		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+			return;
+		}
+
+		// Fallback to prop when attributes are not supported
+<span style='color:red'>		if ( typeof elem.getAttribute === strundefined ) {</span>
+			return jQuery.prop( elem, name, value );
+		}
+
+		// All attributes are lowercase
+		// Grab necessary hook if one is defined
+		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
+			name = name.toLowerCase();
+			hooks = jQuery.attrHooks[ name ] ||
+				( jQuery.expr.match.bool.test( name ) ? boolHook : nodeHook );
+		}
+
+		if ( value !== undefined ) {
+
+			if ( value === null ) {
+				jQuery.removeAttr( elem, name );
+
+			} else if ( hooks && "set" in hooks && (ret = hooks.set( elem, value, name )) !== undefined ) {
+				return ret;
+
+			} else {
+				elem.setAttribute( name, value + "" );
+				return value;
+			}
+
+		} else if ( hooks && "get" in hooks && (ret = hooks.get( elem, name )) !== null ) {
+			return ret;
+
+		} else {
+			ret = jQuery.find.attr( elem, name );
+
+			// Non-existent attributes return null, we normalize to undefined
+			return ret == null ?
+				undefined :
+				ret;
+		}
+	}
+</pre>
+<b>jquery-1.11.0-beta2 - jquery-1.11.2: no change</b><br/><br/>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.extend demo</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+ 
+<div id="log"></div>
+<h2 class="foo"> Hello world !!!</h2>
+Hi 
+<div class="foo"> Jquery foo each example </div>
+ 
+<script>
+    var ps = document.querySelectorAll(".foo");
+	
+	function setBackground(i, el) {
+	   el.style.backgroundColor="red";
+	}
+	
+	jQuery.each(ps, setBackground);
+</script>
+ 
+</body>
+</html>

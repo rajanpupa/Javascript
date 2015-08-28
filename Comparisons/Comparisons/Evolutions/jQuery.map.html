@@ -1,0 +1,451 @@
+<html>
+<head>
+</head>
+<body>
+<h3>arg=jQuery.map</h3>
+<b>jQuery.map (jquery-1.0.js)</b><br/>
+<pre>
+ function (elems, fn) {
+		// If a string is passed in for the function, make a function
+		// for it (a handy shortcut)
+<i>		if ( fn.constructor == String )</i> <b>//modified in jquery-1.0.4.js</b>
+			fn = new Function("a","return " + fn);
+		
+		var result = [];
+		
+		// Go through the array, translating each of the items to their
+		// new value (or values).
+		for ( var i = 0; i &lt; elems.length; i++ ) {
+			var val = fn(elems[i],i);
+
+			if ( val !== null && val != undefined ) {
+				if ( val.constructor != Array ) val = [val];
+				result = jQuery.merge( result, val );
+			}
+		}
+
+		return result;
+	}
+</pre>
+<b>jquery-1.0.1 - jquery-1.0.3: no change</b><br/><br/>
+<b>jQuery.map (jquery-1.0.4.js)</b><br/>
+<pre>
+ function (elems, fn) {
+		// If a string is passed in for the function, make a function
+		// for it (a handy shortcut)
+<span style='color:red'>		if ( typeof fn == "string" )</span>
+			fn = new Function("a","return " + fn);
+
+<i>		var result = [];</i> <b>//modified in jquery-1.1a.js</b>
+
+		// Go through the array, translating each of the items to their
+		// new value (or values).
+<i>		for ( var i = 0; i &lt; elems.length; i++ ) {</i> <b>//modified in jquery-1.1a.js</b>
+			var val = fn(elems[i],i);
+
+			if ( val !== null && val != undefined ) {
+				if ( val.constructor != Array ) val = [val];
+<i>				result = jQuery.merge( result, val );</i> <b>//modified in jquery-1.1a.js</b>
+			}
+		}
+
+<i>		return result;</i> <b>//modified in jquery-1.1a.js</b>
+	}
+</pre>
+<b>jQuery.map (jquery-1.1a.js)</b><br/>
+<pre>
+ function (elems, fn) {
+		// If a string is passed in for the function, make a function
+		// for it (a handy shortcut)
+		if ( typeof fn == "string" )
+			fn = new Function("a","return " + fn);
+
+<span style='color:red'>		var result = [], r = [];</span>
+
+		// Go through the array, translating each of the items to their
+		// new value (or values).
+<span style='color:red'>		for ( var i = 0, el = elems.length; i &lt; el; i++ ) {</span>
+			var val = fn(elems[i],i);
+
+			if ( val !== null && val != undefined ) {
+				if ( val.constructor != Array ) val = [val];
+<span style='color:red'>				result = result.concat( val );</span>
+			}
+		}
+
+<span style='color:red'><i>		var r = result.length ? [ result[0] ] : [];</i> <b>//modified in jquery-1.1.3a.js</b></span>
+
+<span style='color:red'><i>		check: for ( var i = 1, rl = result.length; i &lt; rl; i++ ) {</i> <b>//modified in jquery-1.1.3a.js</b></span>
+<span style='color:red'><i>			for ( var j = 0; j &lt; i; j++ )</i> <b>//modified in jquery-1.1.3a.js</b></span>
+<span style='color:red'><i>				if ( result[i] == r[j] )</i> <b>//modified in jquery-1.1.3a.js</b></span>
+<span style='color:red'><i>					continue check;</i> <b>//modified in jquery-1.1.3a.js</b></span>
+
+<span style='color:red'><i>			r.push( result[i] );</i> <b>//modified in jquery-1.1.3a.js</b></span>
+		}
+
+<span style='color:red'><i>		return r;</i> <b>//modified in jquery-1.1.3a.js</b></span>
+	}
+</pre>
+<b>jquery-1.1b - jquery-1.1.2: no change</b><br/><br/>
+<b>jQuery.map (jquery-1.1.3a.js)</b><br/>
+<pre>
+ function (elems, fn) {
+		// If a string is passed in for the function, make a function
+		// for it (a handy shortcut)
+		if ( typeof fn == "string" )
+			fn = new Function("a","return " + fn);
+
+<i>		var result = [], r = [];</i> <b>//modified in jquery-1.1.3.js</b>
+
+		// Go through the array, translating each of the items to their
+		// new value (or values).
+		for ( var i = 0, el = elems.length; i &lt; el; i++ ) {
+			var val = fn(elems[i],i);
+
+			if ( val !== null && val != undefined ) {
+				if ( val.constructor != Array ) val = [val];
+				result = result.concat( val );
+			}
+		}
+
+<span style='color:red'>		return result;</span>
+	}
+</pre>
+<b>jQuery.map (jquery-1.1.3.js)</b><br/>
+<pre>
+ function (elems, fn) {
+		// If a string is passed in for the function, make a function
+		// for it (a handy shortcut)
+		if ( typeof fn == "string" )
+<i>			fn = new Function("a","return " + fn);</i> <b>//modified in jquery-1.1.4.js</b>
+
+<span style='color:red'>		var result = [];</span>
+
+		// Go through the array, translating each of the items to their
+		// new value (or values).
+		for ( var i = 0, el = elems.length; i &lt; el; i++ ) {
+			var val = fn(elems[i],i);
+
+			if ( val !== null && val != undefined ) {
+				if ( val.constructor != Array ) val = [val];
+				result = result.concat( val );
+			}
+		}
+
+		return result;
+	}
+</pre>
+<b>jQuery.map (jquery-1.1.4.js)</b><br/>
+<pre>
+<i> function (elems, fn) {</i> <b>//modified in jquery-1.2.2b.js</b>
+<i>		// If a string is passed in for the function, make a function</i> <b>//modified in jquery-1.2.2b.js</b>
+<i>		// for it (a handy shortcut)</i> <b>//modified in jquery-1.2.2b.js</b>
+<i>		if ( typeof fn == "string" )</i> <b>//modified in jquery-1.2.2b.js</b>
+<span style='color:red'><i>			fn = eval("false||function(a){return " + fn + "}");</i> <b>//modified in jquery-1.2.2b.js</b></span>
+
+<i>		var result = [];</i> <b>//modified in jquery-1.2.2b.js</b>
+
+		// Go through the array, translating each of the items to their
+		// new value (or values).
+<i>		for ( var i = 0, el = elems.length; i &lt; el; i++ ) {</i> <b>//modified in jquery-1.2.2b.js</b>
+<i>			var val = fn(elems[i],i);</i> <b>//modified in jquery-1.2.2b.js</b>
+
+<i>			if ( val !== null && val != undefined ) {</i> <b>//modified in jquery-1.2.2b.js</b>
+<i>				if ( val.constructor != Array ) val = [val];</i> <b>//modified in jquery-1.2.2b.js</b>
+<i>				result = result.concat( val );</i> <b>//modified in jquery-1.2.2b.js</b>
+			}
+		}
+
+<i>		return result;</i> <b>//modified in jquery-1.2.2b.js</b>
+	}
+</pre>
+<b>jquery-1.2 - jquery-1.2.1: no change</b><br/><br/>
+<b>jQuery.map (jquery-1.2.2b.js)</b><br/>
+<pre>
+<span style='color:red'> function ( elems, callback ) {</span>
+<span style='color:red'>		var ret = [];</span>
+
+		// Go through the array, translating each of the items to their
+		// new value (or values).
+<span style='color:red'>		for ( var i = 0, length = elems.length; i &lt; length; i++ ) {</span>
+<span style='color:red'>			var value = callback( elems[ i ], i );</span>
+
+<span style='color:red'><i>			if ( value !== null && value != undefined ) {</i> <b>//modified in jquery-1.2.5.js</b></span>
+<span style='color:red'><i>				if ( value.constructor != Array )</i> <b>//modified in jquery-1.2.5.js</b></span>
+<span style='color:red'><i>					value = [ value ];</i> <b>//modified in jquery-1.2.5.js</b></span>
+
+<span style='color:red'><i>				ret = ret.concat( value );</i> <b>//modified in jquery-1.2.5.js</b></span>
+			}
+		}
+
+<span style='color:red'><i>		return ret;</i> <b>//modified in jquery-1.2.5.js</b></span>
+	}
+</pre>
+<b>jquery-1.2.2b2 - jquery-1.2.4: no change</b><br/><br/>
+<b>jQuery.map (jquery-1.2.5.js)</b><br/>
+<pre>
+<i> function ( elems, callback ) {</i> <b>//modified in jquery-1.4a1.js</b>
+<i>		var ret = [];</i> <b>//modified in jquery-1.4a1.js</b>
+
+		// Go through the array, translating each of the items to their
+		// new value (or values).
+		for ( var i = 0, length = elems.length; i &lt; length; i++ ) {
+<i>			var value = callback( elems[ i ], i );</i> <b>//modified in jquery-1.4a1.js</b>
+
+<span style='color:red'><i>			if ( value != null )</i> <b>//modified in jquery-1.4a1.js</b></span>
+<span style='color:red'>				ret[ ret.length ] = value;</span>
+		}
+
+<span style='color:red'>		return ret.concat.apply( [], ret );</span>
+	}
+</pre>
+<b>jquery-1.2.6 - jquery-1.3.2: no change</b><br/><br/>
+<b>jQuery.map (jquery-1.4a1.js)</b><br/>
+<pre>
+<span style='color:red'> function ( elems, callback, arg ) {</span>
+<span style='color:red'>		var ret = [], value;</span>
+
+		// Go through the array, translating each of the items to their
+		// new value (or values).
+		for ( var i = 0, length = elems.length; i &lt; length; i++ ) {
+<span style='color:red'>			value = callback( elems[ i ], i, arg );</span>
+
+<span style='color:red'>			if ( value != null ) {</span>
+				ret[ ret.length ] = value;
+			}
+		}
+
+		return ret.concat.apply( [], ret );
+	}
+</pre>
+<b>jquery-1.4a2 - jquery-1.4.4: no change</b><br/><br/>
+<b>jQuery.map (jquery-1.5b1.js)</b><br/>
+<pre>
+ function ( elems, callback, arg ) {
+<i>		var ret = [], value;</i> <b>//modified in jquery-1.6b1.js</b>
+
+		// Go through the array, translating each of the items to their
+<i>		// new value (or values).</i> <b>//modified in jquery-1.6b1.js</b>
+<i>		for ( var i = 0, length = elems.length; i &lt; length; i++ ) {</i> <b>//modified in jquery-1.6b1.js</b>
+			value = callback( elems[ i ], i, arg );
+
+			if ( value != null ) {
+				ret[ ret.length ] = value;
+			}
+		}
+
+<span style='color:red'>		// Flatten any nested arrays</span>
+		return ret.concat.apply( [], ret );
+	}
+</pre>
+<b>jquery-1.5rc1 - jquery-1.5.2: no change</b><br/><br/>
+<b>jQuery.map (jquery-1.6b1.js)</b><br/>
+<pre>
+ function ( elems, callback, arg ) {
+<span style='color:red'>		var value, key, ret = [],</span>
+<span style='color:red'>			i = 0,</span>
+<span style='color:red'>			length = elems.length,</span>
+<span style='color:red'>			// jquery objects are treated as arrays</span>
+<span style='color:red'>			isArray = elems instanceof jQuery || length !== undefined && typeof length === "number" && ( ( length &gt; 0 && elems[ 0 ] && elems[ length -1 ] ) || jQuery.isArray( elems ) ) ;</span>
+
+		// Go through the array, translating each of the items to their
+<span style='color:red'>		if ( isArray ) {</span>
+<span style='color:red'>			for ( ; i &lt; length; i++ ) {</span>
+				value = callback( elems[ i ], i, arg );
+
+				if ( value != null ) {
+					ret[ ret.length ] = value;
+				}
+			}
+
+<span style='color:red'><i>		// Go thorugh every key on the object,</i> <b>//modified in jquery-1.6rc1.js</b></span>
+<span style='color:red'>		} else {</span>
+<span style='color:red'>			for ( key in elems ) {</span>
+<span style='color:red'>				value = callback( elems[ key ], key, arg );</span>
+
+				if ( value != null ) {
+					ret[ ret.length ] = value;
+				}
+			}
+		}
+
+		// Flatten any nested arrays
+		return ret.concat.apply( [], ret );
+	}
+</pre>
+<b>jQuery.map (jquery-1.6rc1.js)</b><br/>
+<pre>
+ function ( elems, callback, arg ) {
+		var value, key, ret = [],
+			i = 0,
+			length = elems.length,
+			// jquery objects are treated as arrays
+<i>			isArray = elems instanceof jQuery || length !== undefined && typeof length === "number" && ( ( length &gt; 0 && elems[ 0 ] && elems[ length -1 ] ) || jQuery.isArray( elems ) ) ;</i> <b>//modified in jquery-1.6.js</b>
+
+		// Go through the array, translating each of the items to their
+		if ( isArray ) {
+			for ( ; i &lt; length; i++ ) {
+				value = callback( elems[ i ], i, arg );
+
+				if ( value != null ) {
+					ret[ ret.length ] = value;
+				}
+			}
+
+<span style='color:red'>		// Go through every key on the object,</span>
+		} else {
+			for ( key in elems ) {
+				value = callback( elems[ key ], key, arg );
+
+				if ( value != null ) {
+					ret[ ret.length ] = value;
+				}
+			}
+		}
+
+		// Flatten any nested arrays
+		return ret.concat.apply( [], ret );
+	}
+</pre>
+<b>jQuery.map (jquery-1.6.js)</b><br/>
+<pre>
+ function ( elems, callback, arg ) {
+<i>		var value, key, ret = [],</i> <b>//modified in jquery-1.9b1.js</b>
+			i = 0,
+			length = elems.length,
+<i>			// jquery objects are treated as arrays</i> <b>//modified in jquery-1.9b1.js</b>
+<span style='color:red'><i>			isArray = elems instanceof jQuery || length !== undefined && typeof length === "number" && ( ( length &gt; 0 && elems[ 0 ] && elems[ length -1 ] ) || length === 0 || jQuery.isArray( elems ) ) ;</i> <b>//modified in jquery-1.9b1.js</b></span>
+
+		// Go through the array, translating each of the items to their
+		if ( isArray ) {
+			for ( ; i &lt; length; i++ ) {
+				value = callback( elems[ i ], i, arg );
+
+				if ( value != null ) {
+					ret[ ret.length ] = value;
+				}
+			}
+
+		// Go through every key on the object,
+		} else {
+<i>			for ( key in elems ) {</i> <b>//modified in jquery-1.9b1.js</b>
+<i>				value = callback( elems[ key ], key, arg );</i> <b>//modified in jquery-1.9b1.js</b>
+
+				if ( value != null ) {
+					ret[ ret.length ] = value;
+				}
+			}
+		}
+
+		// Flatten any nested arrays
+<i>		return ret.concat.apply( [], ret );</i> <b>//modified in jquery-1.9b1.js</b>
+	}
+</pre>
+<b>jquery-1.6.1rc1 - jquery-1.8.3: no change</b><br/><br/>
+<b>jQuery.map (jquery-1.9b1.js)</b><br/>
+<pre>
+ function ( elems, callback, arg ) {
+<span style='color:red'>		var value,</span>
+			i = 0,
+			length = elems.length,
+<span style='color:red'>			isArray = isArraylike( elems ),</span>
+<span style='color:red'>			ret = [];</span>
+
+		// Go through the array, translating each of the items to their
+		if ( isArray ) {
+			for ( ; i &lt; length; i++ ) {
+				value = callback( elems[ i ], i, arg );
+
+				if ( value != null ) {
+					ret[ ret.length ] = value;
+				}
+			}
+
+		// Go through every key on the object,
+		} else {
+<span style='color:red'>			for ( i in elems ) {</span>
+				value = callback( elems[ i ], i, arg );
+
+				if ( value != null ) {
+					ret[ ret.length ] = value;
+				}
+			}
+		}
+
+		// Flatten any nested arrays
+<span style='color:red'><i>		return core_concat.apply( [], ret );</i> <b>//modified in jquery-1.11.0-beta1.js</b></span>
+	}
+</pre>
+<b>jquery-1.9rc1 - jquery-1.10.2: no change</b><br/><br/>
+<b>jQuery.map (jquery-1.11.0-beta1.js)</b><br/>
+<pre>
+ function ( elems, callback, arg ) {
+		var value,
+			i = 0,
+			length = elems.length,
+			isArray = isArraylike( elems ),
+			ret = [];
+
+<i>		// Go through the array, translating each of the items to their</i> <b>//modified in jquery-1.11.0-beta2.js</b>
+		if ( isArray ) {
+			for ( ; i &lt; length; i++ ) {
+				value = callback( elems[ i ], i, arg );
+
+				if ( value != null ) {
+<i>					ret[ ret.length ] = value;</i> <b>//modified in jquery-1.11.0-beta2.js</b>
+				}
+			}
+
+		// Go through every key on the object,
+		} else {
+			for ( i in elems ) {
+				value = callback( elems[ i ], i, arg );
+
+				if ( value != null ) {
+<i>					ret[ ret.length ] = value;</i> <b>//modified in jquery-1.11.0-beta2.js</b>
+				}
+			}
+		}
+
+		// Flatten any nested arrays
+<span style='color:red'>		return concat.apply( [], ret );</span>
+	}
+</pre>
+<b>jQuery.map (jquery-1.11.0-beta2.js)</b><br/>
+<pre>
+ function ( elems, callback, arg ) {
+		var value,
+			i = 0,
+			length = elems.length,
+			isArray = isArraylike( elems ),
+			ret = [];
+
+<span style='color:red'>		// Go through the array, translating each of the items to their new values</span>
+		if ( isArray ) {
+			for ( ; i &lt; length; i++ ) {
+				value = callback( elems[ i ], i, arg );
+
+				if ( value != null ) {
+<span style='color:red'>					ret.push( value );</span>
+				}
+			}
+
+		// Go through every key on the object,
+		} else {
+			for ( i in elems ) {
+				value = callback( elems[ i ], i, arg );
+
+				if ( value != null ) {
+<span style='color:red'>					ret.push( value );</span>
+				}
+			}
+		}
+
+		// Flatten any nested arrays
+		return concat.apply( [], ret );
+	}
+</pre>
+<b>jquery-1.11.0-beta3 - jquery-1.11.2: no change</b><br/><br/>
+
+</body>
+</html>

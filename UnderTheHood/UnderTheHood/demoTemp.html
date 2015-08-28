@@ -1,0 +1,16 @@
+<html>
+<head>
+<script src="jQueryVersions/jquery-1.0.js"></script>
+</head>
+<body>
+	<p class='foo'>Hello</p>
+</body>
+<script type="text/javascript">
+var els = document.querySelectorAll("p");    // get DOM elements to filter	
+var filtered = jQuery.filter(".foo", els);   // get DOM element with class = 'foo'
+var selected = filtered.r;                   // these are the .foo DOM elements
+for (i=0; i<selected.length; i++) {
+   selected[i].style.backgroundColor = "red";  // make their background colors red
+}
+</script>
+</html>

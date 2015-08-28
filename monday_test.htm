@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>test monday</title>
+  <script>
+	function Foo(){
+		this.a=5;
+		this.b="Hello";
+		Foo.log=function(value){console.log(value)};
+	}
+	
+	Foo.prototype={
+		toString: function(){Foo.log("a=" + this.a + ", b=" + this.b);}
+	}
+	
+	function demo(){
+		var obj = new Foo();
+		obj.toString();
+	}
+</script>
+</head>
+<body onload="demo()">
+	
+	<!--<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;"></canvas>-->
+
+ 
+</body>
+</html>

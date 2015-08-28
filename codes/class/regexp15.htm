@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.extend demo</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+ 
+<div id="log"></div>
+<script>
+
+    var i, len, regexps, regexp;
+			// Here are some regular expressions that are used by jQuery.
+	regexps = [
+	   {line:36,  s:"\
+	   ", re:/^[^<]*(<.+>)[^>]*$/},
+	   {line:344, s:"cl1 cl2 sdf", re:/(^|\s*\b[^-])cl2($|\b(?=[^-]))/, usage:""},
+	   {line:349, s:" foo def ", re:/(^|\s)foo(\s|$)/, usage:""},
+	   {line:553, s:"//abc", re:/^\/\//i, usage:'jQuery.trim(t).replace( /^\/\//i, "" )'},
+	   {line:558, s:"/..abc", re:/^(\.\.|\/\.\.)/, usage:""},
+	   {line:559, s:">abc", re:/^(>|\/)/, usage:""},
+	   {line:560, s:"+abc", re:/^(\+)/, usage:""},
+	   {line:561, s:"~abc", re:/^(~)/, usage:""},
+	   {line:575, s:".foo", re:/^([#.]?)([a-z0-9\\*_-]*)/i, usage:""},
+	   {line:662, s:"a[b]", re:/^[a-z[({<*:.#]/},
+	   {line:675, s:"[@abc='def']", re:/^\[ *(@)([a-z*_-][a-z0-9_-]*) *([!*$^=]*) * *'?"?([^'"]*?)'?"? *\]/i},
+	   {line:676, s:"['abc']", re:/^(\[) *'?"?([^'"]*?)'?"? *\]/i},
+	   {line:677, s:":aBc('def')", re:/^(:)([a-z*_-][a-z0-9_-]*)\( *'?"?([^'"]*?)'?"? *\)/i},
+	   {line:678, s:"#ID", re:/^([:.#]*)([a-z*_-][a-z0-9_-]*)/i},
+	   {line:715, s:"  abc", re:/^\s+|\s+$/, usage:'t.replace(/^\s+|\s+$/g, "")'}
+	];
+	len = regexps.length;
+	for (i=0; i<len; i++) {
+	   regexp = regexps[i];
+	   if (regexp.re.test(regexp.s)) {
+		  console.log("" + regexp.line + " matched.")
+	   } else {
+		  console.log("" + regexp.line + " not matched.");
+	   }
+	}
+</script>
+ 
+</body>
+</html>

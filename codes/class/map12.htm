@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.extend demo</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+ 
+<div id="log"></div>
+<p>Hello world</p>
+
+<span>How are you people doing.</span>
+
+<p>Hi world</p>
+ 
+<script>
+    var els = document.querySelectorAll("p");
+	jQuery.map(els, "a.style.backgroundColor='red';");
+	
+	var b = "true";
+	
+	$("span").css("background-color", "red");
+</script>
+ 
+</body>
+</html>

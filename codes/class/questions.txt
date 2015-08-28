@@ -1,0 +1,5 @@
+in each2.htm, in jquery each what is the use of args || [i, obj[i]]
+
+number 9, jquery.merge, does for loop makes the list live instead of staticNodeList.
+
+number 14, how are javascript arrays different then java arrays.

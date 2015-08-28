@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.extend demo</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+
+	<div id="id3" class="cl1  cl2 cl3"/>
+		<p>How are yu world</p>
+		<div id="id4" >Hi world!
+		
+			<div id="id5" class="cl3">
+				<p class="foo">Hello world!</p>
+			</div>
+		</div>
+	</div>
+	
+	<div id="a1">
+		<p class="foo">My name is rajan</p>
+	</div>
+	<div id="a2"><div>
+	
+	<div id="b1">
+		<div id="b2"></div>
+		<div id="b3"></div>
+	</div>
+	
+<script>
+	var els = document.querySelectorAll("p");    // get DOM elements to filter	
+	var filtered = jQuery.filter(".foo", els);   // get DOM element with class = 'foo'
+	var selected = filtered.r;                   // these are the .foo DOM elements
+	for (i=0; i<selected.length; i++) {
+	   selected[i].style.backgroundColor = "red";  // make their background colors red
+	}
+	
+</script>
+ 
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.extend demo</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+ 
+<div id="log"></div>
+<script>
+
+    var a = [1, 2, 3, 4], result, i;
+	jQuery.extend(a, {get:jQuery.fn.get} );     		// because pushStack uses get
+	
+	document.write(a.get() + "<br/>");
+	
+	var result = jQuery.fn.pushStack.apply(a); 		// push a onto a.stack
+	
+	if(result===a){
+		document.write("a is exactly the result <br/>");
+	}
+	document.write(JSON.stringify(result) + "<br/>");
+	
+	for ( i=0; i<a.length; i++ ) {               	// modify a to [2, 3, 4, 5]
+	   a[i]++;
+	}
+	
+	document.write("result after a++ " + JSON.stringify(result) + "<br/>");
+	
+	jQuery.fn.end.apply(a);                    		// restore a to [1, 2, 3, 4] from a.stack
+
+	document.write(JSON.stringify(a) + "<br/>");
+</script>
+ 
+</body>
+</html>

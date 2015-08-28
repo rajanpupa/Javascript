@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.extend demo</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+	
+<script>
+	var Apple = function (){
+		var color = "green";
+		
+		function getColor(){
+			return this.color;
+		}
+		function setColor(color){
+			this.color = color;
+		}
+	}
+	
+	var anApple = new Apple();
+	
+	if(anApple.constructor === Apple){
+		document.write("The constructor of object anApple points to function Apple.");
+	}else{
+		document.write("The constructor of object anApple points to function Apple. <br/>");
+		//document.write(JSON.stringify(anApple.constructor));
+	}
+	
+</script>
+ 
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.extend demo</title>
+  <script src="https://code.jquery.com/jquery-1.0.js"></script>
+</head>
+<body>
+ 
+<div id="log"></div>
+ 
+<script>
+    var object1 = {
+      apple: 0,
+      banana: { weight: 52, price: 100 },
+      cherry: 97
+    };
+
+        //document.write(JSON.stringify(object1));
+    
+    var object2 = {
+      banana: {weight: 100, price: 200 },
+      durian: 100
+    };
+
+    $( "#log" ).append( "Object1: " + JSON.stringify( object1 ) );
+    $( "#log" ).append("<br/>");
+    $( "#log" ).append( "Object2: " + JSON.stringify( object2 ) );
+    $( "#log" ).append("<br/>");
+    // Merge object2 into object1
+    $.extend( object1, object2 );
+
+    // Assuming JSON.stringify - not available in IE<8
+    $( "#log" ).append("$.extend( object1, object2 ) =" +  JSON.stringify( object1 ) );
+</script>
+ 
+</body>
+</html>
