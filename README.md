@@ -15,4 +15,6 @@ etc
 
 ### Topics
   1. Javascript Inheritance example
-    * ([Example 1](http://www.2ality.com/2012/01/js-inheritance-by-example.html)
+    * [JS Inheritance By Example](http://www.2ality.com/2012/01/js-inheritance-by-example.html)
+  2. Call vs apply vs bind
+    * [APPLY VS. CALL VS. BIND IN JAVASCRIPT](https://codeplanet.io/javascript-apply-vs-call-vs-bind/)
