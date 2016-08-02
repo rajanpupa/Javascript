@@ -12,3 +12,7 @@ Some of the key stuffs were:
 * closures
 
 etc
+
+### Topics
+  1. Javascript Inheritance example
+    * ([Example 1](http://www.2ality.com/2012/01/js-inheritance-by-example.html)
